@@ -1,0 +1,5 @@
+configure terminal
+hostname HQ-EDGE
+no ip domain-lookup
+end
+write memory

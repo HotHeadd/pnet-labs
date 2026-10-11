@@ -1,0 +1,8 @@
+configure terminal
+interface Ethernet0/3
+ description to BR-CORE-2
+ no switchport
+ ip address 10.2.255.25 255.255.255.252
+ no shutdown
+end
+write memory

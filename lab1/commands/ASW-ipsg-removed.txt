@@ -1,0 +1,8 @@
+! IP Source Guard was applied and then removed: on IOL L2 15.2 it drops traffic
+! of hosts with DHCP-snooping (dynamic) bindings although 'show ip verify source' is correct.
+! ASW-1
+configure terminal
+interface range Ethernet0/2 - 3 , Ethernet1/0 - 1
+ ip verify source
+ no ip verify source
+end

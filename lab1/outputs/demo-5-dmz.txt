@@ -1,0 +1,21 @@
+SRV-WEB> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=0.423 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=1.103 ms
+
+SRV-WEB> ping 10.1.50.10 -c 2          ! SRV-INT (LAN ГО)
+*10.1.100.1 icmp_seq=1 ttl=255 time=0.424 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.100.1 icmp_seq=2 ttl=255 time=0.423 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+SRV-WEB> ping 10.2.10.10 -c 2          ! PC-ADMIN (LAN филиала)
+*10.1.100.1 icmp_seq=1 ttl=255 time=0.493 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.100.1 icmp_seq=2 ttl=255 time=0.511 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+ISP#telnet 203.0.113.2 80              ! из «интернета» на опубликованный порт
+Trying 203.0.113.2, 80 ...
+% Connection timed out; remote host not responding      ! на VPCS нет веб-сервера
+
+HQ-EDGE>show ip nat translations | include tcp
+tcp 203.0.113.2:80     10.1.100.10:80     203.0.113.1:46056  203.0.113.1:46056
+tcp 203.0.113.2:80     10.1.100.10:80     ---                ---
+tcp 203.0.113.2:443    10.1.100.10:443    ---                ---
+tcp 203.0.113.2:25     10.1.100.11:25     ---                ---

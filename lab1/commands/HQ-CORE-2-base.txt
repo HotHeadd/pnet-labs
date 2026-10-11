@@ -1,0 +1,14 @@
+configure terminal
+hostname HQ-CORE-2
+no ip domain-lookup
+interface range Ethernet0/3 , Ethernet1/0
+ description to HQ-CORE-1 (Po1)
+ no switchport
+ channel-group 1 mode active
+interface Port-channel1
+ description L3 EtherChannel to HQ-CORE-1
+ no switchport
+interface range Ethernet1/1 - 3
+ shutdown
+end
+write memory

@@ -1,0 +1,10 @@
+HQ-DSW-1#ssh -l netadmin 10.2.99.11
+Password:
+ASW-1#show users
+    Line       User       Host(s)              Idle       Location
+   0 con 0                idle                 00:00:59
+*  2 vty 0     netadmin   idle                 00:00:00 10.1.10.2
+
+  Interface    User               Mode         Idle     Peer Address
+
+ASW-1#

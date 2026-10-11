@@ -1,0 +1,26 @@
+! DSW-1, DSW-2 (филиал): доступ ADMIN ГО в VLAN 99
+configure terminal
+ip access-list extended MGMT-OUT
+ 15 permit ip 10.1.10.0 0.0.0.31 any
+end
+! ASW-1/2/3, DSW-1/2 (филиал): SSH-управление
+configure terminal
+ip domain-name branch.local
+username netadmin privilege 15 secret BKS1-admin
+crypto key generate rsa modulus 2048
+ip ssh version 2
+end
+configure terminal
+ip access-list standard VTY-MGMT
+ permit 10.1.10.0 0.0.0.31
+ permit 10.2.10.0 0.0.0.31
+line vty 0 4
+ login local
+ transport input ssh
+ access-class VTY-MGMT in
+end
+write memory
+! HQ-DSW-1: SSH-клиент из сети ADMIN
+configure terminal
+ip ssh source-interface Vlan10
+end

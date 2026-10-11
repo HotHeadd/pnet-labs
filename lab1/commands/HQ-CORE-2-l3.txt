@@ -1,0 +1,24 @@
+configure terminal
+ip routing
+interface Ethernet0/0
+ description to HQ-EDGE
+ no switchport
+ ip address 10.1.255.6 255.255.255.252
+ no shutdown
+interface Ethernet0/1
+ description to HQ-DSW-1
+ no switchport
+ ip address 10.1.255.17 255.255.255.252
+ no shutdown
+interface Ethernet0/2
+ description to HQ-DSW-2
+ no switchport
+ ip address 10.1.255.21 255.255.255.252
+ no shutdown
+interface Port-channel1
+ ip address 10.1.255.26 255.255.255.252
+router ospf 1
+ router-id 10.1.254.2
+ network 10.1.255.0 0.0.0.255 area 0
+end
+write memory

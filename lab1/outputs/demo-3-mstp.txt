@@ -1,0 +1,19 @@
+HQ-ASW-1#show spanning-tree mst 1 | begin Interface      ! до отказа
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Et1/0            Desg FWD 2000000   128.5    Shr Edge
+Po1              Root FWD 1000000   128.65   P2p
+Po2              Altn BLK 1000000   128.66   P2p
+
+! Отказ: HQ-ASW-1 interface Port-channel1 / shutdown, на PC-HQ-ADMIN ping 10.1.10.1
+! ДО исправления (тип канала Shr — IOL считает линк полудуплексным, RSTP proposal/agreement
+! не работает): HQ-DSW-2 Po21 «Desg BLK» ~30 с, у PC-HQ-ADMIN icmp_seq 4..26 timeout,
+! восстановление на icmp_seq=27.
+! Исправление: spanning-tree link-type point-to-point на всех межкоммутаторных каналах
+! (HQ-ASW/HQ-DSW Po, ASW/DSW филиала e0/x, Po1) — тип стал P2p.
+! ПОСЛЕ исправления: при выключенном Po1 пинги шлюза идут без длительного перерыва
+! (icmp_seq 12–20 успешны в тестах длиной 12 и 20 пакетов).
+HQ-ASW-1#show spanning-tree mst 1 | begin Interface      ! во время отказа
+Interface        Role Sts Cost      Prio.Nbr Type
+Et1/0            Desg FWD 2000000   128.5    Shr Edge
+Po2              Root FWD 1000000   128.66   Shr

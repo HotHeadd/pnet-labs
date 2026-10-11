@@ -1,0 +1,5 @@
+configure terminal
+hostname HQ-INFRA
+no ip domain-lookup
+end
+write memory

@@ -1,0 +1,21 @@
+BR-EDGE#show crypto isakmp sa
+IPv4 Crypto ISAKMP SA
+dst             src             state          conn-id status
+203.0.113.2     198.51.100.2    QM_IDLE           1001 ACTIVE
+198.51.100.2    203.0.113.2     QM_IDLE           1003 ACTIVE
+192.0.2.2       203.0.113.2     QM_IDLE           1002 ACTIVE
+
+BR-EDGE#show crypto ipsec sa | include interface|encaps|decaps
+interface: Tunnel0
+    #pkts encaps: 13, #pkts encrypt: 13, #pkts digest: 13
+    #pkts decaps: 15, #pkts decrypt: 15, #pkts verify: 15
+interface: Tunnel1
+    #pkts encaps: 13, #pkts encrypt: 13, #pkts digest: 13
+    #pkts decaps: 14, #pkts decrypt: 14, #pkts verify: 14
+BR-EDGE#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.1.254.254      0   FULL/  -        00:00:36    172.16.0.5      Tunnel1
+10.1.254.254      0   FULL/  -        00:00:37    172.16.0.1      Tunnel0
+10.2.254.4        1   FULL/DR         00:00:30    10.2.255.14     Ethernet0/2
+10.2.254.1        1   FULL/BDR        00:00:33    10.2.255.2      Ethernet0/1

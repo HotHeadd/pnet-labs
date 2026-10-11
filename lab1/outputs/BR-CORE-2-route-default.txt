@@ -1,0 +1,8 @@
+Routing entry for 0.0.0.0/0, supernet
+  Known via "ospf 1", distance 110, metric 1, candidate default path
+  Tag 1, type extern 2, forward metric 10
+  Last update from 10.2.255.13 on Ethernet0/0, 00:00:37 ago
+  Routing Descriptor Blocks:
+  * 10.2.255.13, from 10.2.254.254, 00:00:37 ago, via Ethernet0/0
+      Route metric is 1, traffic share count is 1
+      Route tag 1

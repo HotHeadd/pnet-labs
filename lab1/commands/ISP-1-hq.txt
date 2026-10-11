@@ -1,0 +1,7 @@
+configure terminal
+interface Ethernet0/2
+ description to HQ-EDGE
+ ip address 203.0.113.1 255.255.255.252
+ no shutdown
+end
+write memory

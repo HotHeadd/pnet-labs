@@ -1,0 +1,17 @@
+BR-EDGE#show run interface e0/2
+Building configuration...
+
+Current configuration : 136 bytes
+!
+interface Ethernet0/2
+ description to BR-CORE-2
+ ip address 10.2.255.13 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+end
+
+BR-EDGE#show run | section router ospf
+router ospf 1
+ router-id 10.2.254.254
+ network 10.2.255.0 0.0.0.3 area 0
+ default-information originate

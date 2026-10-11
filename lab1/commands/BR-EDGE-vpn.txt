@@ -1,0 +1,41 @@
+configure terminal
+crypto isakmp policy 10
+ encryption aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+crypto ipsec transform-set TS-GRE esp-aes 256 esp-sha256-hmac
+ mode transport
+crypto ipsec profile VPN-T0
+ set transform-set TS-GRE
+crypto ipsec profile VPN-T1
+ set transform-set TS-GRE
+crypto isakmp key BKS1-vpn-psk address 203.0.113.2
+ip access-list extended VPN-T1-SRC
+ permit ip host 192.0.2.2 host 203.0.113.2
+route-map VPN-T1-PBR permit 10
+ match ip address VPN-T1-SRC
+ set ip next-hop 192.0.2.1
+ip local policy route-map VPN-T1-PBR
+interface Tunnel0
+ description GRE over IPsec main via ISP-1
+ ip address 172.16.0.2 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 10
+ tunnel source Ethernet0/0
+ tunnel destination 203.0.113.2
+ tunnel protection ipsec profile VPN-T0
+interface Tunnel1
+ description GRE over IPsec backup via ISP-2
+ ip address 172.16.0.6 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 100
+ tunnel source Ethernet0/3
+ tunnel destination 203.0.113.2
+ tunnel protection ipsec profile VPN-T1
+router ospf 1
+ network 172.16.0.0 0.0.0.7 area 0
+end
+write memory

@@ -1,0 +1,18 @@
+PC-DEV1> trace 10.2.20.11 -m 5          ! один VLAN 20
+trace to 10.2.20.11, 5 hops max, press Ctrl+C to stop
+ 1   *10.2.20.11   0.271 ms (ICMP type:3, code:3, Destination port unreachable)
+
+PC-DEV1> trace 10.2.10.10 -m 5          ! VLAN 20 -> VLAN 10
+trace to 10.2.10.10, 5 hops max, press Ctrl+C to stop
+ 1   10.2.20.3   0.310 ms  0.272 ms  0.318 ms
+ 2   *10.2.10.10   1.902 ms (ICMP type:3, code:3, Destination port unreachable)
+
+PC-HQ-STAFF> trace 10.2.10.10 -m 10     ! ГО -> филиал через VPN
+trace to 10.2.10.10, 10 hops max, press Ctrl+C to stop
+ 1   10.1.20.3   0.474 ms  0.306 ms  0.318 ms
+ 2   10.1.255.13   0.650 ms  0.517 ms  0.505 ms
+ 3   10.1.255.1   1.648 ms  0.628 ms  0.688 ms
+ 4   172.16.0.2   1.242 ms  1.130 ms  1.126 ms
+ 5   10.2.255.2   1.280 ms  1.312 ms  1.149 ms
+ 6   10.2.255.10   1.563 ms  3.544 ms  1.350 ms
+ 7   *10.2.10.10   1.574 ms (ICMP type:3, code:3, Destination port unreachable)

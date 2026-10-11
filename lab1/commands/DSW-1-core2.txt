@@ -1,0 +1,10 @@
+configure terminal
+interface Ethernet1/2
+ description to BR-CORE-2
+ no switchport
+ ip address 10.2.255.18 255.255.255.252
+ no shutdown
+router ospf 1
+ no passive-interface Ethernet1/2
+end
+write memory

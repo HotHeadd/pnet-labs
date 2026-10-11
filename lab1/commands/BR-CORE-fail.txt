@@ -1,0 +1,4 @@
+configure terminal
+interface range Ethernet0/0 - 3
+ shutdown
+end

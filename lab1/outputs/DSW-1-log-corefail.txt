@@ -1,0 +1,1 @@
+*Oct 10 17:22:38.822: %OSPF-5-ADJCHG: Process 1, Nbr 10.2.254.1 on Ethernet0/0 from FULL to DOWN, Neighbor Down: Dead timer expired

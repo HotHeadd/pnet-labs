@@ -1,0 +1,31 @@
+configure terminal
+hostname HQ-DMZ
+no ip domain-lookup
+vtp mode transparent
+vlan 100
+ name DMZ
+vlan 999
+ name BLACKHOLE
+exit
+interface Ethernet0/0
+ description to HQ-EDGE
+ switchport mode access
+ switchport access vlan 100
+interface Ethernet0/1
+ description SRV-WEB
+ switchport mode access
+ switchport access vlan 100
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+interface Ethernet0/2
+ description SRV-MAIL
+ switchport mode access
+ switchport access vlan 100
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+interface Ethernet0/3
+ switchport mode access
+ switchport access vlan 999
+ shutdown
+end
+write memory

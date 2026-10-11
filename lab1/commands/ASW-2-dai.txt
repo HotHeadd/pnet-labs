@@ -1,0 +1,8 @@
+configure terminal
+ip source binding AABB.CC00.0900 vlan 50 10.2.50.10 interface Ethernet1/0
+interface range Ethernet0/0 - 1
+ ip arp inspection trust
+ip arp inspection vlan 10,20,30,40,50,60,70
+ip arp inspection validate src-mac dst-mac ip
+end
+write memory

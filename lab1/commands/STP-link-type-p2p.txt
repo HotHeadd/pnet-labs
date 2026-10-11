@@ -1,0 +1,6 @@
+configure terminal
+interface range Port-channel1 - 2      ! HQ-ASW-1/2; HQ-DSW-1: Po1,Po11-12; HQ-DSW-2: Po1,Po21-22
+ spanning-tree link-type point-to-point
+end
+write memory
+! филиал: DSW-1/2 — interface range Ethernet0/3 , Ethernet1/0 - 1 , Port-channel1; ASW-1/2/3 — Ethernet0/0 - 1

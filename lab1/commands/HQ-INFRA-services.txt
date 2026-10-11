@@ -1,0 +1,42 @@
+configure terminal
+no ip routing
+ip default-gateway 10.1.55.1
+interface Ethernet0/0
+ description VLAN55 INFRA
+ ip address 10.1.55.10 255.255.255.240
+ no shutdown
+ip domain-lookup
+ip domain-name hq.local
+ip dhcp excluded-address 10.1.10.1 10.1.10.9
+ip dhcp excluded-address 10.1.20.1 10.1.20.9
+ip dhcp excluded-address 10.1.60.1 10.1.60.9
+ip dhcp excluded-address 10.1.70.1 10.1.70.9
+ip dhcp pool V10-ADMIN
+ network 10.1.10.0 255.255.255.224
+ default-router 10.1.10.1
+ dns-server 10.1.55.10
+ domain-name hq.local
+ip dhcp pool V20-STAFF
+ network 10.1.20.0 255.255.255.0
+ default-router 10.1.20.1
+ dns-server 10.1.55.10
+ domain-name hq.local
+ip dhcp pool V60-GUEST
+ network 10.1.60.0 255.255.255.0
+ default-router 10.1.60.1
+ dns-server 10.1.55.10
+ domain-name hq.local
+ip dhcp pool V70-CCTV
+ network 10.1.70.0 255.255.255.192
+ default-router 10.1.70.1
+ dns-server 10.1.55.10
+ domain-name hq.local
+ip dns server
+ip host hq-infra.hq.local 10.1.55.10
+ip host srv-int.hq.local 10.1.50.10
+ip host srv-web.hq.local 10.1.100.10
+ip host srv-mail.hq.local 10.1.100.11
+ip host hq-edge.hq.local 10.1.100.1
+ntp master 3
+end
+write memory

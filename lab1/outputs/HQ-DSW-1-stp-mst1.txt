@@ -1,0 +1,5 @@
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Po1              Desg FWD 1000000   128.65   Shr
+Po11             Desg FWD 1000000   128.66   Shr
+Po12             Desg FWD 1000000   128.67   Shr

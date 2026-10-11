@@ -1,0 +1,16 @@
+configure terminal
+ip access-list extended DMZ-IN
+ permit tcp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 established
+ permit icmp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 echo-reply
+ permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq domain
+ permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq ntp
+ permit icmp 10.1.100.0 0.0.0.15 host 10.1.100.1
+ deny ip 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255
+ permit ip 10.1.100.0 0.0.0.15 any
+interface Ethernet0/3
+ ip access-group DMZ-IN in
+ip nat inside source static tcp 10.1.100.10 80 203.0.113.2 80 extendable
+ip nat inside source static tcp 10.1.100.10 443 203.0.113.2 443 extendable
+ip nat inside source static tcp 10.1.100.11 25 203.0.113.2 25 extendable
+end
+write memory

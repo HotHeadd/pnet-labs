@@ -1,0 +1,7 @@
+configure terminal
+interface Vlan99
+ ip address 10.1.99.11 255.255.255.240
+ no shutdown
+ip default-gateway 10.1.99.1
+end
+write memory

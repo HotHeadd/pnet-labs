@@ -1,0 +1,7 @@
+configure terminal
+ipv6 unicast-routing
+interface Ethernet0/3
+ ipv6 address fd00:1:100::1/64
+ ipv6 enable
+end
+write memory

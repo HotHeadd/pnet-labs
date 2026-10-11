@@ -1,0 +1,11 @@
+[package]
+name = "mephi-lab"
+version = "0.1.0"
+entrypoint = "lib/lab.typ"
+authors = ["Vladimir Dotsenko"]
+license = "MIT"
+description = "Отчёт о лабораторной работе НИЯУ МИФИ: титульник лабы + оформление НИР (ГОСТ 7.32)"
+
+[template]
+path = "template"
+entrypoint = "main.typ"

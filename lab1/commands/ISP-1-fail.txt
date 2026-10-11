@@ -1,0 +1,4 @@
+configure terminal
+interface Ethernet0/0
+ shutdown
+end

@@ -1,0 +1,34 @@
+configure terminal
+ip access-list extended HQ-GUEST-IN
+ permit udp any any eq bootps
+ permit udp 10.1.60.0 0.0.0.255 host 10.1.55.10 eq domain
+ deny ip any 10.0.0.0 0.255.255.255
+ deny ip any 172.16.0.0 0.15.255.255
+ deny ip any 192.168.0.0 0.0.255.255
+ permit ip any any
+end
+configure terminal
+ip access-list extended HQ-CCTV-IN
+ permit udp any any eq bootps
+ permit 112 any host 224.0.0.18
+ permit udp 10.1.70.0 0.0.0.63 host 10.1.55.10 eq ntp
+ permit ip 10.1.70.0 0.0.0.63 10.1.50.0 0.0.0.63
+ permit icmp 10.1.70.0 0.0.0.63 any echo-reply
+ deny ip any any
+end
+configure terminal
+ip access-list extended HQ-MGMT-OUT
+ permit ip 10.1.10.0 0.0.0.31 any
+ permit ip 10.2.10.0 0.0.0.31 any
+ permit ip 10.1.99.0 0.0.0.15 any
+ deny ip any any
+end
+configure terminal
+interface Vlan60
+ ip access-group HQ-GUEST-IN in
+interface Vlan70
+ ip access-group HQ-CCTV-IN in
+interface Vlan99
+ ip access-group HQ-MGMT-OUT out
+end
+write memory

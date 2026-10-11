@@ -1,0 +1,27 @@
+configure terminal
+ip routing
+interface Ethernet0/0
+ description to BR-EDGE
+ no switchport
+ ip address 10.2.255.14 255.255.255.252
+ no shutdown
+interface Ethernet0/1
+ description to DSW-1
+ no switchport
+ ip address 10.2.255.17 255.255.255.252
+ no shutdown
+interface Ethernet0/2
+ description to DSW-2
+ no switchport
+ ip address 10.2.255.21 255.255.255.252
+ no shutdown
+interface Ethernet0/3
+ description to BR-CORE
+ no switchport
+ ip address 10.2.255.26 255.255.255.252
+ no shutdown
+router ospf 1
+ router-id 10.2.254.4
+ network 10.2.255.0 0.0.0.255 area 0
+end
+write memory

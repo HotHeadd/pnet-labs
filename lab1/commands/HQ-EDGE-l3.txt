@@ -1,0 +1,34 @@
+configure terminal
+interface Ethernet0/0
+ description WAN to ISP-1
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ no shutdown
+interface Ethernet0/1
+ description to HQ-CORE-1
+ ip address 10.1.255.1 255.255.255.252
+ ip nat inside
+ no shutdown
+interface Ethernet0/2
+ description to HQ-CORE-2
+ ip address 10.1.255.5 255.255.255.252
+ ip nat inside
+ no shutdown
+interface Ethernet0/3
+ description DMZ
+ ip address 10.1.100.1 255.255.255.240
+ ip nat inside
+ no shutdown
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+ip access-list extended NAT-HQ
+ deny ip 10.0.0.0 0.255.255.255 10.0.0.0 0.255.255.255
+ permit ip 10.1.0.0 0.0.255.255 any
+ip nat inside source list NAT-HQ interface Ethernet0/0 overload
+router ospf 1
+ router-id 10.1.254.254
+ passive-interface Ethernet0/3
+ network 10.1.255.0 0.0.0.7 area 0
+ network 10.1.100.0 0.0.0.15 area 0
+ default-information originate
+end
+write memory

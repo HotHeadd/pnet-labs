@@ -1,0 +1,19 @@
+HQ-EDGE#show ip interface brief | exclude unassigned
+Any interface listed with OK? value "NO" does not have a valid configuration
+
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                203.0.113.2     YES manual up                    up
+Ethernet0/1                10.1.255.1      YES manual up                    up
+Ethernet0/2                10.1.255.5      YES manual up                    up
+Ethernet0/3                10.1.100.1      YES manual up                    up
+
+HQ-EDGE#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.1.254.2        1   FULL/BDR        00:00:38    10.1.255.6      Ethernet0/2
+10.1.254.1        1   FULL/BDR        00:00:32    10.1.255.2      Ethernet0/1
+HQ-EDGE#ping 8.8.8.8 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds:
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/1 ms

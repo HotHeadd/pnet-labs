@@ -1,0 +1,4 @@
+configure terminal
+ip route 203.0.113.0 255.255.255.252 203.0.113.249
+end
+write memory

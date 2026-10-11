@@ -1,0 +1,10 @@
+! ASW-1/2/3 (филиал): IOL L2 с ip routing игнорирует ip default-gateway
+configure terminal
+ip route 0.0.0.0 0.0.0.0 10.2.99.1
+end
+write memory
+! HQ-ASW-1/2
+configure terminal
+ip route 0.0.0.0 0.0.0.0 10.1.99.1
+end
+write memory

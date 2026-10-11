@@ -1,0 +1,25 @@
+HQ-DSW-1#show vrrp brief
+Interface          Grp Pri Time  Own Pre State   Master addr     Group addr
+Vl10               10  110 3570       Y  Master  10.1.10.2       10.1.10.1
+Vl20               20  100 3609       Y  Backup  10.1.20.3       10.1.20.1
+Vl50               50  110 3570       Y  Master  10.1.50.2       10.1.50.1
+Vl55               55  110 3570       Y  Master  10.1.55.2       10.1.55.1
+Vl60               60  100 3609       Y  Backup  10.1.60.3       10.1.60.1
+Vl70               70  100 3609       Y  Backup  10.1.70.3       10.1.70.1
+Vl99               99  100 3609       Y  Backup  10.1.99.3       10.1.99.1
+HQ-DSW-1#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.1.254.12       1   FULL/BDR        00:00:35    10.1.99.3       Vlan99
+10.1.254.2        1   FULL/DR         00:00:32    10.1.255.17     Ethernet0/1
+10.1.254.1        1   FULL/DR         00:00:37    10.1.255.9      Ethernet0/0
+HQ-DSW-1#show ip route 0.0.0.0 | include via
+  Known via "ospf 1", distance 110, metric 1, candidate default path
+  * 10.1.255.17, from 10.1.254.254, 00:02:39 ago, via Ethernet0/1
+    10.1.255.9, from 10.1.254.254, 00:02:39 ago, via Ethernet0/0
+HQ-DSW-1#ping 8.8.8.8 source Vlan10 repeat 5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 8.8.8.8, timeout is 2 seconds:
+Packet sent with a source address of 10.1.10.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms

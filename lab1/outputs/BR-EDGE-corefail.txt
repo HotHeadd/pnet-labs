@@ -1,0 +1,11 @@
+BR-EDGE#show ip ospf neighbor
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.2.254.4        1   FULL/DR         00:00:39    10.2.255.14     Ethernet0/2
+BR-EDGE#show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 198.51.100.2:33140 10.2.10.10:33140  8.8.8.8:33140      8.8.8.8:33140
+icmp 198.51.100.2:33396 10.2.10.10:33396  8.8.8.8:33396      8.8.8.8:33396
+icmp 198.51.100.2:33652 10.2.10.10:33652  8.8.8.8:33652      8.8.8.8:33652
+icmp 198.51.100.2:33908 10.2.10.10:33908  8.8.8.8:33908      8.8.8.8:33908
+icmp 198.51.100.2:34164 10.2.10.10:34164  8.8.8.8:34164      8.8.8.8:34164

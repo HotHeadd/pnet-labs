@@ -1,0 +1,60 @@
+configure terminal
+hostname HQ-DSW-1
+no ip domain-lookup
+vtp mode transparent
+vlan 10
+ name ADMIN
+vlan 20
+ name STAFF
+vlan 50
+ name SERVERS
+vlan 55
+ name INFRA
+vlan 60
+ name GUEST
+vlan 70
+ name CCTV
+vlan 99
+ name MGMT
+vlan 999
+ name BLACKHOLE
+exit
+spanning-tree mode mst
+spanning-tree mst configuration
+ name HQ
+ revision 1
+ instance 1 vlan 10,50,55
+ instance 2 vlan 20,60,70,99
+exit
+spanning-tree mst 1 priority 24576
+spanning-tree mst 2 priority 28672
+interface range Ethernet0/2 - 3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk native vlan 999
+ switchport nonegotiate
+ channel-group 1 mode active
+ description to HQ-DSW-2
+interface range Ethernet1/0 - 1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk native vlan 999
+ switchport nonegotiate
+ channel-group 11 mode active
+ description to HQ-ASW-1
+interface range Ethernet1/2 - 3
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk native vlan 999
+ switchport nonegotiate
+ channel-group 12 mode active
+ description to HQ-ASW-2
+interface range Ethernet2/0 - 3
+ switchport mode access
+ switchport access vlan 999
+ shutdown
+end
+write memory

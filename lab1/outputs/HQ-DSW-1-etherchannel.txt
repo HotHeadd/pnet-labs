@@ -1,0 +1,5 @@
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(SU)         LACP      Et0/2(P)    Et0/3(P)
+11     Po11(SU)        LACP      Et1/0(P)    Et1/1(P)
+12     Po12(SU)        LACP      Et1/2(P)    Et1/3(P)

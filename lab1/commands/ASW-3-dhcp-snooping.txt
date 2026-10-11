@@ -1,0 +1,9 @@
+configure terminal
+interface range Ethernet0/0 - 1
+ ip dhcp snooping trust
+end
+configure terminal
+ip dhcp snooping vlan 10,20,30,40,50,60,70
+no ip dhcp snooping information option
+ip dhcp snooping
+end

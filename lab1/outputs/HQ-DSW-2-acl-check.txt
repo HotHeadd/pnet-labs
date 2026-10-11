@@ -1,0 +1,20 @@
+HQ-DSW-2#show ip access-lists
+Extended IP access list HQ-CCTV-IN
+    10 permit udp any any eq bootps
+    20 permit 112 any host 224.0.0.18
+    30 permit udp 10.1.70.0 0.0.0.63 host 10.1.55.10 eq ntp
+    40 permit ip 10.1.70.0 0.0.0.63 10.1.50.0 0.0.0.63
+    50 permit icmp 10.1.70.0 0.0.0.63 any echo-reply
+    60 deny ip any any (3 matches)
+Extended IP access list HQ-GUEST-IN
+    10 permit udp any any eq bootps
+    20 permit udp 10.1.60.0 0.0.0.255 host 10.1.55.10 eq domain
+    30 deny ip any 10.0.0.0 0.255.255.255 (2 matches)
+    40 deny ip any 172.16.0.0 0.15.255.255
+    50 deny ip any 192.168.0.0 0.0.255.255
+    60 permit ip any any (2 matches)
+Extended IP access list HQ-MGMT-OUT
+    10 permit ip 10.1.10.0 0.0.0.31 any
+    20 permit ip 10.2.10.0 0.0.0.31 any
+    30 permit ip 10.1.99.0 0.0.0.15 any
+    40 deny ip any any (1 match)

@@ -1,0 +1,14 @@
+HQ-ASW-1#show spanning-tree mst 1 | begin Interface
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Et1/0            Desg FWD 2000000   128.5    Shr Edge
+Po1              Root FWD 1000000   128.65   Shr
+Po2              Altn BLK 1000000   128.66   Shr
+
+HQ-ASW-1#show spanning-tree mst 2 | begin Interface
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Et1/1            Desg FWD 2000000   128.6    Shr Edge
+Et1/2            Desg FWD 2000000   128.7    Shr Edge
+Po1              Altn BLK 1000000   128.65   Shr
+Po2              Root FWD 1000000   128.66   Shr

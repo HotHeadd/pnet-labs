@@ -1,0 +1,17 @@
+SRV-WEB> show ipv6
+
+NAME              : SRV-WEB[1]
+LINK-LOCAL SCOPE  : fe80::250:79ff:fe66:681d/64
+GLOBAL SCOPE      : fd00:1:100:0:2050:79ff:fe66:681d/64
+DNS               :
+ROUTER LINK-LAYER : aa:bb:cc:00:0c:30
+MAC               : 00:50:79:66:68:1d
+LPORT             : 20000
+RHOST:PORT        : 127.0.0.1:30000
+MTU:              : 1500
+
+SRV-WEB> ping fd00:1:100::1 -c 2
+
+fd00:1:100::1 icmp6_seq=1 ttl=64 time=0.205 ms
+
+fd00:1:100::1 icmp6_seq=2 ttl=64 time=0.335 ms

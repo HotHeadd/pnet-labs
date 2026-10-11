@@ -1,0 +1,15 @@
+# SRV-WEB
+ip 10.1.100.10/28 10.1.100.1
+ip dns 10.1.55.10
+save
+# SRV-MAIL
+ip 10.1.100.11/28 10.1.100.1
+ip dns 10.1.55.10
+save
+# SRV-INT
+ip 10.1.50.10/26 10.1.50.1
+ip dns 10.1.55.10
+save
+# PC-HQ-ADMIN, PC-HQ-STAFF, PC-HQ-GUEST, CAM-HQ
+ip dhcp
+save

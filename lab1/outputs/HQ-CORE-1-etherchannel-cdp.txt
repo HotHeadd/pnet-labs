@@ -1,0 +1,13 @@
+HQ-CORE-1#show etherchannel summary | begin Group
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+-----------------------------------------------
+1      Po1(RU)         LACP      Et0/3(P)    Et1/0(P)
+
+HQ-CORE-1#show cdp neighbors | begin Device
+Device ID        Local Intrfce     Holdtme    Capability  Platform  Port ID
+HQ-CORE-2        Eth 1/0           159             R S I  Linux Uni Eth 1/0
+HQ-CORE-2        Eth 0/3           157             R S I  Linux Uni Eth 0/3
+Switch           Eth 0/3           19              R S I  Linux Uni Eth 0/3
+Switch           Eth 1/0           18              R S I  Linux Uni Eth 1/0
+HQ-DSW-1         Eth 0/1           147             R S I  Linux Uni Eth 0/0
+HQ-DSW-2         Eth 0/2           159             R S I  Linux Uni Eth 0/0
