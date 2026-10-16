@@ -1,4 +1,5 @@
 hostname HQ-CORE-1
+vtp mode transparent
 no ip domain-lookup
 ip cef
 spanning-tree mode rapid-pvst
@@ -7,7 +8,7 @@ interface Port-channel1
  no switchport
  ip address 10.1.255.25 255.255.255.252
 interface Ethernet0/0
- description to HQ-EDGE
+ description to HQ-EDGE via HQ-FW-1 (transparent)
  no switchport
  ip address 10.1.255.2 255.255.255.252
  duplex auto
@@ -40,3 +41,4 @@ line con 0
  logging synchronous
 line vty 0 4
  login
+ntp server 10.1.55.10

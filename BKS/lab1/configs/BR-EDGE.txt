@@ -1,3 +1,4 @@
+! NVRAM config last updated at 18:03:01 UTC Fri Oct 16 2026
 hostname BR-EDGE
 no ip domain lookup
 ip cef
@@ -87,3 +88,4 @@ line con 0
 line vty 0 4
  login
  transport input none
+ntp server 10.1.55.10

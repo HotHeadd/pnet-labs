@@ -30,6 +30,11 @@ MCP-сервер `pnetlab`, аккаунт PNET `vova_pc` (раньше `mcp-vov
     STP-блокировки, петля, кончается память. Каждому ASW — только VLAN его хостов;
   - IP Source Guard ломает DHCP-хостов; sticky Port Security ломается, т. к. VPCS меняют MAC при пересоздании pod;
   - `interface range` по нескольким Port-channel может уронить ноду — настраивать по одному.
+- **qemu-ноды (pfSense и т. п.):** MCP `add_node` создаёт их без опций шаблона (qemu_arch/nic/options, config_script) —
+  не стартуют и оставляют процессы-сироты qemu на сервере. Создавать в веб-морде; облака (pnet0) подключать там же
+  (`connect_nodes` к облаку не умеет). pfSense: консоль только VNC, через VNC теряется Shift и каждая строка даёт лишний Enter;
+  `export_config` не работает. Настройка — через веб-интерфейс по сети управления (облако pnet0 = VMnet8 192.168.226.0/24 хоста),
+  скрипты `BKS/lab1/tools/pfsense-gui.py` (backup/restore config.xml) и `pfsense-config.py`. В окружении есть прокси — curl с `--noproxy '*'`.
 - **Здоровье нод:** зависшая/упавшая IOL — `get_node_status`; память — `show memory statistics | include Proc` (норма ~55 МБ used).
   Перезапуск ноды — `stop_node` + `start_node` (разрешено). После перезапуска коммутатора доступа привязки snooping пропадают — повторить `ip dhcp` на его хостах.
 - **Сохранение:** после изменений `write memory` на устройстве + `export_config` (node_id=0). Проверка — `get_node_config`. Флаг загрузки startup-config (`config`) MCP менять не умеет: если у нод `config: 0`, попросить пользователя включить его в веб-морде.

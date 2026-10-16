@@ -9,7 +9,7 @@ vlan 100
 vlan 999
  name BLACKHOLE
 interface Ethernet0/0
- description to HQ-EDGE
+ description to HQ-EDGE via HQ-FW-2 (transparent)
  switchport access vlan 100
  switchport mode access
 interface Ethernet0/1

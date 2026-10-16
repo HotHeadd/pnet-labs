@@ -1,3 +1,4 @@
+! NVRAM config last updated at 18:03:04 UTC Fri Oct 16 2026
 hostname DSW-2
 username netadmin privilege 15 secret 5 $1$Au1X$xZoq1W4TYTgU/DiSuunOF0
 vtp mode transparent
@@ -167,6 +168,7 @@ ip access-list extended GUEST-IN
 ip access-list extended MGMT-OUT
  permit ip 10.2.10.0 0.0.0.31 any
  permit ip 10.1.10.0 0.0.0.31 any
+ permit udp host 10.1.55.10 eq ntp 10.2.99.0 0.0.0.15
  deny   ip any any
 ip access-list extended SALES-IN
  permit udp any any eq bootps
@@ -181,3 +183,4 @@ line vty 0 4
  access-class VTY-MGMT in
  login local
  transport input ssh
+ntp server 10.1.55.10

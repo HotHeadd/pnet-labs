@@ -1,6 +1,8 @@
+! NVRAM config last updated at 18:03:18 UTC Fri Oct 16 2026
 hostname HQ-DSW-1
 vtp mode transparent
-no ip domain-lookup
+ip domain-name hq.local
+ip name-server 10.1.55.10
 no ip cef
 spanning-tree mode mst
 spanning-tree extend system-id
@@ -179,8 +181,12 @@ ip access-list extended HQ-MGMT-OUT
  permit ip 10.1.10.0 0.0.0.31 any
  permit ip 10.2.10.0 0.0.0.31 any
  permit ip 10.1.99.0 0.0.0.15 any
+ permit udp host 10.1.55.10 eq ntp 10.1.99.0 0.0.0.15
  deny   ip any any
 line con 0
  logging synchronous
+ transport preferred none
 line vty 0 4
  login
+ transport preferred none
+ntp server 10.1.55.10

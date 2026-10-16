@@ -153,3 +153,4 @@ line vty 0 4
  access-class VTY-MGMT in
  login local
  transport input ssh
+ntp server 10.1.55.10

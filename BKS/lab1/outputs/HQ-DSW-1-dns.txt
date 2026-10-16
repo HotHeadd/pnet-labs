@@ -1,0 +1,12 @@
+HQ-DSW-1#ping srv-int.hq.local repeat 3
+Translating "srv-int.hq.local"...domain server (10.1.55.10) [OK]
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.50.10, timeout is 2 seconds:
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/1 ms
+HQ-DSW-1#ping hq-infra repeat 3
+Translating "hq-infra"...domain server (10.1.55.10) [OK]
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.55.10, timeout is 2 seconds:
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/1 ms

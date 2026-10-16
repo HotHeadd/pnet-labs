@@ -31,3 +31,4 @@ line con 0
  logging synchronous
 line vty 0 4
  login
+ntp server 10.1.55.10

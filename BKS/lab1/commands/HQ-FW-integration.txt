@@ -1,0 +1,42 @@
+! Интеграция МЭ HQ-FW-1 / HQ-FW-2 (pfSense 2.7.2) в ГО — прозрачный режим (L2-мост), фильтрация выключена.
+! Политики МЭ разрабатываются в следующих ЛР; адресация, OSPF, NAT, VPN и ACL стенда не менялись.
+
+! --- Топология (линки PNETLab) ---
+! HQ-EDGE e0/1 -- HQ-FW-1 e0 (vtnet0) | HQ-FW-1 e1 (vtnet1) -- HQ-CORE-1 e0/0   (было: HQ-EDGE e0/1 -- HQ-CORE-1 e0/0)
+! HQ-EDGE e0/2 -- HQ-FW-2 e0 (vtnet0) | HQ-FW-2 e1 (vtnet1) -- HQ-CORE-2 e0/0   (было: HQ-EDGE e0/2 -- HQ-CORE-2 e0/0)
+! HQ-EDGE e0/3 -- HQ-FW-2 e2 (vtnet2) | HQ-FW-2 e3 (vtnet3) -- HQ-DMZ e0/0      (было: HQ-EDGE e0/3 -- HQ-DMZ e0/0)
+! HQ-FW-1 e4, HQ-FW-2 e4 (vtnet4) -- облако NetManagement (pnet0, сеть VM 192.168.226.0/24) — управление
+
+! --- pfSense: первичная настройка в консоли (VNC) ---
+! Меню 1 (Assign Interfaces): VLANs — n, WAN — vtnet4, LAN — нет, proceed — y
+! Меню 8 (Shell):
+pfctl -d
+! WAN получает адрес по DHCP из сети VMware; веб-интерфейс https://<адрес>/ (admin / pfsense)
+
+! --- pfSense: итоговый config.xml (Diagnostics > Backup & Restore) ---
+! python tools/pfsense-gui.py backup  <адрес> orig.xml
+! python tools/pfsense-config.py orig.xml HQ-FW-1 new.xml      (HQ-FW-2 — аналогично)
+! python tools/pfsense-gui.py restore <адрес> new.xml          (pfSense перезагружается)
+! Итог (configs/HQ-FW-1.xml, configs/HQ-FW-2.xml):
+!   HQ-FW-1: bridge0 = TO_HQ_EDGE (vtnet0) + TO_HQ_CORE1 (vtnet1); MGMT (vtnet4) 192.168.226.20/24
+!   HQ-FW-2: bridge0 = TO_HQ_EDGE (vtnet0) + TO_HQ_CORE2 (vtnet1);
+!            bridge1 = DMZ_EDGE_SIDE (vtnet2) + DMZ_SWITCH_SIDE (vtnet3); MGMT (vtnet4) 192.168.226.21/24
+!   оба: disablefilter (pf выключен), NTP 10.1.55.10, домен hq.local
+
+! --- IOS: описания портов (HQ-EDGE, HQ-CORE-1/2, HQ-DMZ) ---
+! HQ-EDGE
+configure terminal
+interface e0/1
+ description to HQ-CORE-1 via HQ-FW-1 (transparent)
+interface e0/2
+ description to HQ-CORE-2 via HQ-FW-2 (transparent)
+interface e0/3
+ description DMZ via HQ-FW-2 (transparent)
+end
+write memory
+! HQ-CORE-1 (HQ-CORE-2 — via HQ-FW-2), HQ-DMZ — via HQ-FW-2
+configure terminal
+interface e0/0
+ description to HQ-EDGE via HQ-FW-1 (transparent)
+end
+write memory

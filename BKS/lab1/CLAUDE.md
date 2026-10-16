@@ -1,17 +1,22 @@
 # ЛР1 БКС — проектирование КВС филиала и головного офиса
 
-Лаба в PNETLab: `/BKS labs/BKS1.unl`, 35 нод (филиал id 1–19, ГО id 20–35), у всех `config: 1`.
+Лаба в PNETLab: `/BKS labs/BKS1.unl`, 37 нод (филиал id 1–19, ГО id 20–37) + облако NetManagement (pnet0); у IOL `config: 1`,
+у pfSense (36, 37) startup-config не работает (export_config → ошибка 16) — их конфиг в `configs/HQ-FW-*.xml`.
 PNETLab — VM на Windows-хосте (20 ГБ RAM), доступ через Tailscale `100.100.57.19` (узел `pnetlab`).
 Вариант доп. задания (п. 1.3.3): **№5** — отдел продаж (VLAN 40) имеет доступ в VLAN разработки только к файловому серверу 10.2.20.42.
 Требования преподавателя: нужные хосты выходят в интернет, изоляция VLAN показана проверками; второй провайдер и дублирование ядра.
 На сдаче проверяют: traceroute между VLAN (в одном и разных), ping через MSTP (отказ аплинка), OSPF, DMZ (WAN есть, LAN нет), IP–MAC–порт. Сценарий — `demo-checks.md`.
-Условие — `preable/Лабораторная работа №1 (БКС).pdf` (25 стр.; стр. 23 — мусор «Где: В раздел 2.3…»; МЭ в ГО — следующие ЛР).
+Условие — `preamble/Лабораторная работа №1 (БКС).pdf` (25 стр.; стр. 23 — мусор «Где: В раздел 2.3…»). МЭ в ГО: «интеграция»
+в ЛР1 (сделано, прозрачный мост), разработка политик — следующие ЛР. Из доп. задач 1.3.3 обязательна только №5.
 Проект ГО и порты — `hq-plan.md`. Для получателей стенда — `stand/README.md`.
 
-## Состояние на 2026-10-16 (конец сессии): стенд готов
+## Состояние на 2026-10-16 (вечер): стенд готов, МЭ интегрированы
 
-Все проверки `demo-checks.md` пройдены (п.1–7 + п. 2.4), ГО после доработки snooping стабилен.
-Сохранено: `write memory` + `export_config` всех 35 нод; выгрузка — `stand/pnetlab_export-20261016-174530.zip`
+Добавлено вечером: клиенты NTP на всех IOL (+ строка NTP в MGMT-OUT/HQ-MGMT-OUT), проверка DNS (HQ-DSW-1 — клиент DNS),
+МЭ HQ-FW-1/2 (pfSense, прозрачный мост EDGE–ядро и EDGE–DMZ, фильтрация выключена). Полный регресс п.1–9 —
+`outputs/regress-fw-20261016.txt` ✅ (вкл. отказ HQ-FW-1).
+Все проверки `demo-checks.md` пройдены (п.1–9 + п. 2.4), ГО после доработки snooping стабилен.
+Сохранено: `write memory` + `export_config` всех IOL; выгрузка — `stand/pnetlab_export-20261016-193000.zip`
 (единственная актуальная, старые удалены); `configs/*.txt` извлечены из неё (`../../tools/extract-configs.py`).
 `commands/` приведены к итоговому состоянию (sticky, ip source binding, IPSG, *-portable — убраны/слиты).
 Временных изменений на стенде нет.
@@ -85,7 +90,7 @@ SRV-INT `ip 10.1.50.10/26 10.1.50.1`, SRV-WEB `ip 10.1.100.10/28 10.1.100.1` + `
 | 9 | SRV-DHCP | IOL L3, no ip routing | 18 | ISP-2 (IOL L3) |
 | | | | 19 | BR-CORE-2 (IOL L2 + ip routing) |
 
-ГО (id 20–35): 20 HQ-EDGE (L3), 21/22 HQ-CORE-1/2, 23/24 HQ-DSW-1/2, 25/26 HQ-ASW-1/2, 27 HQ-DMZ (L2), 28 HQ-INFRA (L3), 29 SRV-WEB, 30 SRV-MAIL, 31 SRV-INT, 32 PC-HQ-ADMIN, 33 PC-HQ-STAFF, 34 PC-HQ-GUEST, 35 CAM-HQ (VPCS). Порты — `hq-plan.md`. Новые ноды созданы с `config: 1`.
+ГО (id 20–37): 36/37 HQ-FW-1/2 (pfSense, консоль VNC, управление https://192.168.226.20/.21 admin/pfsense), 20 HQ-EDGE (L3), 21/22 HQ-CORE-1/2, 23/24 HQ-DSW-1/2, 25/26 HQ-ASW-1/2, 27 HQ-DMZ (L2), 28 HQ-INFRA (L3), 29 SRV-WEB, 30 SRV-MAIL, 31 SRV-INT, 32 PC-HQ-ADMIN, 33 PC-HQ-STAFF, 34 PC-HQ-GUEST, 35 CAM-HQ (VPCS). Порты — `hq-plan.md`. Новые ноды созданы с `config: 1`.
 
 ## Адресация
 
@@ -171,3 +176,14 @@ Router-id OSPF: BR-CORE 10.2.254.1, DSW-1 .2, DSW-2 .3, BR-CORE-2 .4, BR-EDGE .2
   Новая настройка: `spanning-tree mst 0 priority` 24576 (HQ-DSW-1) / 28672 (HQ-DSW-2) — корень CIST явно HQ-DSW-1 (`commands/HQ-DSW-mst0-priority.txt`). write mem + export_config.
   **Пользователь: инцидент со штормом и эксперименты в отчёт НЕ включать**; в отчёте только итоговые настройки (раздел «Доработки ГО» в main.typ). `outputs/HQ-dhcp-storm.txt` — только для себя.
 - 2026-10-16 ~15:30 **ИТОГ по snooping ГО**: разнесены VLAN — HQ-ASW-1 snooping+DAI 10,20,60; HQ-ASW-2 snooping+DAI 50,55,70 (DAI-STATIC для 50/55), `ip dhcp snooping` на HQ-ASW-2 снова включён. Тесты: STAFF, CAM-HQ, ADMIN+GUEST — по 2 DISCOVER на клиента, привязки на обоих HQ-ASW, DAI VLAN 70 пропускает камеру, память ~55 МБ на всех HQ. Вывод: петля, когда один VLAN снупят оба HQ-ASW. `commands/HQ-ASW-snooping-vlans.txt` (старый HQ-ASW-2-no-snooping удалён). write mem + export_config, startup сверен. **Не добавлять один VLAN в snooping на оба HQ-ASW.**
+- 2026-10-16 вечер, **NTP/DNS/МЭ** (в отчёт — сырые разделы «Сервисы ГО», «Интеграция МЭ», «Регресс»):
+  NTP-клиентов не было ни на одном IOL (в hq-plan были запланированы) — добавлены, `commands/NTP-clients.txt`.
+  DNS: VPCS `ping <имя>` не читается со скриншота — проверено с HQ-DSW-1 (`ip name-server`, `transport preferred none`).
+  МЭ: сначала планировался CARP-кластер (HQ-FW-SW, VLAN 102 на ядрах) — откатан, пользователь: «МЭ скорее для вида».
+  Итог: прозрачный мост, `disablefilter`; отказ МЭ → OSPF через второе ядро (~40 с, dead-интервал). DMZ — только через HQ-FW-2.
+  **pfSense на этом PNETLab:** MCP `add_node` создаёт qemu без опций шаблона (не стартует, оставляет процессы-сироты qemu —
+  убивать на сервере) → ноды создавать в веб-морде; консоль только VNC (telnet пустой); через VNC теряется Shift
+  (`$ ( ) | _` не набрать) и каждая строка шлёт лишний Enter → в меню отвечать по одному полю с проверкой;
+  настройка — через веб-интерфейс по сети управления (облако pnet0 = VMnet8 192.168.226.0/24), скрипты
+  `tools/pfsense-gui.py` (backup/restore config.xml, обходит прокси) и `tools/pfsense-config.py` (мосты, MGMT, фильтр off).
+  Облако подключать линками из веб-морды (MCP connect_nodes к облаку не умеет — создаёт bridge-сеть).

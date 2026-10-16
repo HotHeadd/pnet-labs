@@ -4,7 +4,7 @@
 Структура повторяет филиал (те же решения проще защищать в отчёте), плюс то, что
 методичка требует только от ГО: публичный канал, DMZ, VPN-шлюз, DHCP/DNS/NTP, IPv6.
 
-## Узлы (16 новых, id 20–35; всего в лабе 35)
+## Узлы (18, id 20–37; всего в лабе 37)
 
 | Узел | Образ | Роль |
 |---|---|---|
@@ -12,14 +12,17 @@
 | HQ-CORE-1, HQ-CORE-2 | IOL L2 + routing | ядро, дублированное, OSPF ECMP; между ядрами — L3 EtherChannel (Po1, LACP, 2 линка) |
 | HQ-DSW-1, HQ-DSW-2 | IOL L2 + routing | распределение: SVI, **VRRP**, MSTP, Po1 (LACP), межсегментные ACL, DHCP relay |
 | HQ-ASW-1, HQ-ASW-2 | IOL L2 | доступ: Port Security, DHCP Snooping, DAI (IPSG на IOL не используется); аплинки — LACP по 2 линка к каждому DSW |
-| HQ-DMZ | IOL L2 | коммутатор DMZ (VLAN 100), висит только на HQ-EDGE |
+| HQ-FW-1, HQ-FW-2 | pfSense 2.7.2 (qemu) | МЭ в прозрачном режиме (L2-мост, фильтрация выключена): FW-1 — в разрыве HQ-EDGE–HQ-CORE-1, FW-2 — HQ-EDGE–HQ-CORE-2 и HQ-EDGE–HQ-DMZ; управление — 192.168.226.20/.21 (облако NetManagement) |
+| HQ-DMZ | IOL L2 | коммутатор DMZ (VLAN 100), подключён к HQ-EDGE через HQ-FW-2 |
 | HQ-INFRA | IOL L3 (no ip routing) | DHCP + DNS + NTP-сервер (средствами IOS) |
 | SRV-WEB, SRV-MAIL | VPCS | публичные серверы в DMZ (IPv4 + IPv6 SLAAC) |
 | SRV-INT | VPCS | внутренний сервер |
 | PC-HQ-ADMIN, PC-HQ-STAFF, PC-HQ-GUEST, CAM-HQ | VPCS | пользователи по сегментам |
 
-МЭ (pfSense) методичка относит к следующим ЛР — в ЛР1 его роль выполняет HQ-EDGE,
-в отчёте указать, что DMZ далее закрывается МЭ + IPS/WAF.
+МЭ: методичка требует «интеграцию МЭ, разработка которого — в следующих ЛР». В ЛР1 два pfSense встроены
+в разрыв каналов EDGE–ядро (по одному на каждое ядро, отказ МЭ обрабатывает OSPF) и EDGE–DMZ (HQ-FW-2)
+в прозрачном режиме: адресация и маршрутизация не меняются, фильтрации нет. DMZ пока защищает ACL DMZ-IN
+на HQ-EDGE; в отчёте указать, что далее DMZ закрывается МЭ + IPS/WAF. Отказ HQ-FW-2 отрезает DMZ.
 
 ## Отличия от филиала (обязательно, согласовано)
 
@@ -34,14 +37,16 @@
 
 | Узел (слотов) | Порт → куда |
 |---|---|
-| HQ-EDGE (1 → 4 порта) | e0/0 → ISP-1 e0/2; e0/1 → HQ-CORE-1 e0/0; e0/2 → HQ-CORE-2 e0/0; e0/3 → HQ-DMZ e0/0 |
-| HQ-CORE-1 (2) | e0/0 → HQ-EDGE e0/1; e0/1 → HQ-DSW-1 e0/0; e0/2 → HQ-DSW-2 e0/0; e0/3, e1/0 → HQ-CORE-2 e0/3, e1/0 (Po1) |
-| HQ-CORE-2 (2) | e0/0 → HQ-EDGE e0/2; e0/1 → HQ-DSW-1 e0/1; e0/2 → HQ-DSW-2 e0/1; e0/3, e1/0 → HQ-CORE-1 (Po1) |
+| HQ-EDGE (1 → 4 порта) | e0/0 → ISP-1 e0/2; e0/1 → HQ-FW-1 e0 (→ HQ-CORE-1 e0/0); e0/2 → HQ-FW-2 e0 (→ HQ-CORE-2 e0/0); e0/3 → HQ-FW-2 e2 (→ HQ-DMZ e0/0) |
+| HQ-FW-1 (5) | e0 (vtnet0) → HQ-EDGE e0/1; e1 (vtnet1) → HQ-CORE-1 e0/0; bridge0 = e0+e1; e4 (vtnet4) → NetManagement |
+| HQ-FW-2 (5) | e0 → HQ-EDGE e0/2; e1 → HQ-CORE-2 e0/0 (bridge0); e2 → HQ-EDGE e0/3; e3 → HQ-DMZ e0/0 (bridge1); e4 → NetManagement |
+| HQ-CORE-1 (2) | e0/0 → HQ-EDGE e0/1 (через HQ-FW-1); e0/1 → HQ-DSW-1 e0/0; e0/2 → HQ-DSW-2 e0/0; e0/3, e1/0 → HQ-CORE-2 e0/3, e1/0 (Po1) |
+| HQ-CORE-2 (2) | e0/0 → HQ-EDGE e0/2 (через HQ-FW-2); e0/1 → HQ-DSW-1 e0/1; e0/2 → HQ-DSW-2 e0/1; e0/3, e1/0 → HQ-CORE-1 (Po1) |
 | HQ-DSW-1 (3) | e0/0 → CORE-1; e0/1 → CORE-2; e0/2–3 → HQ-DSW-2 e0/2–3 (Po1); e1/0–1 → HQ-ASW-1 e0/0–1 (Po11); e1/2–3 → HQ-ASW-2 e0/0–1 (Po12) |
 | HQ-DSW-2 (3) | e0/0 → CORE-1; e0/1 → CORE-2; e0/2–3 → HQ-DSW-1 (Po1); e1/0–1 → HQ-ASW-1 e0/2–3 (Po21); e1/2–3 → HQ-ASW-2 e0/2–3 (Po22) |
 | HQ-ASW-1 (2) | e0/0–1 → DSW-1 (Po1); e0/2–3 → DSW-2 (Po2); e1/0 → PC-HQ-ADMIN; e1/1 → PC-HQ-STAFF; e1/2 → PC-HQ-GUEST |
 | HQ-ASW-2 (2) | e0/0–1 → DSW-1 (Po1); e0/2–3 → DSW-2 (Po2); e1/0 → SRV-INT; e1/1 → HQ-INFRA e0/0; e1/2 → CAM-HQ |
-| HQ-DMZ (1) | e0/0 → HQ-EDGE e0/3; e0/1 → SRV-WEB; e0/2 → SRV-MAIL |
+| HQ-DMZ (1) | e0/0 → HQ-EDGE e0/3 (через HQ-FW-2); e0/1 → SRV-WEB; e0/2 → SRV-MAIL |
 
 ## Схема подключений
 

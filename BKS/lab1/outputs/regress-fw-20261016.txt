@@ -1,0 +1,264 @@
+Регресс после интеграции МЭ HQ-FW-1/HQ-FW-2 (pfSense 2.7.2, прозрачный мост) — 16.10.2026
+
+=== HQ-FW-1: мост HQ-EDGE e0/1 <-> HQ-CORE-1 e0/0 ===
+[root@HQ-FW-1.hq.local]/root: ifconfig bridge0
+bridge0: flags=1008843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST,LOWER_UP> metric 0 mtu 1500
+        ether 58:9c:fc:10:ff:b8
+        id 00:00:00:00:00:00 priority 32768 hellotime 2 fwddelay 15
+        maxage 20 holdcnt 6 proto rstp maxaddr 2000 timeout 1200
+        root id 00:00:00:00:00:00 priority 32768 ifcost 0 port 0
+        member: vtnet1 flags=143<LEARNING,DISCOVER,AUTOEDGE,AUTOPTP>
+        member: vtnet0 flags=143<LEARNING,DISCOVER,AUTOEDGE,AUTOPTP>
+
+=== HQ-FW-2: мост DMZ HQ-EDGE e0/3 <-> HQ-DMZ e0/0, выученные MAC ===
+[root@HQ-FW-2.hq.local]/root: ifconfig bridge1 addr
+00:50:79:66:68:1e Vlan0 vtnet3 1114 flags=0<>
+aa:bb:cc:00:13:00 Vlan0 vtnet3 1189 flags=0<>
+00:50:79:66:68:1d Vlan0 vtnet3 1109 flags=0<>
+aa:bb:cc:00:0c:30 Vlan0 vtnet2 1191 flags=0<>
+
+=== HQ-EDGE: связность через МЭ ===
+HQ-EDGE#ping 10.1.255.2 repeat 5        (HQ-CORE-1 через HQ-FW-1)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#ping 10.1.255.6 repeat 5        (HQ-CORE-2 через HQ-FW-2)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#ping 10.1.100.10 repeat 5       (SRV-WEB через HQ-FW-2)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#show ip ospf neighbor
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.2.254.254      0   FULL/  -        00:00:32    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:39    10.1.255.6      Ethernet0/2
+10.1.254.1        1   FULL/BDR        00:00:32    10.1.255.2      Ethernet0/1
+
+HQ-EDGE#show crypto isakmp sa
+dst             src             state          conn-id status
+203.0.113.2     198.51.100.2    QM_IDLE           1003 ACTIVE
+203.0.113.2     192.0.2.2       QM_IDLE           1004 ACTIVE
+192.0.2.2       203.0.113.2     QM_IDLE           1002 ACTIVE
+198.51.100.2    203.0.113.2     QM_IDLE           1001 ACTIVE
+HQ-EDGE#show crypto ipsec sa | include interface|encaps|decaps
+interface: Tunnel1
+    #pkts encaps: 3622, #pkts encrypt: 3622, #pkts digest: 3622
+    #pkts decaps: 3691, #pkts decrypt: 3691, #pkts verify: 3691
+interface: Tunnel0
+    #pkts encaps: 4475, #pkts encrypt: 4475, #pkts digest: 4475
+    #pkts decaps: 4417, #pkts decrypt: 4417, #pkts verify: 4417
+
+=== Интернет из ГО ===
+PC-HQ-ADMIN> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.134 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.560 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=252 time=1.451 ms
+PC-HQ-STAFF> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.457 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.444 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=252 time=1.619 ms
+PC-HQ-GUEST> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.435 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.580 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=252 time=1.798 ms
+CAM-HQ> ping 8.8.8.8 -c 2
+*10.1.70.3 icmp_seq=1 ttl=255 time=0.406 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.70.3 icmp_seq=2 ttl=255 time=0.549 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+=== DMZ ===
+SRV-WEB> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=254 time=0.822 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=254 time=1.058 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=254 time=0.902 ms
+HQ-EDGE#show ip access-lists DMZ-IN     (после SRV-WEB -> 10.1.50.10 и -> 10.2.10.10)
+Extended IP access list DMZ-IN
+    10 permit tcp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 established
+    20 permit icmp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 echo-reply (5 matches)
+    30 permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq domain
+    40 permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq ntp
+    50 permit icmp 10.1.100.0 0.0.0.15 host 10.1.100.1
+    60 deny ip 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 (2 matches)
+    70 permit ip 10.1.100.0 0.0.0.15 any (6 matches)
+HQ-EDGE#show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+tcp 203.0.113.2:80     10.1.100.10:80     ---                ---
+tcp 203.0.113.2:443    10.1.100.10:443    ---                ---
+icmp 203.0.113.2:17525 10.1.100.10:17525  8.8.8.8:17525      8.8.8.8:17525
+icmp 203.0.113.2:17781 10.1.100.10:17781  8.8.8.8:17781      8.8.8.8:17781
+icmp 203.0.113.2:18037 10.1.100.10:18037  8.8.8.8:18037      8.8.8.8:18037
+tcp 203.0.113.2:25     10.1.100.11:25     ---                ---
+
+=== IPv6 в DMZ через мост HQ-FW-2 ===
+HQ-EDGE#ping FD00:1:100:0:2050:79FF:FE66:681D repeat 3
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/7/21 ms
+HQ-EDGE#show ipv6 neighbors Ethernet0/3
+IPv6 Address                              Age Link-layer Addr State Interface
+FD00:1:100:0:2050:79FF:FE66:681D            0 0050.7966.681d  REACH Et0/3
+FE80::524C:A8FF:FE00:4A02                   1 504c.a800.4a02  STALE Et0/3
+
+=== ГО -> филиал (МЭ прозрачны, в трассировке не видны) ===
+PC-HQ-STAFF> trace 10.2.10.10 -m 10
+trace to 10.2.10.10, 10 hops max, press Ctrl+C to stop
+ 1   10.1.20.3   0.286 ms  0.277 ms  0.277 ms
+ 2   10.1.255.13   0.525 ms  0.468 ms  0.605 ms
+ 3   10.1.255.5   0.900 ms  1.030 ms  0.742 ms
+ 4   172.16.0.2   1.411 ms  1.358 ms  1.238 ms
+ 5   10.2.255.14   1.590 ms  3.761 ms  1.359 ms
+ 6   10.2.255.22   1.556 ms  1.414 ms  1.563 ms
+ 7   *10.2.10.10   4.689 ms (ICMP type:3, code:3, Destination port unreachable)
+
+=== Филиал: интернет ===
+PC-ADMIN> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.122 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.056 ms
+PC-DEV1> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=0.942 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.437 ms
+PC-ACC> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=0.880 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.173 ms
+PC-SALES> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.005 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.088 ms
+PC-GUEST> ping 8.8.8.8 -c 2
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=0.986 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.350 ms
+CAM1> ping 8.8.8.8 -c 2
+*10.2.70.2 icmp_seq=1 ttl=255 time=0.390 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.2.70.2 icmp_seq=2 ttl=255 time=0.498 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+=== traceroute внутри филиала ===
+PC-DEV1> trace 10.2.20.11 -m 5
+ 1   *10.2.20.11   0.210 ms (ICMP type:3, code:3, Destination port unreachable)
+PC-ADMIN> trace 10.2.20.10 -m 5
+ 1   10.2.10.2   0.302 ms  0.344 ms  0.288 ms
+ 2   *10.2.20.10   0.886 ms (ICMP type:3, code:3, Destination port unreachable)
+
+=== Вариант 5 ===
+PC-SALES> ping 10.2.20.42 -c 3
+84 bytes from 10.2.20.42 icmp_seq=1 ttl=63 time=2.306 ms
+84 bytes from 10.2.20.42 icmp_seq=2 ttl=63 time=0.748 ms
+84 bytes from 10.2.20.42 icmp_seq=3 ttl=63 time=0.771 ms
+DSW-2#show ip access-lists SALES-IN      (после PC-SALES -> 10.2.20.10)
+Extended IP access list SALES-IN
+    10 permit udp any any eq bootps
+    20 permit ip 10.2.40.0 0.0.0.63 host 10.2.20.42 (11 matches)
+    30 deny ip 10.2.40.0 0.0.0.63 10.2.20.0 0.0.0.255 (5 matches)
+    40 permit ip any any (11842 matches)
+
+=== Изоляция VLAN (PC-GUEST -> 10.2.10.10, PC-DEV1 -> 10.2.99.11, PC-HQ-GUEST -> 10.1.50.10) ===
+DSW-2#show ip access-lists GUEST-IN
+    10 permit udp any any eq bootps (1 match)
+    20 deny ip any 10.0.0.0 0.255.255.255 (4 matches)
+    30 permit ip any any (11869 matches)
+DSW-2#show ip access-lists MGMT-OUT
+    10 permit ip 10.2.10.0 0.0.0.31 any
+    20 permit ip 10.1.10.0 0.0.0.31 any
+    25 permit udp host 10.1.55.10 eq ntp 10.2.99.0 0.0.0.15 (241 matches)
+    30 deny ip any any (4 matches)
+HQ-DSW-2#show ip access-lists HQ-GUEST-IN
+    10 permit udp any any eq bootps (3 matches)
+    20 permit udp 10.1.60.0 0.0.0.255 host 10.1.55.10 eq domain
+    30 deny ip any 10.0.0.0 0.255.255.255 (2 matches)
+    40 deny ip any 172.16.0.0 0.15.255.255
+    50 deny ip any 192.168.0.0 0.0.255.255
+    60 permit ip any any (11 matches)
+PC-ADMIN> ping 10.2.99.11 -c 3
+84 bytes from 10.2.99.11 icmp_seq=1 ttl=254 time=1.019 ms
+84 bytes from 10.2.99.11 icmp_seq=2 ttl=254 time=0.968 ms
+84 bytes from 10.2.99.11 icmp_seq=3 ttl=254 time=1.185 ms
+
+=== OSPF / ECMP ===
+DSW-1#show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "ospf 1", distance 110, metric 1, candidate default path
+  * 10.2.255.17, from 10.2.254.254, 08:23:25 ago, via Ethernet1/2
+    10.2.255.5, from 10.2.254.254, 08:23:25 ago, via Ethernet0/0
+HQ-DSW-1#show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "ospf 1", distance 110, metric 1, candidate default path
+  * 10.1.255.17, from 10.1.254.254, 03:56:03 ago, via Ethernet0/1
+    10.1.255.9, from 10.1.254.254, 00:00:46 ago, via Ethernet0/0
+HQ-DSW-1#ping 10.2.99.11 source Vlan10 repeat 5      (управление филиалом из ADMIN ГО)
+Packet sent with a source address of 10.1.10.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+HQ-DSW-1#ping 8.8.8.8 source Vlan20 repeat 5
+Packet sent with a source address of 10.1.20.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+
+=== MSTP ГО: отказ Po1 на HQ-ASW-1 ===
+HQ-ASW-1#show spanning-tree mst 1 | begin Interface
+Et1/0            Desg FWD 2000000   128.5    Shr Edge
+Po1              Root FWD 1000000   128.65   P2p
+Po2              Altn BLK 1000000   128.66   P2p
+HQ-ASW-1#show spanning-tree mst 2 | begin Interface
+Et1/1            Desg FWD 2000000   128.6    Shr Edge
+Et1/2            Desg FWD 2000000   128.7    Shr Edge
+Po1              Altn BLK 1000000   128.65   P2p
+Po2              Root FWD 1000000   128.66   P2p
+(interface Port-channel1 / shutdown)
+PC-HQ-ADMIN> ping 10.1.10.1 -c 4
+84 bytes from 10.1.10.1 icmp_seq=1 ttl=255 time=0.606 ms
+84 bytes from 10.1.10.1 icmp_seq=2 ttl=255 time=0.644 ms
+84 bytes from 10.1.10.1 icmp_seq=3 ttl=255 time=0.711 ms
+84 bytes from 10.1.10.1 icmp_seq=4 ttl=255 time=0.676 ms
+HQ-ASW-1#show spanning-tree mst 1 | begin Interface
+Et1/0            Desg FWD 2000000   128.5    Shr Edge
+Po2              Root FWD 1000000   128.66   P2p
+(no shutdown — Po1 снова up)
+
+=== Отказ МЭ: HQ-FW-1 остановлен ===
+HQ-EDGE#show ip ospf neighbor          (через ~40 с)
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:35    10.1.255.6      Ethernet0/2
+HQ-EDGE#show ip route 10.1.20.0
+  * 10.1.255.6, from 10.1.254.11, 03:54:11 ago, via Ethernet0/2
+PC-HQ-STAFF> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.271 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.415 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=252 time=1.417 ms
+PC-HQ-ADMIN> ping 10.2.10.10 -c 3
+84 bytes from 10.2.10.10 icmp_seq=1 ttl=58 time=3.807 ms
+84 bytes from 10.2.10.10 icmp_seq=2 ttl=58 time=2.455 ms
+84 bytes from 10.2.10.10 icmp_seq=3 ttl=58 time=2.434 ms
+(HQ-FW-1 запущен снова)
+HQ-EDGE#show ip ospf neighbor
+10.2.254.254      0   FULL/  -        00:00:37    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:39    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:39    10.1.255.6      Ethernet0/2
+10.1.254.1        1   FULL/BDR        00:00:37    10.1.255.2      Ethernet0/1
+
+=== NTP / IP–MAC–порт ===
+ASW-1#show ntp status
+Clock is synchronized, stratum 4, reference is 10.1.55.10
+ASW-1#show ip dhcp snooping binding
+MacAddress          IpAddress        Lease(sec)  Type           VLAN  Interface
+00:50:79:66:68:0A   10.2.10.10       55249       dhcp-snooping   10    Ethernet0/2
+00:50:79:66:68:0B   10.2.20.10       55254       dhcp-snooping   20    Ethernet0/3
+00:50:79:66:68:0C   10.2.20.11       68929       dhcp-snooping   20    Ethernet1/0
+ASW-1#show port-security
+Secure Port  MaxSecureAddr  CurrentAddr  SecurityViolation  Security Action
+      Et0/2              2            1                  0         Restrict
+      Et0/3              2            1                  0         Restrict
+      Et1/0              2            1                  0         Restrict
+      Et1/1              1            1                  0         Restrict
+(PC-GUEST: ip 10.2.60.50/24 10.2.60.1 — подмена адреса)
+ASW-3#show ip arp inspection statistics vlan 60
+ Vlan      Forwarded        Dropped     DHCP Drops      ACL Drops
+   60             17              6              6              0
+ASW-3#show logging | include DAI
+Oct 16 19:15:24.603: %SW_DAI-4-DHCP_SNOOPING_DENY: 1 Invalid ARPs (Req) on Et0/2, vlan 60.([0050.7966.680f/10.2.60.50/ffff.ffff.ffff/10.2.60.50/19:15:24 UTC Fri Oct 16 2026])
+Oct 16 19:15:25.608: %SW_DAI-4-DHCP_SNOOPING_DENY: 1 Invalid ARPs (Req) on Et0/2, vlan 60.([0050.7966.680f/10.2.60.50/ffff.ffff.ffff/10.2.60.50/19:15:25 UTC Fri Oct 16 2026])
+(PC-GUEST: ip dhcp -> 10.2.60.10, привязка восстановлена)
+ASW-3#show ip dhcp snooping binding
+00:50:79:66:68:10   10.2.70.10       55184       dhcp-snooping   70    Ethernet0/3
+00:50:79:66:68:0F   10.2.60.10       86395       dhcp-snooping   60    Ethernet0/2
+
+=== Публикация DMZ из интернета через HQ-FW-2 (ISP-1: telnet 203.0.113.2 80 /source-interface Loopback0) ===
+HQ-EDGE#show ip nat translations | include 8.8.8.8:|:80
+tcp 203.0.113.2:80     10.1.100.10:80     8.8.8.8:53982      8.8.8.8:53982
+tcp 203.0.113.2:80     10.1.100.10:80     ---                ---

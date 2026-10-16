@@ -1,0 +1,11 @@
+ASW-1#show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.1.55.10      127.127.1.1      3     55     64   377  2.000   0.000  2.909
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+
+HQ-ASW-2#show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.1.55.10      127.127.1.1      3     65     64    77  1.000   0.500  2.901
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured

@@ -516,6 +516,40 @@ DSW формирует кадр верно (adjacency, листинги @lst-raw
 
 #commands("HQ-DSW-1/2", [приоритет MST0], read("commands/HQ-DSW-mst0-priority.txt")) <lst-raw-mst0>
 
+// СЫРОЕ (2026-10-16)
+=== Сервисы ГО: клиенты NTP и проверка DNS (сырое)
+
+#todo[оформить] Все сетевые устройства обеих площадок (кроме ISP) синхронизируют время с HQ-INFRA
+(`ntp server 10.1.55.10`); ответы NTP коммутаторам доступа разрешены в исходящих ACL VLAN 99
+(MGMT-OUT, HQ-MGMT-OUT) (листинг @lst-raw-ntp, проверка @lst-raw-ntp-check). Разрешение имён зоны
+hq.local через DNS HQ-INFRA проверено с HQ-DSW-1 (листинги @lst-raw-dns-cmd, @lst-raw-dns).
+
+#commands("все IOL", [клиенты NTP], read("commands/NTP-clients.txt")) <lst-raw-ntp>
+
+#console("ASW-1, HQ-ASW-2", [синхронизация NTP], read("outputs/NTP-check.txt")) <lst-raw-ntp-check>
+
+#commands("HQ-DSW-1", [клиент DNS], read("commands/HQ-DSW-1-dns-client.txt")) <lst-raw-dns-cmd>
+
+#console("HQ-DSW-1", [разрешение имён hq.local], read("outputs/HQ-DSW-1-dns.txt")) <lst-raw-dns>
+
+// СЫРОЕ (2026-10-16)
+=== Интеграция межсетевого экрана ГО (сырое)
+
+#todo[оформить] Межсетевые экраны HQ-FW-1 и HQ-FW-2 (pfSense 2.7.2) включены в разрыв каналов
+HQ-EDGE — HQ-CORE-1, HQ-EDGE — HQ-CORE-2 и HQ-EDGE — DMZ (HQ-FW-2) в прозрачном режиме (L2-мост).
+Адресация, маршрутизация OSPF, NAT, VPN и ACL не менялись; отказ одного МЭ обрабатывается
+OSPF (трафик уходит через второе ядро). Фильтрация на МЭ выключена — политики разрабатываются
+в следующих ЛР; DMZ пока защищает ACL DMZ-IN на HQ-EDGE, далее — МЭ + IPS/WAF.
+Управление МЭ — отдельный интерфейс в сети управления стенда (192.168.226.20/.21).
+Конфигурации HQ-FW-1/2 (config.xml) — в приложении, шаги — листинг @lst-raw-fw.
+
+#commands("HQ-FW-1/2, HQ-EDGE", [интеграция МЭ], read("commands/HQ-FW-integration.txt")) <lst-raw-fw>
+
+// СЫРОЕ (2026-10-16)
+=== Регресс после интеграции МЭ (сырое)
+
+#console("стенд", [Регресс после интеграции МЭ], read("outputs/regress-fw-20261016.txt")) <lst-raw-regress-fw>
+
 = Заключение
 
 #todo[выводы]
@@ -532,5 +566,12 @@ DSW формирует кадр верно (adjacency, листинги @lst-raw
   #{
     show raw: set text(size: 8pt)
     device-config(name, read("configs/" + name + ".txt"))
+  } #label("lst-cfg-" + name)
+]
+
+#for name in ("HQ-FW-1", "HQ-FW-2") [
+  #{
+    show raw: set text(size: 7pt)
+    device-config(name, read("configs/" + name + ".xml"))
   } #label("lst-cfg-" + name)
 ]

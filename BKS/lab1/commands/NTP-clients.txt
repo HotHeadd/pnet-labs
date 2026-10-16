@@ -1,0 +1,22 @@
+! Клиенты NTP: время со HQ-INFRA (10.1.55.10, ntp master 3)
+! Все IOL обеих площадок, кроме HQ-INFRA (сервер), HQ-DMZ (без IP) и ISP-1/ISP-2 (не наши)
+! BR-EDGE, BR-CORE, BR-CORE-2, DSW-1, DSW-2, ASW-1, ASW-2, ASW-3, SRV-DHCP,
+! HQ-EDGE, HQ-CORE-1, HQ-CORE-2, HQ-DSW-1, HQ-DSW-2, HQ-ASW-1, HQ-ASW-2:
+enable
+configure terminal
+ntp server 10.1.55.10
+end
+write memory
+
+! Ответы NTP коммутаторам доступа уходят в VLAN 99 через исходящий ACL управления.
+! DSW-1, DSW-2 (филиал):
+configure terminal
+ip access-list extended MGMT-OUT
+ 25 permit udp host 10.1.55.10 eq ntp 10.2.99.0 0.0.0.15
+end
+! HQ-DSW-1, HQ-DSW-2 (ГО):
+configure terminal
+ip access-list extended HQ-MGMT-OUT
+ 35 permit udp host 10.1.55.10 eq ntp 10.1.99.0 0.0.0.15
+end
+write memory

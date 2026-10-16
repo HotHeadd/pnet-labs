@@ -1,3 +1,4 @@
+! NVRAM config last updated at 18:03:02 UTC Fri Oct 16 2026
 hostname BR-CORE
 no ip domain-lookup
 ip cef
@@ -32,3 +33,4 @@ line con 0
  logging synchronous
 line vty 0 4
  login
+ntp server 10.1.55.10

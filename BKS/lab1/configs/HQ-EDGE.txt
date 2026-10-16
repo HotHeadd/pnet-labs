@@ -1,3 +1,4 @@
+! NVRAM config last updated at 19:02:33 UTC Fri Oct 16 2026
 hostname HQ-EDGE
 no ip domain lookup
 ip cef
@@ -40,17 +41,17 @@ interface Ethernet0/0
  ip nat outside
  ip virtual-reassembly in
 interface Ethernet0/1
- description to HQ-CORE-1
+ description to HQ-CORE-1 via HQ-FW-1 (transparent)
  ip address 10.1.255.1 255.255.255.252
  ip nat inside
  ip virtual-reassembly in
 interface Ethernet0/2
- description to HQ-CORE-2
+ description to HQ-CORE-2 via HQ-FW-2 (transparent)
  ip address 10.1.255.5 255.255.255.252
  ip nat inside
  ip virtual-reassembly in
 interface Ethernet0/3
- description DMZ
+ description DMZ via HQ-FW-2 (transparent)
  ip address 10.1.100.1 255.255.255.240
  ip access-group DMZ-IN in
  ip nat inside
@@ -85,3 +86,4 @@ line con 0
 line vty 0 4
  login
  transport input none
+ntp server 10.1.55.10

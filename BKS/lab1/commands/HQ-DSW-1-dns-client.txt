@@ -1,0 +1,11 @@
+! HQ-DSW-1: клиент DNS (сервер HQ-INFRA 10.1.55.10) для проверки разрешения имён
+enable
+configure terminal
+ip domain-lookup
+ip domain-name hq.local
+ip name-server 10.1.55.10
+line con 0
+ transport preferred none
+line vty 0 4
+ transport preferred none
+end

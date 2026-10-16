@@ -1,3 +1,4 @@
+! NVRAM config last updated at 18:03:19 UTC Fri Oct 16 2026
 hostname HQ-DSW-2
 vtp mode transparent
 no ip domain-lookup
@@ -179,8 +180,10 @@ ip access-list extended HQ-MGMT-OUT
  permit ip 10.1.10.0 0.0.0.31 any
  permit ip 10.2.10.0 0.0.0.31 any
  permit ip 10.1.99.0 0.0.0.15 any
+ permit udp host 10.1.55.10 eq ntp 10.1.99.0 0.0.0.15
  deny   ip any any
 line con 0
  logging synchronous
 line vty 0 4
  login
+ntp server 10.1.55.10
