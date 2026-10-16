@@ -1,0 +1,12 @@
+DSW-1#ping 10.1.50.10 source Vlan10 repeat 5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.50.10, timeout is 2 seconds:
+Packet sent with a source address of 10.2.10.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms
+DSW-1#ping 10.1.55.10 source Vlan10 repeat 5
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.55.10, timeout is 2 seconds:
+Packet sent with a source address of 10.2.10.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms

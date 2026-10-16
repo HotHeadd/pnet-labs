@@ -1,0 +1,4 @@
+SRV-DHCP#show ip traffic | include local destination|echo
+  Rcvd:  16 total, 3 local destination
+         3 echo, 0 echo reply, 0 mask requests, 0 mask replies, 0 quench
+  Sent: 0 redirects, 0 unreachable, 0 echo, 3 echo reply

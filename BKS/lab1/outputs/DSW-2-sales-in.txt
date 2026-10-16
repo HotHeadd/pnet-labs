@@ -1,0 +1,5 @@
+Extended IP access list SALES-IN
+    10 permit udp any any eq bootps
+    20 permit ip 10.2.40.0 0.0.0.63 host 10.2.20.42
+    30 deny ip 10.2.40.0 0.0.0.63 10.2.20.0 0.0.0.255 (3 matches)
+    40 permit ip any any (9 matches)

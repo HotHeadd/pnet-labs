@@ -1,0 +1,182 @@
+hostname DSW-1
+username netadmin privilege 15 secret 5 $1$XHud$x5CNqIkpyN05eiimrnn8T1
+vtp mode transparent
+no ip domain-lookup
+ip domain-name branch.local
+no ip cef
+spanning-tree mode mst
+spanning-tree extend system-id
+spanning-tree mst configuration
+ name BRANCH
+ revision 1
+ instance 1 vlan 10, 30, 50, 70
+ instance 2 vlan 20, 40, 60, 99
+spanning-tree mst 0-1 priority 4096
+spanning-tree mst 2 priority 8192
+vlan 10
+ name ADMIN
+vlan 20
+ name DEV
+vlan 30
+ name ACC
+vlan 40
+ name SALES
+vlan 50
+ name SERVERS
+vlan 60
+ name GUEST
+vlan 70
+ name CCTV
+vlan 99
+ name MGMT
+vlan 999
+ name BLACKHOLE
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ spanning-tree link-type point-to-point
+interface Ethernet0/0
+ description to BR-CORE
+ no switchport
+ ip address 10.2.255.6 255.255.255.252
+ duplex auto
+interface Ethernet0/1
+ description Po1 to DSW-2
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ channel-group 1 mode active
+interface Ethernet0/2
+ description Po1 to DSW-2
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ channel-group 1 mode active
+interface Ethernet0/3
+ description trunk to ASW-1/2/3
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Ethernet1/0
+ description trunk to ASW-1/2/3
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Ethernet1/1
+ description trunk to ASW-1/2/3
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Ethernet1/2
+ description to BR-CORE-2
+ no switchport
+ ip address 10.2.255.18 255.255.255.252
+ duplex auto
+interface Vlan10
+ ip address 10.2.10.2 255.255.255.224
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 10 ip 10.2.10.1
+ standby 10 priority 110
+ standby 10 preempt
+interface Vlan20
+ ip address 10.2.20.2 255.255.255.0
+ ip access-group DEV-IN in
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 20 ip 10.2.20.1
+ standby 20 preempt
+interface Vlan30
+ ip address 10.2.30.2 255.255.255.192
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 30 ip 10.2.30.1
+ standby 30 priority 110
+ standby 30 preempt
+interface Vlan40
+ ip address 10.2.40.2 255.255.255.192
+ ip access-group SALES-IN in
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 40 ip 10.2.40.1
+ standby 40 preempt
+interface Vlan50
+ ip address 10.2.50.2 255.255.255.128
+ standby version 2
+ standby 50 ip 10.2.50.1
+ standby 50 priority 110
+ standby 50 preempt
+interface Vlan60
+ ip address 10.2.60.2 255.255.255.0
+ ip access-group GUEST-IN in
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 60 ip 10.2.60.1
+ standby 60 preempt
+interface Vlan70
+ ip address 10.2.70.2 255.255.255.192
+ ip access-group CCTV-IN in
+ ip helper-address 10.2.50.10 
+ standby version 2
+ standby 70 ip 10.2.70.1
+ standby 70 priority 110
+ standby 70 preempt
+interface Vlan99
+ ip address 10.2.99.2 255.255.255.240
+ ip access-group MGMT-OUT out
+ standby version 2
+ standby 99 ip 10.2.99.1
+ standby 99 preempt
+router ospf 1
+ router-id 10.2.254.2
+ passive-interface default
+ no passive-interface Ethernet0/0
+ no passive-interface Ethernet1/2
+ no passive-interface Vlan99
+ network 10.2.0.0 0.0.255.255 area 0
+ip ssh version 2
+ip access-list standard VTY-MGMT
+ permit 10.1.10.0 0.0.0.31
+ permit 10.2.10.0 0.0.0.31
+ip access-list extended CCTV-IN
+ permit udp any any eq bootps
+ permit udp any host 224.0.0.102 eq 1985
+ permit ip 10.2.70.0 0.0.0.63 10.2.50.0 0.0.0.127
+ deny   ip any any
+ip access-list extended DEV-IN
+ permit ip host 10.2.20.42 10.2.40.0 0.0.0.63
+ deny   ip 10.2.20.0 0.0.0.255 10.2.40.0 0.0.0.63
+ permit ip any any
+ip access-list extended GUEST-IN
+ permit udp any any eq bootps
+ deny   ip any 10.0.0.0 0.255.255.255
+ permit ip any any
+ip access-list extended MGMT-OUT
+ permit ip 10.2.10.0 0.0.0.31 any
+ permit ip 10.1.10.0 0.0.0.31 any
+ deny   ip any any
+ip access-list extended SALES-IN
+ permit udp any any eq bootps
+ permit ip 10.2.40.0 0.0.0.63 host 10.2.20.42
+ deny   ip 10.2.40.0 0.0.0.63 10.2.20.0 0.0.0.255
+ permit ip any any
+line con 0
+ exec-timeout 0 0
+ logging synchronous
+line vty 0 4
+ access-class VTY-MGMT in
+ login local
+ transport input ssh

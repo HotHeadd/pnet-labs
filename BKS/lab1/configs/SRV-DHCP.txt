@@ -1,0 +1,50 @@
+hostname SRV-DHCP
+logging buffered 64000
+no ip routing
+ip dhcp excluded-address 10.2.10.1 10.2.10.9
+ip dhcp excluded-address 10.2.20.1 10.2.20.9
+ip dhcp excluded-address 10.2.20.42
+ip dhcp excluded-address 10.2.30.1 10.2.30.9
+ip dhcp excluded-address 10.2.40.1 10.2.40.9
+ip dhcp excluded-address 10.2.60.1 10.2.60.9
+ip dhcp excluded-address 10.2.70.1 10.2.70.9
+ip dhcp pool V10-ADMIN
+ network 10.2.10.0 255.255.255.224
+ default-router 10.2.10.1 
+ip dhcp pool V20-DEV
+ network 10.2.20.0 255.255.255.0
+ default-router 10.2.20.1 
+ip dhcp pool V30-ACC
+ network 10.2.30.0 255.255.255.192
+ default-router 10.2.30.1 
+ip dhcp pool V40-SALES
+ network 10.2.40.0 255.255.255.192
+ default-router 10.2.40.1 
+ip dhcp pool V60-GUEST
+ network 10.2.60.0 255.255.255.0
+ default-router 10.2.60.1 
+ip dhcp pool V70-CCTV
+ network 10.2.70.0 255.255.255.192
+ default-router 10.2.70.1 
+no ip domain lookup
+no ip cef
+interface Ethernet0/0
+ ip address 10.2.50.10 255.255.255.128
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ip default-gateway 10.2.50.1
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+ transport input none

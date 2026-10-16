@@ -1,0 +1,9 @@
+PC-ADMIN> ping 10.2.30.10 -c 2
+
+84 bytes from 10.2.30.10 icmp_seq=1 ttl=63 time=1.838 ms
+84 bytes from 10.2.30.10 icmp_seq=2 ttl=63 time=0.863 ms
+
+PC-ADMIN> ping 8.8.8.8 -c 2
+
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.018 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.138 ms

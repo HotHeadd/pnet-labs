@@ -1,0 +1,186 @@
+hostname HQ-DSW-1
+vtp mode transparent
+no ip domain-lookup
+no ip cef
+spanning-tree mode mst
+spanning-tree extend system-id
+spanning-tree mst configuration
+ name HQ
+ revision 1
+ instance 1 vlan 10, 50, 55
+ instance 2 vlan 20, 60, 70, 99
+spanning-tree mst 0-1 priority 24576
+spanning-tree mst 2 priority 28672
+vlan 10
+ name ADMIN
+vlan 20
+ name STAFF
+vlan 50
+ name SERVERS
+vlan 55
+ name INFRA
+vlan 60
+ name GUEST
+vlan 70
+ name CCTV
+vlan 99
+ name MGMT
+vlan 999
+ name BLACKHOLE
+interface Port-channel1
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Port-channel11
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Port-channel12
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Ethernet0/0
+ description to HQ-CORE-1
+ no switchport
+ ip address 10.1.255.10 255.255.255.252
+ duplex auto
+interface Ethernet0/1
+ description to HQ-CORE-2
+ no switchport
+ ip address 10.1.255.18 255.255.255.252
+ duplex auto
+interface Ethernet0/2
+ description to HQ-DSW-2
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 1 mode active
+interface Ethernet0/3
+ description to HQ-DSW-2
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 1 mode active
+interface Ethernet1/0
+ description to HQ-ASW-1
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 11 mode active
+interface Ethernet1/1
+ description to HQ-ASW-1
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 11 mode active
+interface Ethernet1/2
+ description to HQ-ASW-2
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 12 mode active
+interface Ethernet1/3
+ description to HQ-ASW-2
+ switchport trunk allowed vlan 10,20,50,55,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ channel-group 12 mode active
+interface Ethernet2/0
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Vlan10
+ ip address 10.1.10.2 255.255.255.224
+ ip helper-address 10.1.55.10 
+ vrrp 10 ip 10.1.10.1
+ vrrp 10 priority 110
+interface Vlan20
+ ip address 10.1.20.2 255.255.255.0
+ ip helper-address 10.1.55.10 
+ vrrp 20 ip 10.1.20.1
+interface Vlan50
+ ip address 10.1.50.2 255.255.255.192
+ vrrp 50 ip 10.1.50.1
+ vrrp 50 priority 110
+interface Vlan55
+ ip address 10.1.55.2 255.255.255.240
+ vrrp 55 ip 10.1.55.1
+ vrrp 55 priority 110
+interface Vlan60
+ ip address 10.1.60.2 255.255.255.0
+ ip access-group HQ-GUEST-IN in
+ ip helper-address 10.1.55.10 
+ vrrp 60 ip 10.1.60.1
+interface Vlan70
+ ip address 10.1.70.2 255.255.255.192
+ ip access-group HQ-CCTV-IN in
+ ip helper-address 10.1.55.10 
+ vrrp 70 ip 10.1.70.1
+interface Vlan99
+ ip address 10.1.99.2 255.255.255.240
+ ip access-group HQ-MGMT-OUT out
+ vrrp 99 ip 10.1.99.1
+router ospf 1
+ router-id 10.1.254.11
+ passive-interface default
+ no passive-interface Ethernet0/0
+ no passive-interface Ethernet0/1
+ no passive-interface Vlan99
+ network 10.1.0.0 0.0.255.255 area 0
+ip ssh source-interface Vlan10
+ip access-list extended HQ-CCTV-IN
+ permit udp any any eq bootps
+ permit 112 any host 224.0.0.18
+ permit udp 10.1.70.0 0.0.0.63 host 10.1.55.10 eq ntp
+ permit ip 10.1.70.0 0.0.0.63 10.1.50.0 0.0.0.63
+ permit icmp 10.1.70.0 0.0.0.63 any echo-reply
+ deny   ip any any
+ip access-list extended HQ-GUEST-IN
+ permit udp any any eq bootps
+ permit udp 10.1.60.0 0.0.0.255 host 10.1.55.10 eq domain
+ deny   ip any 10.0.0.0 0.255.255.255
+ deny   ip any 172.16.0.0 0.15.255.255
+ deny   ip any 192.168.0.0 0.0.255.255
+ permit ip any any
+ip access-list extended HQ-MGMT-OUT
+ permit ip 10.1.10.0 0.0.0.31 any
+ permit ip 10.2.10.0 0.0.0.31 any
+ permit ip 10.1.99.0 0.0.0.15 any
+ deny   ip any any
+line con 0
+ logging synchronous
+line vty 0 4
+ login

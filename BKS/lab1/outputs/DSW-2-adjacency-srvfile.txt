@@ -1,0 +1,10 @@
+IP       Vlan20                    10.2.20.42(7)
+                                   5 packets, 490 bytes
+                                   epoch 0
+                                   sourced in sev-epoch 0
+                                   Encap length 14
+                                   005079666811AABBCC8005000800
+                                   L2 destination address byte offset 0
+                                   L2 destination address byte length 6
+                                   Link-type after encap: ip
+                                   ARP

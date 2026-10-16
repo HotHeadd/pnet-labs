@@ -1,0 +1,59 @@
+! No configuration change since last restart
+! NVRAM config last updated at 15:38:19 UTC Fri Oct 16 2026
+hostname HQ-INFRA
+no ip routing
+ip dhcp excluded-address 10.1.10.1 10.1.10.9
+ip dhcp excluded-address 10.1.20.1 10.1.20.9
+ip dhcp excluded-address 10.1.60.1 10.1.60.9
+ip dhcp excluded-address 10.1.70.1 10.1.70.9
+ip dhcp pool V10-ADMIN
+ network 10.1.10.0 255.255.255.224
+ default-router 10.1.10.1 
+ dns-server 10.1.55.10 
+ domain-name hq.local
+ip dhcp pool V20-STAFF
+ network 10.1.20.0 255.255.255.0
+ default-router 10.1.20.1 
+ dns-server 10.1.55.10 
+ domain-name hq.local
+ip dhcp pool V60-GUEST
+ network 10.1.60.0 255.255.255.0
+ default-router 10.1.60.1 
+ dns-server 10.1.55.10 
+ domain-name hq.local
+ip dhcp pool V70-CCTV
+ network 10.1.70.0 255.255.255.192
+ default-router 10.1.70.1 
+ dns-server 10.1.55.10 
+ domain-name hq.local
+ip domain name hq.local
+ip host hq-infra.hq.local 10.1.55.10
+ip host srv-int.hq.local 10.1.50.10
+ip host srv-web.hq.local 10.1.100.10
+ip host srv-mail.hq.local 10.1.100.11
+ip host hq-edge.hq.local 10.1.100.1
+no ip cef
+interface Ethernet0/0
+ description VLAN55 INFRA
+ ip address 10.1.55.10 255.255.255.240
+ no ip route-cache
+interface Ethernet0/1
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/2
+ no ip address
+ no ip route-cache
+ shutdown
+interface Ethernet0/3
+ no ip address
+ no ip route-cache
+ shutdown
+ip default-gateway 10.1.55.1
+ip dns server
+line con 0
+ logging synchronous
+line vty 0 4
+ login
+ transport input none
+ntp master 3

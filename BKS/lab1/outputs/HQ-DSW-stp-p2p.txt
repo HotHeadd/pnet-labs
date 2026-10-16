@@ -1,0 +1,13 @@
+HQ-DSW-1#show spanning-tree mst 1 | begin Interface
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Po1              Desg FWD 1000000   128.65   P2p
+Po11             Desg FWD 1000000   128.66   P2p
+Po12             Desg FWD 1000000   128.67   P2p
+
+HQ-DSW-2#show spanning-tree mst 2 | begin Interface
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Po1              Desg FWD 1000000   128.65   P2p
+Po21             Desg FWD 1000000   128.66   P2p
+Po22             Desg FWD 1000000   128.67   P2p

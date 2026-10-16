@@ -1,0 +1,24 @@
+hostname ISP
+no ip domain lookup
+ip cef
+interface Loopback0
+ description Internet
+ ip address 8.8.8.8 255.255.255.255
+interface Ethernet0/0
+ description to BR-EDGE
+ ip address 198.51.100.1 255.255.255.252
+interface Ethernet0/1
+ description to ISP-2 (internet core)
+ ip address 203.0.113.249 255.255.255.252
+interface Ethernet0/2
+ description to HQ-EDGE
+ ip address 203.0.113.1 255.255.255.252
+ip route 1.1.1.1 255.255.255.255 203.0.113.250
+ip route 192.0.2.0 255.255.255.252 203.0.113.250
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+ transport input none

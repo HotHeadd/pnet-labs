@@ -1,0 +1,10 @@
+IP       Vlan50                    10.2.50.10(7)
+                                   8 packets, 784 bytes
+                                   epoch 0
+                                   sourced in sev-epoch 0
+                                   Encap length 14
+                                   AABBCC000900AABBCC8004000800
+                                   L2 destination address byte offset 0
+                                   L2 destination address byte length 6
+                                   Link-type after encap: ip
+                                   ARP

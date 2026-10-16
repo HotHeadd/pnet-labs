@@ -1,0 +1,15 @@
+! DHCP Snooping и DAI — каждый коммутатор доступа ГО защищает только VLAN своих хостов
+! HQ-ASW-1 (ADMIN, STAFF, GUEST)
+enable
+configure terminal
+no ip dhcp snooping vlan 50,55,70
+no ip arp inspection vlan 50,55,70
+end
+write memory
+! HQ-ASW-2 (SRV-INT, HQ-INFRA, CAM-HQ)
+enable
+configure terminal
+no ip dhcp snooping vlan 10,20,60
+no ip arp inspection vlan 10,20,60
+end
+write memory

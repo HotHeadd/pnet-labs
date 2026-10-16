@@ -1,0 +1,11 @@
+configure terminal
+arp access-list DAI-STATIC
+ permit ip host 10.2.50.10 mac any
+exit
+interface range Ethernet0/0 - 1
+ ip arp inspection trust
+ip arp inspection vlan 10,20,30,40,50,60,70
+ip arp inspection validate src-mac dst-mac ip
+ip arp inspection filter DAI-STATIC vlan 50
+end
+write memory

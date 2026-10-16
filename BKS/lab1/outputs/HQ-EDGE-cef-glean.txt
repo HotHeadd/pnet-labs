@@ -1,0 +1,27 @@
+HQ-EDGE#ping 10.1.55.10 repeat 3          ! CEF на HQ-DSW включён
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.55.10, timeout is 2 seconds:
+...
+Success rate is 0 percent (0/3)
+
+HQ-DSW-1#ping 10.1.55.10 repeat 3         ! сам DSW: ARP разрешён, дальше успешно
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.55.10, timeout is 2 seconds:
+.!!
+Success rate is 66 percent (2/3), round-trip min/avg/max = 1/1/1 ms
+
+HQ-EDGE#ping 10.1.55.10 repeat 3          ! теперь транзит проходит (ARP уже есть)
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.55.10, timeout is 2 seconds:
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#ping 10.1.50.10 repeat 3          ! для SRV-INT ARP на DSW нет — снова потери
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.50.10, timeout is 2 seconds:
+...
+
+HQ-EDGE#ping 10.1.50.10 repeat 5          ! после no ip cef на HQ-DSW-1/2
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.1.50.10, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/2 ms

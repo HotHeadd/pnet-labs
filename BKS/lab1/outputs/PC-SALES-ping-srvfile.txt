@@ -1,0 +1,6 @@
+PC-SALES> ping 10.2.20.42 -c 4
+
+84 bytes from 10.2.20.42 icmp_seq=1 ttl=63 time=1.821 ms
+84 bytes from 10.2.20.42 icmp_seq=2 ttl=63 time=0.771 ms
+84 bytes from 10.2.20.42 icmp_seq=3 ttl=63 time=0.718 ms
+84 bytes from 10.2.20.42 icmp_seq=4 ttl=63 time=0.954 ms

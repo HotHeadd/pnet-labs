@@ -1,0 +1,25 @@
+PC-SALES> ping 10.2.20.42 -c 4                    ! вариант 5: файловый сервер — разрешено
+84 bytes from 10.2.20.42 icmp_seq=1 ttl=63 time=1.821 ms
+84 bytes from 10.2.20.42 icmp_seq=2 ttl=63 time=0.771 ms
+84 bytes from 10.2.20.42 icmp_seq=3 ttl=63 time=0.718 ms
+84 bytes from 10.2.20.42 icmp_seq=4 ttl=63 time=0.954 ms
+
+PC-SALES> ping 10.2.20.10 -c 2                    ! вариант 5: PC-DEV1 — запрещено
+*10.2.40.3 icmp_seq=1 ttl=255 time=0.353 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.2.40.3 icmp_seq=2 ttl=255 time=0.404 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-GUEST> ping 10.2.10.10 -c 2                    ! гость филиала -> ADMIN — запрещено
+*10.2.60.3 icmp_seq=1 ttl=255 time=0.306 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.2.60.3 icmp_seq=2 ttl=255 time=0.550 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-HQ-GUEST> ping 10.1.50.10 -c 2                 ! гость ГО -> SRV-INT — запрещено
+*10.1.60.3 icmp_seq=1 ttl=255 time=0.478 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.1.60.3 icmp_seq=2 ttl=255 time=0.341 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-DEV1> ping 10.2.99.11 -c 2                     ! DEV -> управление ASW-1 — запрещено
+*10.2.20.3 icmp_seq=1 ttl=255 time=0.353 ms (ICMP type:3, code:13, Communication administratively prohibited)
+*10.2.20.3 icmp_seq=2 ttl=255 time=0.574 ms (ICMP type:3, code:13, Communication administratively prohibited)
+
+PC-ADMIN> ping 10.2.99.11 -c 2                    ! ADMIN -> управление ASW-1 — разрешено
+10.2.99.11 icmp_seq=1 timeout
+84 bytes from 10.2.99.11 icmp_seq=2 ttl=254 time=1.080 ms

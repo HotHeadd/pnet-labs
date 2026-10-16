@@ -1,0 +1,155 @@
+hostname ASW-3
+username netadmin privilege 15 secret 5 $1$lWT2$XUP0D.bZwm9SjH.IFBsuV.
+vtp mode transparent
+ip arp inspection vlan 10,20,30,40,50,60,70
+ip arp inspection validate src-mac dst-mac ip 
+ip dhcp snooping vlan 10,20,30,40,50,60,70
+no ip dhcp snooping information option
+ip dhcp snooping
+no ip domain-lookup
+ip domain-name branch.local
+ip cef
+spanning-tree mode mst
+spanning-tree extend system-id
+spanning-tree mst configuration
+ name BRANCH
+ revision 1
+ instance 1 vlan 10, 30, 50, 70
+ instance 2 vlan 20, 40, 60, 99
+vlan 10
+ name ADMIN
+vlan 20
+ name DEV
+vlan 30
+ name ACC
+vlan 40
+ name SALES
+vlan 50
+ name SERVERS
+vlan 60
+ name GUEST
+vlan 70
+ name CCTV
+vlan 99
+ name MGMT
+vlan 999
+ name BLACKHOLE
+interface Ethernet0/0
+ description uplink to DSW-1 / DSW-2
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ ip arp inspection trust
+ spanning-tree link-type point-to-point
+ ip dhcp snooping trust
+interface Ethernet0/1
+ description uplink to DSW-1 / DSW-2
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ ip arp inspection trust
+ spanning-tree link-type point-to-point
+ ip dhcp snooping trust
+interface Ethernet0/2
+ description PC-GUEST
+ switchport access vlan 60
+ switchport mode access
+ switchport port-security maximum 2
+ switchport port-security violation restrict
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ ip dhcp snooping limit rate 15
+interface Ethernet0/3
+ description CAM1
+ switchport access vlan 70
+ switchport mode access
+ switchport port-security violation restrict
+ switchport port-security
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+ ip dhcp snooping limit rate 15
+interface Ethernet1/0
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet1/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet1/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet1/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/0
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet2/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet3/0
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet3/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet3/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet3/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet4/0
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet4/1
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet4/2
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Ethernet4/3
+ switchport access vlan 999
+ switchport mode access
+ shutdown
+interface Vlan99
+ ip address 10.2.99.13 255.255.255.240
+ip default-gateway 10.2.99.1
+ip route 0.0.0.0 0.0.0.0 10.2.99.1
+ip ssh version 2
+ip access-list standard VTY-MGMT
+ permit 10.1.10.0 0.0.0.31
+ permit 10.2.10.0 0.0.0.31
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ access-class VTY-MGMT in
+ login local
+ transport input ssh

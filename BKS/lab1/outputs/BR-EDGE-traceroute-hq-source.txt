@@ -1,0 +1,8 @@
+BR-EDGE#traceroute 10.1.50.10 source Ethernet0/1 numeric probe 1 timeout 1
+Type escape sequence to abort.
+Tracing the route to 10.1.50.10
+VRF info: (vrf in name/id, vrf out name/id)
+  1 172.16.0.1 5 msec
+  2 10.1.255.2 6 msec
+  3 10.1.255.14 5 msec
+  4 10.1.50.10 5 msec

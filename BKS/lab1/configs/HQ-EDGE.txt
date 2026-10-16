@@ -1,0 +1,87 @@
+hostname HQ-EDGE
+no ip domain lookup
+ip cef
+ipv6 unicast-routing
+ipv6 cef
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+crypto isakmp key BKS1-vpn-psk address 198.51.100.2   
+crypto isakmp key BKS1-vpn-psk address 192.0.2.2      
+crypto ipsec transform-set TS-GRE esp-aes 256 esp-sha256-hmac 
+ mode transport
+crypto ipsec profile VPN-T0
+ set transform-set TS-GRE 
+crypto ipsec profile VPN-T1
+ set transform-set TS-GRE 
+interface Tunnel0
+ description GRE over IPsec main via ISP-1
+ ip address 172.16.0.1 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 10
+ tunnel source Ethernet0/0
+ tunnel destination 198.51.100.2
+ tunnel protection ipsec profile VPN-T0
+interface Tunnel1
+ description GRE over IPsec backup via ISP-2
+ ip address 172.16.0.5 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 100
+ tunnel source Ethernet0/0
+ tunnel destination 192.0.2.2
+ tunnel protection ipsec profile VPN-T1
+interface Ethernet0/0
+ description WAN to ISP-1
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+interface Ethernet0/1
+ description to HQ-CORE-1
+ ip address 10.1.255.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+interface Ethernet0/2
+ description to HQ-CORE-2
+ ip address 10.1.255.5 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+interface Ethernet0/3
+ description DMZ
+ ip address 10.1.100.1 255.255.255.240
+ ip access-group DMZ-IN in
+ ip nat inside
+ ip virtual-reassembly in
+ ipv6 address FD00:1:100::1/64
+ ipv6 enable
+router ospf 1
+ router-id 10.1.254.254
+ passive-interface Ethernet0/3
+ network 10.1.100.0 0.0.0.15 area 0
+ network 10.1.255.0 0.0.0.7 area 0
+ network 172.16.0.0 0.0.0.7 area 0
+ default-information originate
+ip nat inside source list NAT-HQ interface Ethernet0/0 overload
+ip nat inside source static tcp 10.1.100.11 25 203.0.113.2 25 extendable
+ip nat inside source static tcp 10.1.100.10 80 203.0.113.2 80 extendable
+ip nat inside source static tcp 10.1.100.10 443 203.0.113.2 443 extendable
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+ip access-list extended DMZ-IN
+ permit tcp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 established
+ permit icmp 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255 echo-reply
+ permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq domain
+ permit udp 10.1.100.0 0.0.0.15 host 10.1.55.10 eq ntp
+ permit icmp 10.1.100.0 0.0.0.15 host 10.1.100.1
+ deny   ip 10.1.100.0 0.0.0.15 10.0.0.0 0.255.255.255
+ permit ip 10.1.100.0 0.0.0.15 any
+ip access-list extended NAT-HQ
+ deny   ip 10.0.0.0 0.255.255.255 10.0.0.0 0.255.255.255
+ permit ip 10.1.0.0 0.0.255.255 any
+line con 0
+ logging synchronous
+line vty 0 4
+ login
+ transport input none

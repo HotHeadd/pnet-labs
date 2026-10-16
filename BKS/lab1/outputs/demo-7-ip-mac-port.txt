@@ -1,0 +1,43 @@
+ASW-1#show ip dhcp snooping binding
+MacAddress          IpAddress        Lease(sec)  Type           VLAN  Interface
+------------------  ---------------  ----------  -------------  ----  --------------------
+00:50:79:66:68:0A   10.2.10.10       84362       dhcp-snooping   10    Ethernet0/2
+00:50:79:66:68:0B   10.2.20.10       84367       dhcp-snooping   20    Ethernet0/3
+00:50:79:66:68:0C   10.2.20.11       84376       dhcp-snooping   20    Ethernet1/0
+Total number of bindings: 3
+
+ASW-1#show port-security interface e0/2
+Port Security              : Enabled
+Port Status                : Secure-up
+Violation Mode             : Restrict
+Aging Time                 : 0 mins
+Aging Type                 : Absolute
+SecureStatic Address Aging : Disabled
+Maximum MAC Addresses      : 2
+Total MAC Addresses        : 1
+Configured MAC Addresses   : 0
+Sticky MAC Addresses       : 0
+Last Source Address:Vlan   : 0050.7966.680a:10
+Security Violation Count   : 0
+
+PC-GUEST> ip 10.2.60.50/24 10.2.60.1            ! подмена: статический адрес вместо выданного DHCP
+Checking for duplicate address...
+PC-GUEST : 10.2.60.50 255.255.255.0 gateway 10.2.60.1
+
+ASW-3#show ip arp inspection statistics vlan 60
+
+ Vlan      Forwarded        Dropped     DHCP Drops      ACL Drops
+ ----      ---------        -------     ----------      ---------
+   60              0              3              3              0
+
+ Vlan   DHCP Permits    ACL Permits  Probe Permits   Source MAC Failures
+ ----   ------------    -----------  -------------   -------------------
+   60              0              0              0                     0
+
+ Vlan   Dest MAC Failures   IP Validation Failures   Invalid Protocol Data
+ ----   -----------------   ----------------------   ---------------------
+   60                   0                        0                       0
+
+ASW-3#show logging | include DAI|SW_DAI
+*Oct 16 11:09:33.544: %SW_DAI-4-DHCP_SNOOPING_DENY: 1 Invalid ARPs (Req) on Et0/2, vlan 60.([0050.7966.680f/10.2.60.50/ffff.ffff.ffff/10.2.60.50/11:09:32 UTC Fri Oct 16 2026])
+*Oct 16 11:09:34.545: %SW_DAI-4-DHCP_SNOOPING_DENY: 2 Invalid ARPs (Req) on Et0/2, vlan 60.([0050.7966.680f/10.2.60.50/ffff.ffff.ffff/10.2.60.50/11:09:34 UTC Fri Oct 16 2026])

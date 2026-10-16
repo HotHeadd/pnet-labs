@@ -1,0 +1,12 @@
+! HQ-DSW-1 — корень CIST (MST0)
+enable
+configure terminal
+spanning-tree mst 0 priority 24576
+end
+write memory
+! HQ-DSW-2
+enable
+configure terminal
+spanning-tree mst 0 priority 28672
+end
+write memory

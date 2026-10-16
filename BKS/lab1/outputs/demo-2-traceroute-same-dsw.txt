@@ -1,0 +1,9 @@
+PC-ADMIN> trace 10.2.30.10 -m 5          ! VLAN 10 -> VLAN 30 (оба HSRP active на DSW-1)
+trace to 10.2.30.10, 5 hops max, press Ctrl+C to stop
+ 1   10.2.10.2   0.375 ms  0.337 ms  0.312 ms
+ 2   *10.2.30.10   1.775 ms (ICMP type:3, code:3, Destination port unreachable)
+
+PC-SALES> trace 10.2.20.42 -m 5          ! VLAN 40 -> SRV-FILE (оба HSRP active на DSW-2)
+trace to 10.2.20.42, 5 hops max, press Ctrl+C to stop
+ 1   10.2.40.3   0.261 ms  0.255 ms  0.266 ms
+ 2   *10.2.20.42   1.679 ms (ICMP type:3, code:3, Destination port unreachable)

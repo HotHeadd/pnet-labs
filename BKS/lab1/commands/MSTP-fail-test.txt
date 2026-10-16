@@ -1,0 +1,12 @@
+! ГО, HQ-ASW-1: отказ аплинка к HQ-DSW-1 (корень MST1)
+configure terminal
+interface Port-channel1
+ shutdown
+end
+! восстановление — no shutdown
+! Филиал, ASW-1: отказ аплинка к DSW-1 (корень MST1)
+configure terminal
+interface Ethernet0/0
+ shutdown
+end
+! восстановление — no shutdown

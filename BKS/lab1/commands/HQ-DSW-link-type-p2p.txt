@@ -1,0 +1,15 @@
+! HQ-DSW-1 (по одному Port-channel; пачка interface range по нескольким Po ранее роняла ноду)
+configure terminal
+interface Port-channel11
+ spanning-tree link-type point-to-point
+end
+configure terminal
+interface Port-channel12
+ spanning-tree link-type point-to-point
+end
+configure terminal
+interface Port-channel1
+ spanning-tree link-type point-to-point
+end
+write memory
+! HQ-DSW-2 — то же для Port-channel21, Port-channel22, Port-channel1

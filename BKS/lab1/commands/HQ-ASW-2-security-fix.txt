@@ -1,0 +1,24 @@
+configure terminal
+interface range Port-channel1 - 2
+ ip dhcp snooping trust
+ ip arp inspection trust
+ spanning-tree link-type point-to-point
+end
+configure terminal
+interface range Ethernet1/0 , Ethernet1/2
+ switchport port-security maximum 1
+ switchport port-security violation restrict
+ switchport port-security
+ ip dhcp snooping limit rate 15
+end
+configure terminal
+interface Ethernet1/1
+ switchport port-security maximum 1
+ switchport port-security violation restrict
+ switchport port-security
+ ip dhcp snooping trust
+end
+configure terminal
+ip route 0.0.0.0 0.0.0.0 10.1.99.1
+end
+write memory

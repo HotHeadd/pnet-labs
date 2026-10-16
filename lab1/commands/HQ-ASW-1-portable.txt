@@ -1,6 +1,0 @@
-configure terminal
-interface range Ethernet1/0 - 2
- no switchport port-security mac-address sticky
-end
-clear port-security all
-write memory

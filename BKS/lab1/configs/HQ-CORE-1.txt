@@ -1,0 +1,42 @@
+hostname HQ-CORE-1
+no ip domain-lookup
+ip cef
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+interface Port-channel1
+ no switchport
+ ip address 10.1.255.25 255.255.255.252
+interface Ethernet0/0
+ description to HQ-EDGE
+ no switchport
+ ip address 10.1.255.2 255.255.255.252
+ duplex auto
+interface Ethernet0/1
+ description to HQ-DSW-1
+ no switchport
+ ip address 10.1.255.9 255.255.255.252
+ duplex auto
+interface Ethernet0/2
+ description to HQ-DSW-2
+ no switchport
+ ip address 10.1.255.13 255.255.255.252
+ duplex auto
+interface Ethernet0/3
+ description to HQ-CORE-2 (Po1)
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode active
+interface Ethernet1/0
+ description to HQ-CORE-2 (Po1)
+ no switchport
+ no ip address
+ duplex auto
+ channel-group 1 mode active
+router ospf 1
+ router-id 10.1.254.1
+ network 10.1.255.0 0.0.0.255 area 0
+line con 0
+ logging synchronous
+line vty 0 4
+ login

@@ -1,0 +1,4 @@
+PC-HQ-ADMIN> ping 10.1.50.10 -c 4
+
+10.1.50.10 icmp_seq=1 timeout
+84 bytes from 10.1.50.10 icmp_seq=2 ttl=63 time=1.740 ms

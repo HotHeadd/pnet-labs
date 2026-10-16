@@ -1,0 +1,5 @@
+! DSW-1, DSW-2 (филиал), HQ-DSW-1, HQ-DSW-2 (ГО) — IOL L2 с маршрутизацией между SVI
+configure terminal
+no ip cef
+end
+write memory

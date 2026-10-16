@@ -1,0 +1,89 @@
+hostname BR-EDGE
+no ip domain lookup
+ip cef
+track 1 ip sla 1 reachability
+crypto isakmp policy 10
+ encr aes 256
+ hash sha256
+ authentication pre-share
+ group 14
+crypto isakmp key BKS1-vpn-psk address 203.0.113.2    
+crypto ipsec transform-set TS-GRE esp-aes 256 esp-sha256-hmac 
+ mode transport
+crypto ipsec profile VPN-T0
+ set transform-set TS-GRE 
+crypto ipsec profile VPN-T1
+ set transform-set TS-GRE 
+interface Tunnel0
+ description GRE over IPsec main via ISP-1
+ ip address 172.16.0.2 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 10
+ tunnel source Ethernet0/0
+ tunnel destination 203.0.113.2
+ tunnel protection ipsec profile VPN-T0
+interface Tunnel1
+ description GRE over IPsec backup via ISP-2
+ ip address 172.16.0.6 255.255.255.252
+ ip mtu 1400
+ ip tcp adjust-mss 1360
+ ip ospf cost 100
+ tunnel source Ethernet0/3
+ tunnel destination 203.0.113.2
+ tunnel protection ipsec profile VPN-T1
+interface Ethernet0/0
+ description WAN to ISP
+ ip address 198.51.100.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+interface Ethernet0/1
+ description to BR-CORE
+ ip address 10.2.255.1 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+interface Ethernet0/2
+ description to BR-CORE-2
+ ip address 10.2.255.13 255.255.255.252
+ ip nat inside
+ ip virtual-reassembly in
+interface Ethernet0/3
+ description WAN2 to ISP-2
+ ip address 192.0.2.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+router ospf 1
+ router-id 10.2.254.254
+ network 10.2.255.0 0.0.0.3 area 0
+ network 10.2.255.12 0.0.0.3 area 0
+ network 172.16.0.0 0.0.0.7 area 0
+ default-information originate
+ip local policy route-map VPN-T1-PBR
+ip nat inside source route-map NAT-ISP1 interface Ethernet0/0 overload
+ip nat inside source route-map NAT-ISP2 interface Ethernet0/3 overload
+ip route 0.0.0.0 0.0.0.0 198.51.100.1 track 1
+ip route 0.0.0.0 0.0.0.0 192.0.2.1 10
+ip access-list standard NAT-BR
+ permit 10.2.0.0 0.0.255.255
+ip access-list extended VPN-T1-SRC
+ permit ip host 192.0.2.2 host 203.0.113.2
+ip sla 1
+ icmp-echo 198.51.100.1 source-interface Ethernet0/0
+ frequency 5
+ip sla schedule 1 life forever start-time now
+route-map NAT-ISP1 permit 10
+ match ip address NAT-BR
+ match interface Ethernet0/0
+route-map NAT-ISP2 permit 10
+ match ip address NAT-BR
+ match interface Ethernet0/3
+route-map VPN-T1-PBR permit 10
+ match ip address VPN-T1-SRC
+ set ip next-hop 192.0.2.1
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+ transport input none

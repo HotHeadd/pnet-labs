@@ -1,0 +1,6 @@
+*Oct 16 10:50:36.725: IP: s=10.2.50.3 (Ethernet0/0), d=224.0.0.102, len 80, input feature
+*Oct 16 10:50:38.420: IP: s=10.2.50.2 (Ethernet0/0), d=224.0.0.102, len 80, input feature
+*Oct 16 10:50:39.299: IP: s=10.2.50.3 (Ethernet0/0), d=224.0.0.102, len 80, input feature
+*Oct 16 10:50:41.089: IP: s=10.2.50.2 (Ethernet0/0), d=224.0.0.102, len 80, input feature
+*Oct 16 10:50:41.791: IP: s=10.2.50.3 (Ethernet0/0), d=224.0.0.102, len 80, input feature
+*Oct 16 10:50:44.011: IP: s=10.2.50.2 (Ethernet0/0), d=224.0.0.102, len 80, input feature
