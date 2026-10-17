@@ -1,81 +1,111 @@
 # Сценарий проверок на сдаче (стенд BKS1)
 
-Перед началом: на VPCS выданы адреса (см. `stand/README.md`). Вывод VPCS читается в консоли.
-Статус прогона 2026-10-16: все пункты 1–7 ✅ (`outputs/demo-*`, `ASW-1-mstp-fail.txt`, `HQ-ASW-1-mstp-fail.txt`,
-`demo-2-traceroute-same-dsw.txt`). Хост↔хост между VLAN одного DSW работает после `no ip cef` на DSW/HQ-DSW.
-Полный регресс после интеграции МЭ (16.10, вечер): пункты 1–9 ✅ — `outputs/regress-fw-20261016.txt`.
-МЭ прозрачные — в traceroute их не видно, это нормально.
-Вывод VPCS во время отказа MSTP не сохраняется — на сдаче смотреть пинг вживую в консоли браузера.
+Перед началом на VPCS должны быть адреса (см. `stand/README.md`): у ПК — `ip dhcp`, у серверов — статические.
+Команды вводятся в консоли устройства, указанного перед `>` (VPCS) или `#` (Cisco).
 
-## 1. Интернет с нужных машин
+## 1. traceroute между VLAN
 
-| Хост | Команда | Ожидание |
-|---|---|---|
-| PC-ADMIN, PC-DEV1, PC-ACC, PC-SALES, PC-GUEST (филиал) | `ping 8.8.8.8` | есть |
-| CAM1 (филиал) | `ping 8.8.8.8` | **нет** (CCTV-IN) |
-| PC-HQ-ADMIN, PC-HQ-STAFF, PC-HQ-GUEST | `ping 8.8.8.8` | есть |
-| CAM-HQ | `ping 8.8.8.8` | **нет** (HQ-CCTV-IN) |
-| SRV-WEB (DMZ) | `ping 8.8.8.8` | есть |
+**Доступ есть** — разработка (VLAN 20) → администратор (VLAN 10):
 
-## 2. traceroute
+```
+PC-DEV1> trace 10.2.10.10 -m 5
+ 1   10.2.20.3   ...
+ 2   *10.2.10.10 ...
+```
 
-| Откуда → куда | Команда | Ожидание |
-|---|---|---|
-| PC-DEV1 → PC-DEV2 (один VLAN 20) | `trace 10.2.20.11` | 1 хоп, сразу хост |
-| PC-ADMIN → PC-DEV1 (VLAN 10 → 20) | `trace 10.2.20.10` | хоп 1 — шлюз 10.2.10.1/.2, хоп 2 — хост |
-| PC-HQ-STAFF → PC-ADMIN (ГО → филиал) | `trace 10.2.10.10` | HQ-DSW → HQ-CORE → HQ-EDGE → 172.16.0.2 (туннель) → BR-CORE → DSW → хост |
-| PC-ADMIN → 8.8.8.8 | `trace 8.8.8.8` | через BR-EDGE и ISP-1 |
+Первый хоп — шлюз VLAN 20 на DSW-2 (10.2.20.3; DSW-2 — активный HSRP для VLAN 20), второй — сам PC-ADMIN.
+Трафик между VLAN идёт через шлюз уровня распределения, ACL его пропускает.
 
-## 3. MSTP
+**Доступа нет** — отдел продаж (VLAN 40) → компьютер разработчика (вариант 5):
 
-- HQ-ASW-1: `show spanning-tree mst 1` / `mst 2` — в каждом экземпляре свой Po в Altn BLK.
-- Отказ: на PC-HQ-ADMIN `ping 10.1.10.1 -t`, на HQ-ASW-1 `interface port-channel1` → `shutdown` → ping восстанавливается через Po2; `no shutdown`.
+```
+PC-SALES> trace 10.2.20.10 -m 5
+ 1   *10.2.40.3 ... (ICMP type:3, code:13, Communication administratively prohibited)
+```
 
-## 4. OSPF
+Шлюз VLAN 40 (DSW-2) отвечает «административно запрещено»: пакет отбросил входной ACL `SALES-IN` на Vlan40.
+Из продаж в VLAN разработки можно только к файловому серверу 10.2.20.42 (`ping 10.2.20.42` проходит), к остальным
+узлам — нет.
 
-- BR-EDGE / HQ-EDGE: `show ip ospf neighbor` (соседи по туннелям и внутри площадки).
-- HQ-EDGE: `show ip route ospf` — сети 10.2.x через Tunnel0.
-- DSW-1: `show ip route 0.0.0.0` — ECMP через два ядра; отказ ядра (уже снято, `outputs/DSW-1-*corefail*`).
+## 2. MSTP: отказ аплинка без потери связи
 
-## 5. DMZ
+```
+PC-ADMIN> ping 10.2.10.1 -t
+```
 
-- SRV-WEB: `ping 8.8.8.8` — есть; `ping 10.1.50.10` (SRV-INT) — **нет**; `ping 10.2.10.10` — **нет**.
-- HQ-EDGE: `show ip access-lists DMZ-IN` — счётчик deny растёт.
-- Публикация: ISP-1 `telnet 203.0.113.2 80 /source-interface Loopback0` → на HQ-EDGE `show ip nat translations` —
-  трансляция 203.0.113.2:80 → 10.1.100.10:80 с адресом 8.8.8.8 (трафик идёт через мост HQ-FW-2).
-- IPv6: на SRV-WEB `ip auto`; HQ-EDGE `show ipv6 neighbors Ethernet0/3` → `ping <SLAAC-адрес SRV-WEB>`
-  (VPCS не отвечает на ping ff02::1 — это не ошибка).
+Непрерывный пинг шлюза VLAN 10 (остановить — Ctrl+C). Пока он идёт, в соседней вкладке:
 
-## 6. Изоляция VLAN
+```
+ASW-1# configure terminal
+ASW-1(config)# interface Ethernet0/0
+ASW-1(config-if)# shutdown
+```
 
-- PC-SALES → `ping 10.2.20.42` (файловый сервер) — есть; `ping 10.2.20.10` (PC-DEV1) — **нет** (вариант 5).
-- PC-GUEST → `ping 10.2.10.10` — **нет**; PC-HQ-GUEST → `ping 10.1.50.10` — **нет**.
-- PC-DEV1 → `ping 10.2.99.11` (управление) — **нет**; PC-ADMIN → `ping 10.2.99.11` — есть.
+e0/0 — аплинк ASW-1 к DSW-1, корню MST1 (VLAN 10). MSTP за секунды переводит заблокированный аплинк e0/1 к DSW-2
+(роль Alternate) в Forwarding, пинг продолжается — пропадает 0–2 ответа. Вернуть: `no shutdown` на том же интерфейсе.
+До отказа это видно в `show spanning-tree mst 1`: Et0/0 — Root FWD, Et0/1 — Altn BLK.
 
-## 7. IP–MAC–порт
+## 3. OSPF
 
-- ASW-1: `show ip dhcp snooping binding` — привязки IP–MAC–порт–VLAN.
-- ASW-1: `show port-security`, `show port-security interface e0/2`.
-- Подмена IP: PC-GUEST `ip 10.2.60.50/24 10.2.60.1` → `ping 10.2.60.1` — **нет**;
-  ASW-3: `show ip arp inspection statistics vlan 60` (DHCP Drops растёт), `show logging | include DAI`.
-  Вернуть: `ip dhcp`.
+```
+HQ-EDGE# show ip ospf neighbor
+```
 
-## 8. Межсетевые экраны ГО (HQ-FW-1/2, прозрачный режим)
+Четыре соседа: HQ-CORE-1 и HQ-CORE-2 (Ethernet0/1 и 0/2, сквозь прозрачные межсетевые экраны) и BR-EDGE дважды —
+через Tunnel0 и Tunnel1. Значит, OSPF работает внутри ГО и между площадками поверх VPN.
 
-| Что | Где | Ожидание |
-|---|---|---|
-| Мосты | консоль МЭ (VNC) → `8` (Shell) → `ifconfig bridge0` (на HQ-FW-2 ещё `bridge1`) | члены vtnet0+vtnet1 (и vtnet2+vtnet3) |
-| Трафик идёт через МЭ | HQ-FW-2: `ifconfig bridge1 addr` | MAC SRV-WEB/SRV-MAIL (`00:50:79:…`) и HQ-EDGE |
-| Веб-интерфейс | браузер на хосте: `https://192.168.226.20`, `.21` (admin / pfsense) | Dashboard, Interfaces → Bridges |
-| Отказ МЭ | `stop_node` HQ-FW-1 (или Stop в веб-морде), ~40 с | HQ-EDGE `show ip ospf neighbor` — нет соседа по e0/1; PC-HQ-STAFF `ping 8.8.8.8` и `ping 10.2.10.10` — есть |
-| Возврат | Start HQ-FW-1, ~2 мин | сосед 10.1.254.1 по e0/1 снова FULL |
+```
+DSW-1# show ip route 0.0.0.0
+```
 
-В консоли pfSense (VNC) не набираются символы с Shift (`|`, `$`, `(`…) — команды без конвейеров.
-Отказ HQ-FW-2 отрезает DMZ (DMZ подключена только через него) — это ожидаемо, в отчёте как единичная точка отказа.
+Маршрут по умолчанию получен по OSPF (его раздаёт BR-EDGE) и имеет два равноценных next-hop — 10.2.255.5 (BR-CORE)
+и 10.2.255.17 (BR-CORE-2): трафик делится между двумя ядрами (ECMP), при отказе одного остаётся второй.
 
-## 9. Сервисы ГО: NTP и DNS
+## 4. DMZ: изоляция
 
-- Любой коммутатор/маршрутизатор: `show ntp associations` — `*~10.1.55.10`, `show ntp status` — `Clock is synchronized, stratum 4`.
-  Филиал (ASW-1) — время через VPN; DSW: `show ip access-lists MGMT-OUT` — строка 25 (NTP) набирает совпадения.
-- HQ-DSW-1: `ping srv-int.hq.local`, `ping hq-infra` — имя разрешается через 10.1.55.10, пинг есть.
-- VPCS ГО: `show ip` — DNS 10.1.55.10, DOMAIN NAME hq.local (выданы DHCP).
+```
+SRV-WEB> ping 8.8.8.8 -c 2
+```
+
+Есть ответы: из DMZ в интернет можно (через NAT на HQ-EDGE).
+
+```
+SRV-WEB> ping 10.1.50.10 -c 2
+*10.1.100.1 ... (ICMP type:3, code:13, Communication administratively prohibited)
+```
+
+SRV-INT во внутренней сети недоступен: шлюз DMZ (HQ-EDGE, 10.1.100.1) отбрасывает пакет списком `DMZ-IN`. Если
+веб-сервер взломают, из него нельзя попасть во внутреннюю сеть.
+
+```
+PC-HQ-STAFF> ping 10.1.50.10 -c 2
+```
+
+Есть ответы: к тому же серверу из внутренней сети (VLAN сотрудников ГО) доступ есть. Ограничение действует
+именно на DMZ, а не на сервер.
+
+## 5. Привязка IP–MAC–порт
+
+```
+ASW-1# show ip dhcp snooping binding
+```
+
+Таблица привязок DHCP Snooping: для каждого ПК — MAC, выданный IP, VLAN и порт коммутатора
+(например, 00:50:79:66:68:0A — 10.2.10.10 — VLAN 10 — Ethernet0/2). По ней работает DAI.
+
+Подмена адреса — гость вручную ставит себе другой IP:
+
+```
+PC-GUEST> ip 10.2.60.50/24 10.2.60.1
+PC-GUEST> ping 10.2.60.1 -c 2
+```
+
+Пинг до шлюза не проходит: адреса 10.2.60.50 для этого MAC и порта нет в таблице привязок, и DAI на ASW-3 отбрасывает
+ARP-запросы гостя. Подтверждение:
+
+```
+ASW-3# show ip arp inspection statistics vlan 60
+```
+
+Растут счётчики `Dropped` и `DHCP Drops` (в журнале — `%SW_DAI-4-DHCP_SNOOPING_DENY`). Вернуть адрес:
+`ip dhcp` на PC-GUEST.
