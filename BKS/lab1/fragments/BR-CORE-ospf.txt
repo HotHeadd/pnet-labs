@@ -1,0 +1,16 @@
+! BR-CORE: L3-порты и OSPF (без ACL и NAT)
+interface Ethernet0/0
+ description to BR-EDGE
+ no switchport
+ ip address 10.2.255.2 255.255.255.252
+interface Ethernet0/1
+ description to DSW-1
+ no switchport
+ ip address 10.2.255.5 255.255.255.252
+interface Ethernet0/2
+ description to DSW-2
+ no switchport
+ ip address 10.2.255.9 255.255.255.252
+router ospf 1
+ router-id 10.2.254.1
+ network 10.2.255.0 0.0.0.255 area 0

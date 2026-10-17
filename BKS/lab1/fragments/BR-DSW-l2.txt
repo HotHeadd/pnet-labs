@@ -1,0 +1,30 @@
+! DSW-1 (DSW-2 — те же VLAN и транки, приоритеты MSTP наоборот)
+vtp mode transparent
+! VLAN 10, 20, 30, 40, 50, 60, 70, 99, 999 — как на ASW
+spanning-tree mode mst
+spanning-tree mst configuration
+ name BRANCH
+ revision 1
+ instance 1 vlan 10, 30, 50, 70
+ instance 2 vlan 20, 40, 60, 99
+spanning-tree mst 0-1 priority 4096          ! DSW-2: mst 0-1 priority 8192
+spanning-tree mst 2 priority 8192            ! DSW-2: mst 2 priority 4096
+! дополнительный канал между DSW: LACP из двух линков
+interface range Ethernet0/1 - 2
+ description Po1 to DSW-2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk native vlan 999
+ switchport mode trunk
+ channel-group 1 mode active
+interface Port-channel1
+ spanning-tree link-type point-to-point
+! транки к ASW-1/2/3
+interface range Ethernet0/3 , Ethernet1/0 - 1
+ description trunk to ASW-1/2/3
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point

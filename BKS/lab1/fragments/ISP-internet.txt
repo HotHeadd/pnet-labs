@@ -1,0 +1,26 @@
+! ISP-1 и ISP-2 — эмуляция интернета
+! ISP-1 (ISP)
+interface Loopback0
+ ip address 8.8.8.8 255.255.255.255
+interface Ethernet0/0
+ description to BR-EDGE
+ ip address 198.51.100.1 255.255.255.252
+interface Ethernet0/1
+ description to ISP-2 (internet core)
+ ip address 203.0.113.249 255.255.255.252
+interface Ethernet0/2
+ description to HQ-EDGE
+ ip address 203.0.113.1 255.255.255.252
+ip route 1.1.1.1 255.255.255.255 203.0.113.250
+ip route 192.0.2.0 255.255.255.252 203.0.113.250
+! ISP-2
+interface Loopback0
+ ip address 1.1.1.1 255.255.255.255
+interface Ethernet0/0
+ description to BR-EDGE
+ ip address 192.0.2.1 255.255.255.252
+interface Ethernet0/1
+ ip address 203.0.113.250 255.255.255.252
+ip route 8.8.8.8 255.255.255.255 203.0.113.249
+ip route 198.51.100.0 255.255.255.252 203.0.113.249
+ip route 203.0.113.0 255.255.255.252 203.0.113.249

@@ -1,0 +1,15 @@
+! SRV-DHCP (IOL L3 в роли сервера): пулы VLAN филиала
+no ip routing
+ip default-gateway 10.2.50.1
+interface Ethernet0/0
+ ip address 10.2.50.10 255.255.255.128
+ip dhcp excluded-address 10.2.10.1 10.2.10.9
+ip dhcp excluded-address 10.2.20.1 10.2.20.9
+ip dhcp excluded-address 10.2.20.42
+ip dhcp pool V10-ADMIN
+ network 10.2.10.0 255.255.255.224
+ default-router 10.2.10.1
+ip dhcp pool V20-DEV
+ network 10.2.20.0 255.255.255.0
+ default-router 10.2.20.1
+! V30-ACC, V40-SALES, V60-GUEST, V70-CCTV — аналогично (исключены .1–.9)

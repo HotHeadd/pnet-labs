@@ -1,0 +1,34 @@
+! DSW-1, DSW-2: межсегментные ACL
+ip access-list extended SALES-IN                 ! вариант 5: SALES -> только файловый сервер в VLAN 20
+ permit udp any any eq bootps
+ permit ip 10.2.40.0 0.0.0.63 host 10.2.20.42
+ deny   ip 10.2.40.0 0.0.0.63 10.2.20.0 0.0.0.255
+ permit ip any any
+ip access-list extended DEV-IN                   ! обратное направление: из DEV в SALES — только SRV-FILE
+ permit ip host 10.2.20.42 10.2.40.0 0.0.0.63
+ deny   ip 10.2.20.0 0.0.0.255 10.2.40.0 0.0.0.63
+ permit ip any any
+ip access-list extended GUEST-IN                 ! гости — только интернет
+ permit udp any any eq bootps
+ deny   ip any 10.0.0.0 0.255.255.255
+ permit ip any any
+ip access-list extended CCTV-IN                  ! камеры — только к серверам (видеорегистратор)
+ permit udp any any eq bootps
+ permit udp any host 224.0.0.102 eq 1985
+ permit ip 10.2.70.0 0.0.0.63 10.2.50.0 0.0.0.127
+ deny   ip any any
+ip access-list extended MGMT-OUT                 ! сеть управления — только администраторы и NTP
+ permit ip 10.2.10.0 0.0.0.31 any
+ permit ip 10.1.10.0 0.0.0.31 any
+ permit udp host 10.1.55.10 eq ntp 10.2.99.0 0.0.0.15
+ deny   ip any any
+interface Vlan20
+ ip access-group DEV-IN in
+interface Vlan40
+ ip access-group SALES-IN in
+interface Vlan60
+ ip access-group GUEST-IN in
+interface Vlan70
+ ip access-group CCTV-IN in
+interface Vlan99
+ ip access-group MGMT-OUT out

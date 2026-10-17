@@ -1,0 +1,20 @@
+HQ-EDGE#show ip ospf neighbor          (через ~40 с)
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:35    10.1.255.6      Ethernet0/2
+HQ-EDGE#show ip route 10.1.20.0
+  * 10.1.255.6, from 10.1.254.11, 03:54:11 ago, via Ethernet0/2
+PC-HQ-STAFF> ping 8.8.8.8 -c 3
+84 bytes from 8.8.8.8 icmp_seq=1 ttl=252 time=1.271 ms
+84 bytes from 8.8.8.8 icmp_seq=2 ttl=252 time=1.415 ms
+84 bytes from 8.8.8.8 icmp_seq=3 ttl=252 time=1.417 ms
+PC-HQ-ADMIN> ping 10.2.10.10 -c 3
+84 bytes from 10.2.10.10 icmp_seq=1 ttl=58 time=3.807 ms
+84 bytes from 10.2.10.10 icmp_seq=2 ttl=58 time=2.455 ms
+84 bytes from 10.2.10.10 icmp_seq=3 ttl=58 time=2.434 ms
+(HQ-FW-1 запущен снова)
+HQ-EDGE#show ip ospf neighbor
+10.2.254.254      0   FULL/  -        00:00:37    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:39    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:39    10.1.255.6      Ethernet0/2
+10.1.254.1        1   FULL/BDR        00:00:37    10.1.255.2      Ethernet0/1

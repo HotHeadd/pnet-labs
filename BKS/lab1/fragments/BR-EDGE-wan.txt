@@ -1,0 +1,39 @@
+! BR-EDGE: два провайдера, IP SLA, NAT через route-map, OSPF
+interface Ethernet0/0
+ description WAN to ISP
+ ip address 198.51.100.2 255.255.255.252
+ ip nat outside
+interface Ethernet0/3
+ description WAN2 to ISP-2
+ ip address 192.0.2.2 255.255.255.252
+ ip nat outside
+interface Ethernet0/1
+ description to BR-CORE
+ ip address 10.2.255.1 255.255.255.252
+ ip nat inside
+interface Ethernet0/2
+ description to BR-CORE-2
+ ip address 10.2.255.13 255.255.255.252
+ ip nat inside
+ip sla 1
+ icmp-echo 198.51.100.1 source-interface Ethernet0/0
+ frequency 5
+ip sla schedule 1 life forever start-time now
+track 1 ip sla 1 reachability
+ip route 0.0.0.0 0.0.0.0 198.51.100.1 track 1
+ip route 0.0.0.0 0.0.0.0 192.0.2.1 10
+ip access-list standard NAT-BR
+ permit 10.2.0.0 0.0.255.255
+route-map NAT-ISP1 permit 10
+ match ip address NAT-BR
+ match interface Ethernet0/0
+route-map NAT-ISP2 permit 10
+ match ip address NAT-BR
+ match interface Ethernet0/3
+ip nat inside source route-map NAT-ISP1 interface Ethernet0/0 overload
+ip nat inside source route-map NAT-ISP2 interface Ethernet0/3 overload
+router ospf 1
+ router-id 10.2.254.254
+ network 10.2.255.0 0.0.0.3 area 0
+ network 10.2.255.12 0.0.0.3 area 0
+ default-information originate

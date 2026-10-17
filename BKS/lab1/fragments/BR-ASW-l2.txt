@@ -1,0 +1,43 @@
+! ASW-1 (ASW-2, ASW-3 — аналогично, свои access-порты): VLAN, MSTP, аплинки к DSW-1/DSW-2
+vtp mode transparent
+vlan 10
+ name ADMIN
+vlan 20
+ name DEV
+vlan 30
+ name ACC
+vlan 40
+ name SALES
+vlan 50
+ name SERVERS
+vlan 60
+ name GUEST
+vlan 70
+ name CCTV
+vlan 99
+ name MGMT
+vlan 999
+ name BLACKHOLE
+spanning-tree mode mst
+spanning-tree mst configuration
+ name BRANCH
+ revision 1
+ instance 1 vlan 10, 30, 50, 70
+ instance 2 vlan 20, 40, 60, 99
+interface range Ethernet0/0 - 1
+ description uplink to DSW-1 / DSW-2
+ switchport trunk encapsulation dot1q
+ switchport trunk allowed vlan 10,20,30,40,50,60,70,99
+ switchport trunk native vlan 999
+ switchport mode trunk
+ switchport nonegotiate
+ spanning-tree link-type point-to-point
+interface Ethernet0/2
+ description PC-ADMIN
+ switchport mode access
+ switchport access vlan 10
+ spanning-tree portfast edge
+ spanning-tree bpduguard enable
+interface Vlan99
+ ip address 10.2.99.11 255.255.255.240
+ip route 0.0.0.0 0.0.0.0 10.2.99.1

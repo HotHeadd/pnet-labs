@@ -1,0 +1,32 @@
+! DSW-1: маршрутизация, HSRP, DHCP relay, OSPF (DSW-2 — адреса .3, priority 110 у VLAN 20/40/60/99)
+no ip cef                                     ! обход ошибки CEF образа IOL L2
+interface Ethernet0/0
+ description to BR-CORE
+ no switchport
+ ip address 10.2.255.6 255.255.255.252
+interface Ethernet1/2
+ description to BR-CORE-2
+ no switchport
+ ip address 10.2.255.18 255.255.255.252
+interface Vlan10
+ ip address 10.2.10.2 255.255.255.224
+ ip helper-address 10.2.50.10
+ standby version 2
+ standby 10 ip 10.2.10.1
+ standby 10 priority 110
+ standby 10 preempt
+interface Vlan20
+ ip address 10.2.20.2 255.255.255.0
+ ip access-group DEV-IN in
+ ip helper-address 10.2.50.10
+ standby version 2
+ standby 20 ip 10.2.20.1
+ standby 20 preempt
+! Vlan30, 40, 50, 60, 70, 99 — аналогично (шлюз .1, DSW-1 .2, DSW-2 .3)
+router ospf 1
+ router-id 10.2.254.2
+ passive-interface default
+ no passive-interface Ethernet0/0
+ no passive-interface Ethernet1/2
+ no passive-interface Vlan99
+ network 10.2.0.0 0.0.255.255 area 0

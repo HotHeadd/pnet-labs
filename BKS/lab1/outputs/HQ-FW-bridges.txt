@@ -1,0 +1,31 @@
+[root@HQ-FW-1.hq.local]/root: ifconfig bridge0
+bridge0: flags=1008843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST,LOWER_UP> metric 0 mtu 1500
+        ether 58:9c:fc:10:ff:b8
+        id 00:00:00:00:00:00 priority 32768 hellotime 2 fwddelay 15
+        maxage 20 holdcnt 6 proto rstp maxaddr 2000 timeout 1200
+        root id 00:00:00:00:00:00 priority 32768 ifcost 0 port 0
+        member: vtnet1 flags=143<LEARNING,DISCOVER,AUTOEDGE,AUTOPTP>
+        member: vtnet0 flags=143<LEARNING,DISCOVER,AUTOEDGE,AUTOPTP>
+
+[root@HQ-FW-2.hq.local]/root: ifconfig bridge1 addr
+00:50:79:66:68:1e Vlan0 vtnet3 1114 flags=0<>
+aa:bb:cc:00:13:00 Vlan0 vtnet3 1189 flags=0<>
+00:50:79:66:68:1d Vlan0 vtnet3 1109 flags=0<>
+aa:bb:cc:00:0c:30 Vlan0 vtnet2 1191 flags=0<>
+
+HQ-EDGE#ping 10.1.255.2 repeat 5        (HQ-CORE-1 через HQ-FW-1)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#ping 10.1.255.6 repeat 5        (HQ-CORE-2 через HQ-FW-2)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#ping 10.1.100.10 repeat 5       (SRV-WEB через HQ-FW-2)
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/1/1 ms
+HQ-EDGE#show ip ospf neighbor
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+10.2.254.254      0   FULL/  -        00:00:32    172.16.0.6      Tunnel1
+10.2.254.254      0   FULL/  -        00:00:35    172.16.0.2      Tunnel0
+10.1.254.2        1   FULL/BDR        00:00:39    10.1.255.6      Ethernet0/2
+10.1.254.1        1   FULL/BDR        00:00:32    10.1.255.2      Ethernet0/1
+
