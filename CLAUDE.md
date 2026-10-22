@@ -3,9 +3,17 @@
 Отчёты — typst, шаблон `@local/mephi-lab:0.1.0` (см. README.md). Студент: Доценко В. А., группа Б23-505.
 У каждой лабы своя папка `labN/` (или `<предмет>/labN/`) со своим `CLAUDE.md` — состояние стенда и что осталось. Читай его первым, когда работаешь с лабой.
 
+**Условия лаб (методички)** — в Dropbox: `/obsvault/mephi/s7/basynya/bks/` и `.../basynya/sa/` (папка именно `basynya`),
+файлы `Лабораторная работа №N (БКС).pdf` / `(СА).pdf`. Читать: `fetch` (до 5 МБ); больше — `download_link` → curl в scratchpad →
+`uv run --no-project --with pypdf python -I <скрипт>` (pdftotext/pdftoppm на Mac нет). Копию PDF класть в `<лаба>/preamble/`.
+Лабы БКС связаны: ЛР2 встраивает МЭ в сеть ГО из ЛР1, ЛР3 — связь ГО с филиалами (см. `BKS/lab2/CLAUDE.md`).
+
 ## Работа с PNETLab через MCP
 
 MCP-сервер `pnetlab`, аккаунт PNET `vova_pc` (раньше `mcp-vova`, роль Admin). PNETLab 5.x, offline-режим.
+На Mac (с 2026-10-22): `.mcp.json` в корне — **симлинк** на `~/Library/Application Support/Claude/claude_desktop_config.json`
+(в `.gitignore`; конфиг не копировать). Сервер `/Users/martv/mcp/pnetlab-mcp-server` (venv), аккаунт **`vlad_pc`** — тот же,
+что в Claude Desktop на этом Mac, поэтому не работать из обоих одновременно.
 
 - **Одна сессия на аккаунт.** Если одновременно открыт Claude Desktop с тем же MCP — вы выбиваете друг друга. Работай из одного клиента.
 - **Свой экземпляр лабы.** Под этим аккаунтом у каждой лабы свой pod: изменения в консолях видны только в этой сессии. Пользователь смотрит через Join в веб-морде (Running Lab). Чужие сессии (других аккаунтов) MCP не видит и не трогает.
@@ -31,8 +39,9 @@ MCP-сервер `pnetlab`, аккаунт PNET `vova_pc` (раньше `mcp-vov
   - IP Source Guard ломает DHCP-хостов; sticky Port Security ломается, т. к. VPCS меняют MAC при пересоздании pod;
   - `interface range` по нескольким Port-channel может уронить ноду — настраивать по одному.
 - **qemu-ноды (pfSense и т. п.):** MCP `add_node` создаёт их без опций шаблона (qemu_arch/nic/options, config_script) —
-  не стартуют и оставляют процессы-сироты qemu на сервере. Создавать в веб-морде; облака (pnet0) подключать там же
-  (`connect_nodes` к облаку не умеет). pfSense: консоль только VNC, через VNC теряется Shift и каждая строка даёт лишний Enter;
+  не стартуют и оставляют процессы-сироты qemu на сервере, `connect_nodes` к облаку не умеет. Вместо этого —
+  `tools/pnet-helper.py` (python из venv MCP, логин из конфига Desktop): `add-qemu` (с опциями шаблона), `add-cloud`, `connect`,
+  а также `type`/`keys`/`shot` для VNC-консолей с правильным Shift. Его логин выбивает сессию MCP — MCP перелогинивается сам. pfSense: консоль только VNC, через VNC теряется Shift и каждая строка даёт лишний Enter;
   `export_config` не работает. Настройка — через веб-интерфейс по сети управления (облако pnet0 = VMnet8 192.168.226.0/24 хоста),
   скрипты `BKS/lab1/tools/pfsense-gui.py` (backup/restore config.xml) и `pfsense-config.py`. В окружении есть прокси — curl с `--noproxy '*'`.
 - **Здоровье нод:** зависшая/упавшая IOL — `get_node_status`; память — `show memory statistics | include Proc` (норма ~55 МБ used).

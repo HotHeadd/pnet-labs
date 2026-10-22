@@ -1,0 +1,27 @@
+root@kali:~# wg-quick up wg0
+root@kali:~# ping -c2 10.1.200.1
+64 bytes from 10.1.200.1: icmp_seq=2 ttl=64 time=5.59 ms
+
+--- 10.1.200.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 5.359/5.472/5.586/0.113 ms
+root@kali:~# ping -c2 10.1.100.12
+PING 10.1.100.12 (10.1.100.12) 56(84) bytes of data.
+64 bytes from 10.1.100.12: icmp_seq=1 ttl=127 time=4.46 ms
+64 bytes from 10.1.100.12: icmp_seq=2 ttl=127 time=7.25 ms
+
+--- 10.1.100.12 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 4.461/5.856/7.252/1.395 ms
+root@kali:~# wg show
+interface: wg0
+  public key: Vlf+dbrvo9y779wdTEytGFh8KpmpfULo0Qaf9zpTIzI=
+  private key: (hidden)
+  listening port: 40637
+
+peer: gWjahjT1I6gC7gXpjqCTLyumX065fczOjPuC1yNvIEw=
+  endpoint: 203.0.113.10:51820
+  allowed ips: 10.1.200.0/24, 10.1.100.12/32
+  latest handshake: 4 seconds ago
+  transfer: 604 B received, 692 B sent
+  persistent keepalive: every 25 seconds

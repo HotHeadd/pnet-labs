@@ -1,0 +1,25 @@
+root@hq-fw:~# cat /home/fwadmin/.ssh/authorized_keys | cut -c1-60
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP+T5uq9dRqn+PVgcL24Yxu1
+root@hq-fw:~# sshd -T | grep -E '^(permitrootlogin|passwordauthentication|allowusers|maxauthtries|ciphers) '
+maxauthtries 3
+permitrootlogin no
+passwordauthentication no
+ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com
+allowusers fwadmin
+root@hq-fw:~# fail2ban-client status sshd | head -4
+Status for the jail: sshd
+|- Filter
+|  |- Currently failed: 0
+|  |- Total failed:     0
+root@hq-fw:~# auditctl -l | wc -l
+5
+root@hq-fw:~# ls /var/backups/hq-fw
+hq-fw-2026-10-22-2242.tgz
+root@hq-fw:~# systemctl is-active ssh fail2ban auditd wg-quick@wg0
+active
+active
+active
+active
+root@hq-fw:~# cd /etc && git log --oneline | head -2
+d31da99 HQ-FW lab2 baseline
+c01caae daily autocommit

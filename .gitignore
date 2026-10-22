@@ -2,3 +2,5 @@
 .DS_Store
 .preview/
 !**/preamble/*.pdf
+pnet.code-workspace
+.mcp.json

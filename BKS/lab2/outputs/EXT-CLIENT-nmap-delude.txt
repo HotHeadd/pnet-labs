@@ -1,0 +1,11 @@
+root@kali:~# nmap -Pn -sS -p 22,80,12345 203.0.113.10
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-10-22 15:52 EDT
+Nmap scan report for 203.0.113.10
+Host is up.
+
+PORT      STATE    SERVICE
+22/tcp    filtered ssh
+80/tcp    filtered http
+12345/tcp filtered netbus
+
+Nmap done: 1 IP address (1 host up) scanned in 3.10 seconds

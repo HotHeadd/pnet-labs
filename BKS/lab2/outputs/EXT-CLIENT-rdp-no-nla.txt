@@ -1,0 +1,5 @@
+root@kali:~# xfreerdp /v:10.1.100.12 /u:rdpuser /p:'********' /cert-ignore /sec:rdp 2>&1 | grep -iE 'error|fail|negotiat' | head -6
+[15:49:34:988] [3297:3300] [ERROR][com.freerdp.core.transport] - BIO_read returned a system error 104: Connection reset by peer
+[15:49:34:988] [3297:3300] [ERROR][com.freerdp.core.nego] - Protocol Security Negotiation Failure
+[15:49:34:988] [3297:3300] [ERROR][com.freerdp.core] - freerdp_set_last_error ERRCONNECT_SECURITY_NEGO_CONNECT_FAILED [0x0002000C]
+[15:49:34:988] [3297:3300] [ERROR][com.freerdp.core.connection] - Error: protocol security negotiation or connection failure

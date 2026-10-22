@@ -1,0 +1,15 @@
+hostname HQ-DMZ
+no ip domain-lookup
+vtp mode transparent
+vlan 100
+ name DMZ
+interface range Ethernet0/0 - 3
+ switchport mode access
+ switchport access vlan 100
+ spanning-tree portfast edge
+ no shutdown
+interface Ethernet0/0
+ description HQ-FW DMZ
+interface Ethernet0/1
+ description WIN-SRV
+end

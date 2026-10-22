@@ -1,0 +1,12 @@
+root@kali:~# ssh fwadmin@192.168.15.134 "hostname; id; sudo -n true 2>&1 | head -1"
+Warning: Permanently added '192.168.15.134' (ECDSA) to the list of known hosts.
+Authorized access only. All activity is logged.
+hq-fw
+uid=1001(fwadmin) gid=1001(fwadmin) groups=1001(fwadmin),27(sudo)
+sudo: a password is required
+root@kali:~# ssh -o PubkeyAuthentication=no fwadmin@192.168.15.134 true
+Authorized access only. All activity is logged.
+fwadmin@192.168.15.134: Permission denied (publickey).
+root@kali:~# ssh root@192.168.15.134 true
+Authorized access only. All activity is logged.
+root@192.168.15.134: Permission denied (publickey).

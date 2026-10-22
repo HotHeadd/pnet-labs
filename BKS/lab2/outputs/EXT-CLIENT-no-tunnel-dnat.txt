@@ -1,0 +1,8 @@
+root@kali:~# wg-quick down wg0
+root@kali:~# ip r get 10.1.100.12
+10.1.100.12 via 192.168.15.2 dev eth1 src 192.168.15.133 uid 0
+    cache
+root@kali:~# timeout 15 xfreerdp /v:203.0.113.10 /u:rdpuser /p:x /cert-ignore /sec:nla 2>&1 | grep ERROR | head -2
+Terminated
+root@kali:~# curl -s -m 5 http://203.0.113.10:8080/
+<h1>WIN-SRV (DMZ 10.1.100.12) - BKS lab 2</h1>
