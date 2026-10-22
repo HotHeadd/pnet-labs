@@ -29,6 +29,8 @@ Banner /etc/issue.net
 EOF
 echo 'Authorized access only. All activity is logged.' > /etc/issue.net
 rm -f /etc/ssh/sshd_config.d/50-cloud-init.conf
+# rkhunter reads only the main sshd_config
+sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin no/' /etc/ssh/sshd_config
 sshd -t && systemctl restart ssh
 
 # --- fail2ban: SSH brute force -> ban 1 h ---
@@ -60,6 +62,7 @@ EOF
 
 # --- unused services off ---
 systemctl disable --now snapd.service snapd.socket multipathd.service ModemManager.service 2>/dev/null
+systemctl mask snapd.service snapd.socket 2>/dev/null
 
 # --- backups: etckeeper (git /etc) + daily config archive, 14 copies ---
 etckeeper init 2>/dev/null; etckeeper commit 'HQ-FW lab2 baseline' 2>/dev/null
@@ -74,4 +77,11 @@ EOF
 chmod 700 /usr/local/sbin/hq-fw-backup
 echo '30 2 * * * root /usr/local/sbin/hq-fw-backup' > /etc/cron.d/hq-fw-backup
 /usr/local/sbin/hq-fw-backup
+# --- rkhunter: known false positives (sshd drop-in, etckeeper files) ---
+cat >> /etc/rkhunter.conf.local <<'EOF2'
+ALLOW_SSH_ROOT_USER=no
+ALLOWHIDDENDIR=/etc/.git
+ALLOWHIDDENFILE=/etc/.etckeeper
+ALLOWHIDDENFILE=/etc/.gitignore
+EOF2
 echo HARDENING-DONE

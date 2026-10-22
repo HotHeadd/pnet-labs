@@ -1,0 +1,29 @@
+hostname HQ-DMZ
+vtp mode transparent
+no ip domain-lookup
+ip cef
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+vlan 100
+ name DMZ
+interface Ethernet0/0
+ description HQ-FW DMZ
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast edge
+interface Ethernet0/1
+ description WIN-SRV
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast edge
+interface Ethernet0/2
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast edge
+interface Ethernet0/3
+ switchport access vlan 100
+ switchport mode access
+ spanning-tree portfast edge
+line con 0
+ logging synchronous
+line vty 0 4

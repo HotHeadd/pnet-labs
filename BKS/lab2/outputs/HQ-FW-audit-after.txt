@@ -1,0 +1,25 @@
+root@hq-fw:~# grep 'Hardening index' /root/lynis-*.txt
+/root/lynis-after.txt:  Hardening index : 71 [##############      ]
+/root/lynis-before.txt:  Hardening index : 65 [#############       ]
+root@hq-fw:~# rkhunter --check --sk --rwo
+Warning: The SSH configuration option 'PermitRootLogin' has not been set.
+         The default value may be 'yes', to allow root access.
+Warning: Hidden directory found: /etc/.git
+Warning: Hidden file found: /etc/.etckeeper: ASCII text
+Warning: Hidden file found: /etc/.gitignore: ASCII text
+root@hq-fw:~# grep -E 'Rootkits|Possible' /var/log/rkhunter.log | tail -2
+[23:00:13] Rootkits checked : 498
+[23:00:13] Possible rootkits: 0
+root@hq-fw:~# chkrootkit -q
+The following suspicious files and directories were found:
+/usr/lib/python3/dist-packages/fail2ban/tests/files/config/apache-auth/digest_anon/.htpasswd
+/usr/lib/python3/dist-packages/fail2ban/tests/files/config/apache-auth/digest_anon/.htaccess
+/usr/lib/python3/dist-packages/fail2ban/tests/files/config/apache-auth/basic/file/.htpasswd
+/usr/lib/python3/dist-packages/fail2ban/tests/files/config/apache-auth/basic/file/.htaccess
+/usr/lib/python3/dist-packages/fail2ban/tests/files/config/apache-auth/basic/authz_owner/.htpasswd
+root@hq-fw:~# # после исключений в /etc/rkhunter.conf.local и PermitRootLogin no в sshd_config
+root@hq-fw:~# rkhunter --check --sk --rwo; echo RC=$?
+RC=0
+root@hq-fw:~# grep -E 'Rootkits checked|Possible rootkits' /var/log/rkhunter.log | tail -2
+[00:29:39] Rootkits checked : 498
+[00:29:39] Possible rootkits: 0

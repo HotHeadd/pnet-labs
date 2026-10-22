@@ -1,0 +1,27 @@
+hostname HQ-EDGE
+no ip domain lookup
+ip cef
+interface Ethernet0/0
+ description ISP e0/0
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ ip virtual-reassembly in
+interface Ethernet0/1
+ description HQ-FW WAN (public transit)
+ ip address 203.0.113.9 255.255.255.248
+interface Ethernet0/2
+ description HQ LAN (ADMIN)
+ ip address 10.1.10.1 255.255.255.224
+ ip nat inside
+ ip virtual-reassembly in
+ip nat inside source list NAT-HQ interface Ethernet0/0 overload
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+ip route 10.1.100.0 255.255.255.240 203.0.113.10
+ip route 10.1.200.0 255.255.255.0 203.0.113.10
+ip access-list standard NAT-HQ
+ permit 10.1.10.0 0.0.0.31
+line con 0
+ logging synchronous
+line vty 0 4
+ login
+ transport input none

@@ -27,8 +27,9 @@ pfSense прозрачными мостами без фильтрации, в о
 вместо ACL DMZ-IN, маршруты в DMZ на HQ-EDGE через МЭ, e0/3 HQ-EDGE убрать.
 
 **Решения пользователя (2026-10-22):**
-- Стенд **с нуля**, отдельная лаба **`/BKS labs/BKS2-FW.unl`** (создана через MCP под `vlad_pc`). Чужие лабы/сессии не трогать:
-  `/BKS labs/BKS2.unl` (author 6, один узел HQ-FW, 2 открытые сессии pod 6/10) — не наш, не открывать и не менять.
+- Стенд **с нуля**, лаба **`/BKS labs/BKS2.unl`** (создана через MCP под `vlad_pc` как BKS2-FW; 2026-10-23 по просьбе
+  пользователя старая BKS2.unl — один узел HQ-FW, author 6 — удалена вместе с пустыми сессиями, BKS2-FW переименована в BKS2;
+  UUID лабы прежний ee755183-…, диски нод сохранились).
   BKS1 не копируем — на стенде фрагмент ГО из ЛР1 (те же адреса: HQ-EDGE 203.0.113.2, ADMIN 10.1.10.0/27, DMZ 10.1.100.0/28),
   в отчёте — как МЭ встраивается в полную схему ЛР1 (pfSense-заглушки → Ubuntu-МЭ на DMZ).
 - **HQ-FW (Ubuntu) на DMZ:** HQ-EDGE → публичный транзит → HQ-FW → HQ-DMZ (WIN-SRV).
@@ -48,16 +49,17 @@ MCP `pnetlab` на Mac подключён (аккаунт `vlad_pc`, local scope
 - MCP `add_node` не передаёт qemu-опции шаблона (см. корневой CLAUDE.md, проверено в `~/mcp/pnetlab-mcp-server/src/.../client.py`) →
   qemu-узлы и облако добавляет пользователь в веб-морде.
 
-## ТОЧКА ОСТАНОВКИ (2026-10-22 ~23:00, кончились лимиты)
+## Состояние (2026-10-23)
 
-Стенд запущен и работает, всё ключевое проверено (см. план п. 6). Сохранено: write memory IOL + export_config,
-`stand/pnetlab_export-20261022-215442.zip`; HQ-FW — rules.v4 (netfilter-persistent), wg-quick@wg0 enabled, бэкап /var/backups/hq-fw.
-Продолжить: (1) на HQ-FW `grep 'Hardening index' /root/lynis-after.txt`, `/root/rkhunter.txt`, `/root/chkrootkit.txt` → `outputs/`;
-(2) перезагрузить HQ-FW и проверить, что правила/wg/маршруты поднялись; (3) конфиги HQ-FW (`iptables-save`, wg0.conf без ключа,
-netplan, sshd 90-hq-fw.conf) переписать в `configs/HQ-FW/`; (4) отчёт `main.typ` (листинги из `commands/`, `outputs/`, скриншоты `img/`);
-(5) спросить пользователя про удаление ноды 7 (EXT-CLIENT-old). Kali после ребута: `wg-quick up wg0` вручную.
+Практическая часть выполнена и проверена, стенд работает. Lynis 65 → 71; rkhunter 0 руткитов (ложные предупреждения —
+в /etc/rkhunter.conf.local, PermitRootLogin продублирован в основном sshd_config); chkrootkit — только тестовые файлы fail2ban.
+Перезагрузка HQ-FW: правила, wg0, маршруты, службы поднимаются сами (`outputs/HQ-FW-after-reboot.txt`). snapd замаскирован.
+Отчёт `main.typ` написан целиком (собирается, 27+ стр.). Осталось: скриншот топологии `img/topology.png` (заглушка в отчёте —
+просить пользователя), финальная выгрузка `stand/` после изменений.
+Kali: после ребута `wg-quick up wg0` вручную. Конфиги IOL — `configs/*.txt` (из выгрузки), HQ-FW — источник `commands/HQ-FW-*.sh`
+(сверено md5 по коду без комментариев).
 
-## Стенд BKS2-FW
+## Стенд BKS2
 
 | id | Узел | Образ | Порты |
 |---|---|---|---|
@@ -67,7 +69,6 @@ netplan, sshd 90-hq-fw.conf) переписать в `configs/HQ-FW/`; (4) от�
 | 4 | PC-HQ-ADMIN | VPCS | → HQ-EDGE e0/2 |
 | 5 | HQ-FW | linux-ubuntu-server-22.04, 3 NIC, 2 ГБ, 2 CPU, telnet | e0 → HQ-EDGE e0/1; e1 → HQ-DMZ e0/0; e2 → облако NetManagement (net 3) |
 | 6 | WIN-SRV | winserver-S2019-VL-x64, 4 ГБ, 2 CPU, vnc | e0 → HQ-DMZ e0/1 |
-| 7 | EXT-CLIENT-old | kali-2020-epiol → не грузится («No bootable device»); остановлен, e1 ещё в облаке (отвязать API не дал) — **удалить, когда пользователь разрешит** | — |
 | 8 | EXT-CLIENT | linux-kali-large-2019.3 (шаблон linux), 2 NIC, 3 ГБ, vnc, GNOME | e0 → ISP e0/1; e1 → облако NetManagement (net 3) |
 
 qemu-узлы и облако созданы `../../tools/pnet-helper.py` (опции шаблона + `networks/add` type pnet0 + `interfaces/edit`), не веб-мордой.
@@ -106,15 +107,15 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
 
 0. [x] Контекст: условие из Dropbox, папка лабы, этот файл, заготовка `main.typ`.
 1. [x] PNETLab: MCP подключён, образы Ubuntu 22.04 / Windows Server 2019 / Kali есть.
-2. [x] Стенд BKS2-FW собран (2026-10-22): IOL/VPCS — MCP, qemu + облако — `tools/pnet-helper.py`; `start_all`.
+2. [x] Стенд BKS2 собран (2026-10-22): IOL/VPCS — MCP, qemu + облако — `tools/pnet-helper.py`; `start_all`.
 3. [x] Адресация/маршрутизация (IOL консолью, HQ-FW netplan `commands/HQ-FW-netplan.yaml`, Kali nmcli `commands/EXT-CLIENT-setup.sh`).
 4. [x] HQ-FW базово: `commands/HQ-FW-{install,base,iptables,hardening}.sh`; Lynis до — 65.
 5. [x] Вариант 6: WireGuard (`HQ-FW-wireguard.sh`), psd/recent → TARPIT, DELUDE 12345, WIN-SRV NLA (`WIN-SRV-base.ps1`).
-6. [~] Проверки сделаны (`outputs/`, скриншоты `img/`): nmap до/после/DELUDE, WG, RDP NLA ок / без NLA отказ / без туннеля нет,
+6. [x] Проверки сделаны (`outputs/`, скриншоты `img/`): nmap до/после/DELUDE, WG, RDP NLA ок / без NLA отказ / без туннеля нет,
    DNAT 8080, WIN-SRV → 8.8.8.8 (SNAT .11), DMZ ↛ ADMIN (FW-DROP), ADMIN → DMZ ping, SSH ключ/пароль/root.
    Осталось: lynis после + rkhunter/chkrootkit (запущены в фоне → /root/*.txt), перезагрузка HQ-FW (правила/wg живут),
    write memory + export_config, бэкап конфигов HQ-FW в `configs/`, `download_lab` → `stand/`.
-7. [ ] Отчёт по структуре методички; листинги сырыми по ходу, формализация в конце.
+7. [x] Отчёт по структуре методички (кроме скриншота топологии).
 
 ## Заметки
 
