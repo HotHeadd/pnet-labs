@@ -56,7 +56,7 @@ MCP `pnetlab` на Mac подключён (аккаунт `vlad_pc`, local scope
 Перезагрузка HQ-FW: правила, wg0, маршруты, службы поднимаются сами (`outputs/HQ-FW-after-reboot.txt`). snapd замаскирован.
 Отчёт `main.typ` написан целиком (собирается, 27+ стр.). Осталось: скриншот топологии `img/topology.png` (заглушка в отчёте —
 просить пользователя), финальная выгрузка `stand/` после изменений.
-Kali: после ребута `wg-quick up wg0` вручную.
+Kali: туннель поднимается при загрузке (`wg0.service`, `commands/EXT-CLIENT-wg0.service`, с 2026-10-23).
 **Сверка 2026-10-23 (повторная):** топология = таблица ниже; startup IOL = `configs/`, running = startup (кроме служебного `length 0` на line con);
 HQ-FW iptables/nat = `HQ-FW-iptables.sh` и = rules.v4, sshd/fail2ban/auditd/бэкапы по `HQ-FW-hardening.sh`; сквозные проверки (WG, RDP NLA, DNAT 8080, SNAT .11, ADMIN→DMZ/8.8.8.8) ок. Конфиги IOL — `configs/*.txt` (из выгрузки), HQ-FW — источник `commands/HQ-FW-*.sh`
 (сверено md5 по коду без комментариев).
@@ -120,6 +120,13 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
 7. [x] Отчёт по структуре методички (кроме скриншота топологии).
 
 ## Заметки
+
+- **Команда (2026-10-23):** BKS2 открывали и micha (pod 6), и micha_pc (pod 10) — пустые сессии, их не трогать.
+- **Опубликовано 2026-10-23:** узлы 5/6/8 → `linux-bks2-hq-fw-v1` (3,2 ГБ), `winserver-bks2-win-srv-v1` (12 ГБ), `linux-bks2-ext-client-v1`
+  (13 ГБ); проверено на клоне `BKS2-verify` (HQ-FW правила/wg, Kali туннель сам, RDP NLA, DNAT 8080, DELUDE open).
+  Оверлеи на хосте: `/opt/unetlab/tmp/<id сессии лабы>/<session узла>/virtioa.qcow2`.
+- **MAC/IP в облаке управления одинаковы во всех pod** (firstmac в .unl): HQ-FW ens5 .134, Kali eth1 .133 — два pod BKS2 с запущенными
+  HQ-FW/Kali одновременно конфликтуют в сети управления (WAN/DMZ изолированы, им не мешает).
 
 - **DELUDE (2026-10-23):** xtables-addons 3.19 на ядре 5.15 шлёт SYN/ACK с TTL=0 (WARNING dst.h:160 в delude_tg) — HQ-EDGE
   его отбрасывал, nmap видел 12345 filtered. Исправлено правилом

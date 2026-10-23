@@ -7,7 +7,7 @@ apt-get update
 apt-get -y full-upgrade
 apt-get -y install --no-install-recommends \
   iptables-persistent conntrack wireguard wireguard-tools \
-  xtables-addons-dkms xtables-addons-common libtext-csv-xs-perl dkms build-essential \
+  xtables-addons-dkms xtables-addons-common dkms build-essential \
   linux-headers-generic "linux-headers-$(uname -r)" \
   fail2ban unattended-upgrades lynis rkhunter chkrootkit auditd etckeeper git tcpdump
 echo INSTALL-DONE

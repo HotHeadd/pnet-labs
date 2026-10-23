@@ -3,4 +3,6 @@
 .preview/
 !**/preamble/*.pdf
 pnet.code-workspace
-.mcp.json
+mcp-creds.json
+__pycache__/
+.pnet-account
