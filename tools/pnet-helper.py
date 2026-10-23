@@ -20,14 +20,12 @@
                                (на экране должно быть «REMOTE: OK»; --shot сохраняет скриншот;
                                для VNC-консолей --key-delay 0.05, иначе теряется Shift)
 
-Командная работа (см. TEAM.md): лаба не открывается, замок — строка в description лабы.
-  start-lab LAB --who ИМЯ      выбрать аккаунт для лабы (автор живой сессии / свободный), поставить замок, use
+Командная работа (см. TEAM.md): у каждого свой аккаунт, к открытой сессии лабы присоединяются (Join).
+  join LAB [--session ID]      присоединить текущий аккаунт к живой сессии лабы (factory/join, как Join в веб-интерфейсе)
   use АККАУНТ                  выбрать аккаунт для MCP (tools/pnet-mcp.py) и хелпера; потом /mcp → Reconnect
   sessions                     открытые сессии сервера: id, лаба, pod, аккаунт, запущено узлов
   close-session ID [--force]   закрыть сессию (pod уничтожается); без --force — только свою и без запущенных узлов
-  lock LAB --who ИМЯ [--force] взять лабу; отказ, если её держит другой
-  unlock LAB [--force]         снять свой замок
-  status LAB                   замок, сессии лабы, образы qemu-узлов
+  status LAB                   сессии лабы, образы qemu-узлов (лаба не открывается)
   snapshot LAB NODE_ID [--name БАЗА]  свернуть диск узла своего pod в новый образ БАЗА-vN на хосте (root SSH по ключу,
                                $PNETLAB_SSH или root@<хост>; tools/pnet-host/pnet-snapshot.sh) и перевести узел .unl на него; узел должен быть остановлен
 """
@@ -252,15 +250,6 @@ async def _unl(c: PNetLabClient, lab: str) -> ET.Element:
     return ET.fromstring(zf.read(next(n for n in zf.namelist() if n.endswith(".unl"))))
 
 
-def _lock_of(unl: ET.Element) -> str:
-    d = (unl.findtext("description") or "").strip()
-    return d if d.startswith("LOCK:") else ""
-
-
-async def _set_desc(c: PNetLabClient, lab: str, text: str) -> None:
-    await c._request("POST", "/api/labs/edit", json={"path": c._normalize_lab_path(lab), "data": {"description": text}})
-
-
 async def sessions(c: PNetLabClient, a) -> None:
     for s in await _sessions(c):
         print(f"{s['id']:>4}  pod {s['pod']:>3}  {s['user'] or '?':<16} узлов {s['running']:>2}  {s['lab']}")
@@ -275,27 +264,9 @@ async def close_session(c: PNetLabClient, a) -> None:
     print(await c._api_post("/api/labs/session/factory/destroy", {"lab_session": a.id}))
 
 
-async def lock(c: PNetLabClient, a) -> None:
-    held = _lock_of(await _unl(c, a.lab))
-    if held and f"({c.username})" not in held and not a.force:
-        sys.exit(f"занято: {held}")
-    text = f"LOCK: {a.who} {time.strftime('%Y-%m-%d %H:%M')} ({c.username})"
-    await _set_desc(c, a.lab, text)
-    print(text)
-
-
-async def unlock(c: PNetLabClient, a) -> None:
-    held = _lock_of(await _unl(c, a.lab))
-    if held and f"({c.username})" not in held and not a.force:
-        sys.exit(f"замок чужой: {held} (снять — --force)")
-    await _set_desc(c, a.lab, "")
-    print("свободно")
-
-
 async def status(c: PNetLabClient, a) -> None:
     unl = await _unl(c, a.lab)
     path = c._normalize_lab_path(a.lab)
-    print("замок:", _lock_of(unl) or "нет")
     for s in await _sessions(c):
         if s["lab"] == path:
             print(f"сессия {s['id']}: pod {s['pod']} {s['user']}, узлов {s['running']}")
@@ -313,51 +284,15 @@ def use_account(name: str) -> None:
     print(f"аккаунт: {name}. В Claude Code: /mcp → pnetlab → Reconnect (MCP через tools/pnet-mcp.py)")
 
 
-async def start_lab(c: PNetLabClient, a) -> None:
-    accounts = pnet_creds.accounts()
+async def join(c: PNetLabClient, a) -> None:
     path = c._normalize_lab_path(a.lab)
-    try:
-        held = _lock_of(await _unl(c, path))
-        exists = True
-    except Exception:
-        held, exists = "", False
-    sess = await _sessions(c)
-    live = [s for s in sess if s["lab"] == path and s["running"]]
-    if held:
-        m = re.search(r"\(([^)]+)\)\s*$", held)
-        if not held.startswith(f"LOCK: {a.who} ") and not a.force:
-            sys.exit(f"занято: {held} — работать нельзя, решать с коллегами")
-        account = m.group(1) if m else None
-        why = "свой замок"
-    elif live:
-        authors = sorted({s["user"] for s in live})
-        if len(authors) > 1:
-            sys.exit(f"у лабы несколько живых сессий: {authors} — решать с коллегами")
-        account, why = authors[0], f"автор живой сессии {live[0]['id']} (pod {live[0]['pod']}, узлов {live[0]['running']})"
-    else:
-        busy = {s["user"] for s in sess if s["running"]}
-        free = [n for n in accounts if n not in busy]
-        if not free:
-            sys.exit(f"нет свободных аккаунтов: у всех есть сессии с запущенными узлами ({sorted(busy)})")
-        account, why = free[0], "свободный аккаунт"
-    if account not in accounts:
-        sys.exit(f"нужен аккаунт {account} ({why}), его нет в {pnet_creds.CREDS} — решать с коллегами")
-    # проверить, что логин работает, и взять замок уже от этого аккаунта
-    c2 = PNetLabClient(base_url=pnet_creds.HOST, username=account, password=accounts[account], html_console=1,
-                       verify_ssl=False)
-    try:
-        await c2.login()
-    except Exception as e:
-        sys.exit(f"не удалось войти как {account}: {e} — решать с коллегами")
-    try:
-        if exists:
-            text = f"LOCK: {a.who} {time.strftime('%Y-%m-%d %H:%M')} ({account})"
-            await _set_desc(c2, path, text)
-    finally:
-        await c2.close()
-    use_account(account)
-    print(f"{path}: {'есть' if exists else 'нет .unl — создать через MCP create_lab, затем lock'}; "
-          f"аккаунт {account} — {why}" + (f"; {text}" if exists else ""))
+    live = [s for s in await _sessions(c) if s["lab"] == path and (s["id"] == a.session if a.session else s["running"])]
+    if len(live) != 1:
+        sys.exit(f"нужна ровно одна сессия {path}{' с id ' + str(a.session) if a.session else ' с запущенными узлами'}: {live}")
+    s = live[0]
+    await c._api_post("/api/labs/session/factory/join", {"lab_session": s["id"]})
+    me = await c.get_session_info()
+    print(f"{c.username}: сессия {me.get('lab')} (автор {s['user']}, pod {s['pod']}, узлов {s['running']})")
 
 
 async def use(c: PNetLabClient, a) -> None:
@@ -444,22 +379,14 @@ def main() -> None:
     s.add_argument("node", type=int)
     s.add_argument("out")
     sub.add_parser("sessions")
-    sl = sub.add_parser("start-lab")
-    sl.add_argument("lab")
-    sl.add_argument("--who", required=True)
-    sl.add_argument("--force", action="store_true")
+    jn = sub.add_parser("join")
+    jn.add_argument("lab")
+    jn.add_argument("--session", type=int)
     us = sub.add_parser("use")
     us.add_argument("account")
     x = sub.add_parser("close-session")
     x.add_argument("id", type=int)
     x.add_argument("--force", action="store_true")
-    lk = sub.add_parser("lock")
-    lk.add_argument("lab")
-    lk.add_argument("--who", required=True)
-    lk.add_argument("--force", action="store_true")
-    ul = sub.add_parser("unlock")
-    ul.add_argument("lab")
-    ul.add_argument("--force", action="store_true")
     st = sub.add_parser("status")
     st.add_argument("lab")
     sn = sub.add_parser("snapshot")
@@ -475,9 +402,9 @@ def main() -> None:
             await c.login()
             await {"add-qemu": add_qemu, "add-cloud": add_cloud, "connect": connect, "edit": edit,
                    "type": type_file, "keys": keys, "shot": shot, "push": push,
-                   "sessions": sessions, "close-session": close_session, "lock": lock, "unlock": unlock,
+                   "sessions": sessions, "close-session": close_session,
                    "status": status, "snapshot": snapshot,
-                   "start-lab": start_lab, "use": use}[a.cmd](c, a)
+                   "use": use, "join": join}[a.cmd](c, a)
         finally:
             await c.close()
 
