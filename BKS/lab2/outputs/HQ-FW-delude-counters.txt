@@ -1,0 +1,6 @@
+root@hq-fw:~# iptables -L INPUT -n -v | grep DELUDE
+   11   484 DELUDE     tcp  --  ens3   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:12345
+root@hq-fw:~# iptables -t mangle -L POSTROUTING -n -v
+Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    1    40 TTL        all  --  *      ens3    0.0.0.0/0            0.0.0.0/0            TTL match TTL == 0 TTL set to 64

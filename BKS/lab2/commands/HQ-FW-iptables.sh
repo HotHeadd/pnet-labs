@@ -8,7 +8,7 @@ WIN=10.1.100.12
 ADMIN=10.1.10.0/27
 IPT=iptables
 
-$IPT -F; $IPT -X; $IPT -t nat -F; $IPT -t nat -X
+$IPT -F; $IPT -X; $IPT -t nat -F; $IPT -t nat -X; $IPT -t mangle -F
 $IPT -P INPUT DROP
 $IPT -P FORWARD DROP
 $IPT -P OUTPUT ACCEPT
@@ -34,6 +34,8 @@ $IPT -A INPUT -i $WAN -m psd --psd-weight-threshold 21 --psd-delay-threshold 300
 $IPT -A INPUT -i $WAN -p tcp --syn -m recent --name maybe_scan --set
 $IPT -A INPUT -i $WAN -p tcp --syn -m recent --name maybe_scan --update --seconds 60 --hitcount 20 -j PORTSCAN
 $IPT -A INPUT -i $WAN -p tcp --dport 12345 -j DELUDE
+# DELUDE (xtables-addons 3.19, ядро 5.15) шлёт SYN/ACK с TTL=0 — первый маршрутизатор его отбрасывает; исправляем TTL
+$IPT -t mangle -A POSTROUTING -o $WAN -m ttl --ttl-eq 0 -j TTL --ttl-set 64
 # WireGuard извне
 $IPT -A INPUT -i $WAN -p udp --dport 51820 -j ACCEPT
 # SSH: только из сети управления и ADMIN ГО, не более 2 сессий с адреса

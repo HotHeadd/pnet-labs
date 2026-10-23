@@ -56,7 +56,9 @@ MCP `pnetlab` на Mac подключён (аккаунт `vlad_pc`, local scope
 Перезагрузка HQ-FW: правила, wg0, маршруты, службы поднимаются сами (`outputs/HQ-FW-after-reboot.txt`). snapd замаскирован.
 Отчёт `main.typ` написан целиком (собирается, 27+ стр.). Осталось: скриншот топологии `img/topology.png` (заглушка в отчёте —
 просить пользователя), финальная выгрузка `stand/` после изменений.
-Kali: после ребута `wg-quick up wg0` вручную. Конфиги IOL — `configs/*.txt` (из выгрузки), HQ-FW — источник `commands/HQ-FW-*.sh`
+Kali: после ребута `wg-quick up wg0` вручную.
+**Сверка 2026-10-23 (повторная):** топология = таблица ниже; startup IOL = `configs/`, running = startup (кроме служебного `length 0` на line con);
+HQ-FW iptables/nat = `HQ-FW-iptables.sh` и = rules.v4, sshd/fail2ban/auditd/бэкапы по `HQ-FW-hardening.sh`; сквозные проверки (WG, RDP NLA, DNAT 8080, SNAT .11, ADMIN→DMZ/8.8.8.8) ок. Конфиги IOL — `configs/*.txt` (из выгрузки), HQ-FW — источник `commands/HQ-FW-*.sh`
 (сверено md5 по коду без комментариев).
 
 ## Стенд BKS2
@@ -118,6 +120,11 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
 7. [x] Отчёт по структуре методички (кроме скриншота топологии).
 
 ## Заметки
+
+- **DELUDE (2026-10-23):** xtables-addons 3.19 на ядре 5.15 шлёт SYN/ACK с TTL=0 (WARNING dst.h:160 в delude_tg) — HQ-EDGE
+  его отбрасывал, nmap видел 12345 filtered. Исправлено правилом
+  `-t mangle -A POSTROUTING -o ens3 -m ttl --ttl-eq 0 -j TTL --ttl-set 64` (в `HQ-FW-iptables.sh` и rules.v4) — теперь 12345 open.
+  TARPIT этим не страдает.
 
 - Консоли Ubuntu/Windows в PNET — VNC (как pfSense: возможны потери Shift/лишние Enter) или telnet для serial-консоли Ubuntu.
   Сеть облака с Mac недоступна — выводы со скриншотов (telnet HQ-FW читается хорошо).
