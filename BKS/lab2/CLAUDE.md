@@ -122,6 +122,18 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
 ## Заметки
 
 - **Команда (2026-10-23):** BKS2 открывали и micha (pod 6), и micha_pc (pod 10) — пустые сессии, их не трогать.
+  Вечером micha_pc присоединён к рабочей сессии №4 (`pnet-helper.py join`); его пустая сессия №6 (pod 10) осталась —
+  закрыть может пользователь (`close-session 6`). Шпаргалка к защите — `HUMAN.md`, сценарий проверок — `demo-checks.md`.
+- **2026-10-23 ~20:50 (сессия №4): все линки qemu ↔ IOL мёртвые.** HQ-FW ens3/ens4 RX 0 пакетов (uptime 1:04 — перезапущена
+  при публикации), HQ-EDGE не пингует 203.0.113.10, ISP — Kali 203.0.113.18; ARP-записи на IOL возрастом ~85 мин = момент
+  перезапуска qemu-узлов. IOL ↔ IOL и облако (ens5) работают. **Подтверждено:** после перезапуска qemu-узлов при живых IOL
+  линки не восстанавливаются; перезапуск ISP, HQ-EDGE, HQ-DMZ (stop+start, конфиги из startup-config) всё вернул, VPCS
+  трогать не пришлось. Затем регресс по `demo-checks.md` п. 1–7 — всё ✅ (`outputs/regress-20261023.txt`); п. 8 (ребут HQ-FW) не повторял.
+- Проверки с Kali удобнее скриптом: `pnet-helper.py push` на HQ-FW (telnet, md5) → на Kali `scp fwadmin@192.168.15.134:/tmp/c.sh .`
+  (короткая строка через `type`) → `sh c.sh` → вывод в файл. RDP без GUI — `xfreerdp ... /auth-only` (rc=0 — NLA прошла).
+  Из Git Bash вызывать хелпер с `MSYS_NO_PATHCONV=1` (иначе `/root/...` → `C:/Program Files/Git/root/...`).
+- VNC-консоли через MCP `read_console` теряют Shift (`|`, `$`, `-W`); `pnet-helper.py type` на Kali обрезает длинные строки
+  (~50 симв.) — давать короткие строки. Хелпер исправлен: открытие лабы не уводит аккаунт из присоединённой сессии.
 - **Опубликовано 2026-10-23:** узлы 5/6/8 → `linux-bks2-hq-fw-v1` (3,2 ГБ), `winserver-bks2-win-srv-v1` (12 ГБ), `linux-bks2-ext-client-v1`
   (13 ГБ); проверено на клоне `BKS2-verify` (HQ-FW правила/wg, Kali туннель сам, RDP NLA, DNAT 8080, DELUDE open).
   Оверлеи на хосте: `/opt/unetlab/tmp/<id сессии лабы>/<session узла>/virtioa.qcow2`.
@@ -136,3 +148,5 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
 - Консоли Ubuntu/Windows в PNET — VNC (как pfSense: возможны потери Shift/лишние Enter) или telnet для serial-консоли Ubuntu.
   Сеть облака с Mac недоступна — выводы со скриншотов (telnet HQ-FW читается хорошо).
 - xtables-addons собирается DKMS под текущее ядро — нужны `linux-headers-$(uname -r)` и интернет через MGMT.
+- **2026-10-23 вечер:** состав авторов на титуле (4 человека, как в ЛР1) подтверждён пользователем; скриншот топологии
+  `img/topology.png` вставлен в отчёт (рис. 1). Отчёт собирается (28 стр.), регресс п. 1–7 пройден — ЛР2 готова к сдаче.

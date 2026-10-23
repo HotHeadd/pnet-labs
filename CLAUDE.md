@@ -15,6 +15,11 @@ MCP-сервер `pnetlab` ([omichelbraga/pnetlab-mcp-server](https://github.com
 веб-аккаунтами (vlad, vladimir, serjei, micha): один логин в MCP и в браузере выбивают друг друга. MCP pnetlab подключён только
 в этом репо: `.mcp.json` → `tools/pnet-mcp.sh` → `tools/pnet-mcp.py` (аккаунт из `.pnet-account`, пароль из файла кредов).
 В Claude Desktop MCP pnetlab убран (2026-10-23). Установка для людей — `TEAM.md`.
+Windows-ПК (micha_pc, 2026-10-23): сервер в `C:\Users\Mikle\mcp\pnetlab-mcp-server` (venv `.venv\Scripts\python.exe`, нужен
+`pip install "mcp<2"` — с mcp 2.x нет FastMCP), подключён `claude mcp add pnetlab --scope local` (перекрывает `.mcp.json`) с env
+`NO_PROXY=…,100.100.57.19` (в системе прокси 127.0.0.1:10809, через него PNETLab не доступен). Старый `raybiko-lab` сервер в
+`C:\Users\Mikle\pnetlab-mcp-server` — не используется. `pnet-helper.py use` без готового `.pnet-account` падает (логинится до
+выбора аккаунта) — первый раз записать `.pnet-account` вручную.
 
 ### Работа в команде (обязательно)
 

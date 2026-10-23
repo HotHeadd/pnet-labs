@@ -77,6 +77,24 @@ def _env() -> dict:
     sys.exit("нет логина PNETLab: задать PNETLAB_HOST/USERNAME/PASSWORD или .mcp.json в корне репозитория")
 
 
+_create = PNetLabClient.open_lab
+
+
+async def _open_lab(self, lab_path: str):
+    """Как в pnet-mcp.py: не уводить аккаунт из присоединённой сессии лабы в свой pod (factory/create)."""
+    path = self._normalize_lab_path(lab_path)
+    sid = (await self._api_get("/api/auth") or {}).get("lab")
+    if sid:
+        for r in await self.list_running_labs():
+            if str(r.get("session_id")) == str(sid) and r.get("lab_path") == path:
+                self._current_lab = path
+                return {"session": sid, "reused": True}
+    return await _create(self, lab_path)
+
+
+PNetLabClient.open_lab = _open_lab
+
+
 def client() -> PNetLabClient:
     env = _env()
     return PNetLabClient(

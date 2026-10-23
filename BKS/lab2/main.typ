@@ -120,8 +120,8 @@ conntrackd + keepalived без смены платформы. Коммерчес
 — используется для установки пакетов и администрирования МЭ.
 
 #figure(
-  rect(width: 100%, height: 6cm)[Скриншот топологии #raw("img/topology.png")],
-  // image("img/topology.png", width: 100%),
+  // rect(width: 100%, height: 6cm)[Скриншот топологии #raw("img/topology.png")],
+  image("img/topology.png", width: 100%),
   caption: [Топология стенда BKS2 в среде PNETLab],
   kind: image,
 ) <fig-topology>
