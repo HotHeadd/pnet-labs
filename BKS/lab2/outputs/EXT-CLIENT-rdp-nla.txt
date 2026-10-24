@@ -1,0 +1,14 @@
+root@kali:~# nmap -Pn -p 3389 --script rdp-enum-encryption 10.1.100.12
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-10-22 15:47 EDT
+Nmap scan report for 10.1.100.12 (10.1.100.12)
+Host is up (0.0061s latency).
+
+PORT     STATE SERVICE
+3389/tcp open  ms-wbt-server
+| rdp-enum-encryption:
+|   Security layer
+|     CredSSP (NLA): SUCCESS
+|     CredSSP with Early User Auth: SUCCESS
+|_    RDSTLS: SUCCESS
+
+Nmap done: 1 IP address (1 host up) scanned in 1.90 seconds

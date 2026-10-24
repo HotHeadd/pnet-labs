@@ -1,0 +1,15 @@
+HQ-EDGE#ping 10.1.100.12 source Ethernet0/2 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.1.100.12, timeout is 2 seconds:
+Packet sent with a source address of 10.1.10.1
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 2/2/4 ms
+HQ-EDGE#traceroute 10.1.100.12 source Ethernet0/2 probe 1 timeout 1
+Type escape sequence to abort.
+Tracing the route to 10.1.100.12
+VRF info: (vrf in name/id, vrf out name/id)
+  1 203.0.113.10 2 msec
+  2  *
+  3  *
+  4  *
+  5  *

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pnetlab": {
+      "command": "sh",
+      "args": ["tools/pnet-mcp.sh"]
+    }
+  }
+}

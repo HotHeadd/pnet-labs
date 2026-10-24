@@ -1,0 +1,16 @@
+hostname ISP
+no ip domain-lookup
+interface Loopback0
+ description "internet" (8.8.8.8)
+ ip address 8.8.8.8 255.255.255.255
+interface Ethernet0/0
+ description HQ-EDGE e0/0
+ ip address 203.0.113.1 255.255.255.252
+ no shutdown
+interface Ethernet0/1
+ description EXT-CLIENT
+ ip address 203.0.113.17 255.255.255.252
+ no shutdown
+! public transit HQ-EDGE - HQ-FW
+ip route 203.0.113.8 255.255.255.248 203.0.113.2
+end

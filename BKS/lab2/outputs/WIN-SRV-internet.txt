@@ -1,0 +1,28 @@
+PS C:\Users\Administrator> ping -n 3 8.8.8.8
+
+Pinging 8.8.8.8 with 32 bytes of data:
+Reply from 8.8.8.8: bytes=32 time=1ms TTL=253
+Reply from 8.8.8.8: bytes=32 time=4ms TTL=253
+Reply from 8.8.8.8: bytes=32 time=3ms TTL=253
+
+Ping statistics for 8.8.8.8:
+    Packets: Sent = 3, Received = 3, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 1ms, Maximum = 4ms, Average = 2ms
+PS C:\Users\Administrator> tracert -d -h 4 8.8.8.8
+
+Tracing route to 8.8.8.8 over a maximum of 4 hops
+
+  1    <1 ms    <1 ms    <1 ms  10.1.100.1
+  2     4 ms     2 ms     1 ms  203.0.113.9
+  3     2 ms     1 ms     1 ms  8.8.8.8
+
+Trace complete.
+PS C:\Users\Administrator> ping -n 2 -w 1000 10.1.10.10
+
+Pinging 10.1.10.10 with 32 bytes of data:
+Request timed out.
+Request timed out.
+
+Ping statistics for 10.1.10.10:
+    Packets: Sent = 2, Received = 0, Lost = 2 (100% loss),

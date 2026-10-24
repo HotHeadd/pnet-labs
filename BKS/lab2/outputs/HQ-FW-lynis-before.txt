@@ -1,0 +1,3 @@
+root@hq-fw:~# lynis audit system --quick --no-colors > /root/lynis-before.txt
+root@hq-fw:~# grep -E 'Hardening index' /root/lynis-before.txt
+  Hardening index : 65 [#############       ]

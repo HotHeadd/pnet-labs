@@ -2,3 +2,7 @@
 .DS_Store
 .preview/
 !**/preamble/*.pdf
+pnet.code-workspace
+mcp-creds.json
+__pycache__/
+.pnet-account

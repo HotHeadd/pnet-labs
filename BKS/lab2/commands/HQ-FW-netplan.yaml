@@ -1,0 +1,25 @@
+# /etc/netplan/01-hq-fw.yaml
+network:
+  version: 2
+  ethernets:
+    ens3:
+      # e0 - WAN, public transit to HQ-EDGE
+      # .10 - МЭ (WireGuard, опубликованные сервисы), .11 - SNAT для WIN-SRV
+      addresses: [203.0.113.10/29, 203.0.113.11/29]
+      routes:
+        - to: default
+          via: 203.0.113.9
+          metric: 200
+      nameservers:
+        addresses: [8.8.8.8]
+    ens4:
+      # e1 - DMZ
+      addresses: [10.1.100.1/28]
+    ens5:
+      # e2 - MGMT (cloud pnet0): apt and remote admin only
+      # (на время установки пакетов здесь был маршрут по умолчанию: route-metric 100)
+      dhcp4: true
+      dhcp4-overrides:
+        use-routes: false
+        use-dns: false
+      optional: true
