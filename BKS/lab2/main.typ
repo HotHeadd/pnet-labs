@@ -56,10 +56,13 @@
 сравнивались программные и программно-аппаратные решения (таблица @tbl-compare).
 
 #figure(
+  {
+  set text(size: 11pt, hyphenate: true)
+  show table.cell.where(y: 0): set text(hyphenate: false)
   table(
-    columns: 5,
+    columns: (1.05fr, 1fr, 1.2fr, 1.15fr, 1.1fr),
     align: (left, left, left, left, left),
-    table.header[*Решение*][*Надёжность, отказоустойчивость*][*Информационная безопасность*][*Быстродействие*][*Трудоёмкость сопровождения*],
+    table.header[*Решение*][*Надёжность, отказо-\ устойчивость*][*Информационная безопасность*][*Быстродействие*][*Трудоёмкость сопровождения*],
     [Ubuntu Server 22.04 LTS + iptables/nftables (netfilter)],
       [кластер conntrackd + keepalived (VRRP); LTS-поддержка 5 (до 10) лет],
       [минимальная поверхность атаки, AppArmor, быстрые исправления, расширения xtables-addons (psd, TARPIT, DELUDE, geoip)],
@@ -95,7 +98,8 @@
       [сертификат ФСТЭК, NGFW-функции],
       [аппаратная платформа],
       [коммерческая лицензия],
-  ),
+  )
+  },
   caption: [Сравнение межсетевых экранов],
 ) <tbl-compare>
 

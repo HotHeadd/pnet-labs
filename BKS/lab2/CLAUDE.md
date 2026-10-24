@@ -129,6 +129,8 @@ WireGuard на .10. Политика — `commands/HQ-FW-iptables.sh` (rules.v4 
   перезапуска qemu-узлов. IOL ↔ IOL и облако (ens5) работают. **Подтверждено:** после перезапуска qemu-узлов при живых IOL
   линки не восстанавливаются; перезапуск ISP, HQ-EDGE, HQ-DMZ (stop+start, конфиги из startup-config) всё вернул, VPCS
   трогать не пришлось. Затем регресс по `demo-checks.md` п. 1–7 — всё ✅ (`outputs/regress-20261023.txt`); п. 8 (ребут HQ-FW) не повторял.
+- **2026-10-24:** после перезагрузки хоста все узлы сессии №4 были выключены, диски целы; `start_all` → всё поднялось само
+  (линки qemu ↔ IOL живы, т. к. стартовали вместе; VPCS взял адрес из startup.vpc; wg handshake с Kali; правила 37/8 строк).
 - Проверки с Kali удобнее скриптом: `pnet-helper.py push` на HQ-FW (telnet, md5) → на Kali `scp fwadmin@192.168.15.134:/tmp/c.sh .`
   (короткая строка через `type`) → `sh c.sh` → вывод в файл. RDP без GUI — `xfreerdp ... /auth-only` (rc=0 — NLA прошла).
   Из Git Bash вызывать хелпер с `MSYS_NO_PATHCONV=1` (иначе `/root/...` → `C:/Program Files/Git/root/...`).
