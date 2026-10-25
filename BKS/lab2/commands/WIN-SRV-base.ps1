@@ -15,10 +15,5 @@ New-NetFirewallRule -DisplayName 'ICMPv4 echo (DMZ, HQ, VPN)' -Direction Inbound
 $pw = ConvertTo-SecureString 'Lab2-Vpn-Win#7' -AsPlainText -Force
 New-LocalUser -Name rdpuser -Password $pw -FullName 'Remote operator' -PasswordNeverExpires | Out-Null
 Add-LocalGroupMember -Group 'Remote Desktop Users' -Member rdpuser
-cls
-Get-NetIPConfiguration -InterfaceAlias Ethernet | Format-List IPv4Address,IPv4DefaultGateway,DNSServer
-Get-ItemProperty "$ts\WinStations\RDP-Tcp" | Format-List UserAuthentication,SecurityLayer
-Get-NetFirewallRule -DisplayName 'RDP via WireGuard' | Get-NetFirewallAddressFilter | Format-List RemoteAddress
-Get-LocalGroupMember 'Remote Desktop Users'
 Install-WindowsFeature Web-Server
 Set-Content C:\inetpub\wwwroot\index.html '<h1>WIN-SRV (DMZ 10.1.100.12) - BKS lab 2</h1>'
