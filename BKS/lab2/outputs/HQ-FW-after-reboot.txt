@@ -1,0 +1,20 @@
+root@hq-fw:~# uptime; iptables -S | wc -l; iptables -t nat -S | grep -c -- -A
+ 00:28:03 up 1 min,  1 user,  load average: 0.26, 0.10, 0.03
+37
+4
+root@hq-fw:~# wg show wg0 | head -3
+interface: wg0
+  public key: gWjahjT1I6gC7gXpjqCTLyumX065fczOjPuC1yNvIEw=
+  private key: (hidden)
+root@hq-fw:~# ip -br a | grep -v lo; ip r | head -3
+ens3             UP             203.0.113.10/29 203.0.113.11/29 fe80::52fe:eeff:fe00:800/64
+ens4             UP             10.1.100.1/28 fe80::52fe:eeff:fe00:801/64
+ens5             UP             192.168.15.134/24 metric 100 fe80::52fe:eeff:fe00:802/64
+wg0              UNKNOWN        10.1.200.1/24
+default via 203.0.113.9 dev ens3 proto static metric 200
+10.1.100.0/28 dev ens4 proto kernel scope link src 10.1.100.1
+10.1.200.0/24 dev wg0 proto kernel scope link src 10.1.200.1
+root@hq-fw:~# systemctl is-active fail2ban auditd netfilter-persistent
+active
+active
+active

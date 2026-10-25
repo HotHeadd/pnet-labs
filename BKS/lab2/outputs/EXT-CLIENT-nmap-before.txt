@@ -1,0 +1,9 @@
+root@kali:~# nmap -Pn -sS -T4 203.0.113.10 | tee /root/nmap-before.txt
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-10-22 15:39 EDT
+Nmap scan report for 203.0.113.10
+Host is up (0.00099s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 0.17 seconds

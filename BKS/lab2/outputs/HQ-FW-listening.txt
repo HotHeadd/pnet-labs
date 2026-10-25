@@ -1,0 +1,7 @@
+root@hq-fw:~# ss -tulpn | grep -v '127.0.0'
+Netid State  Recv-Q Send-Q       Local Address:Port  Peer Address:PortProcess
+udp   UNCONN 0      0      192.168.15.134%ens5:68         0.0.0.0:*    users:(("systemd-network",pid=473,fd=22))
+udp   UNCONN 0      0                  0.0.0.0:51820      0.0.0.0:*
+udp   UNCONN 0      0                     [::]:51820         [::]:*
+tcp   LISTEN 0      128                0.0.0.0:22         0.0.0.0:*    users:(("sshd",pid=57664,fd=3))
+tcp   LISTEN 0      128                   [::]:22            [::]:*    users:(("sshd",pid=57664,fd=4))

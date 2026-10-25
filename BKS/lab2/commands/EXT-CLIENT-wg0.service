@@ -1,0 +1,15 @@
+# /etc/systemd/system/wg0.service (EXT-CLIENT): WireGuard tunnel to HQ-FW at boot
+# (wireguard-tools built from source without systemd units; wg-quick falls back to wireguard-go)
+[Unit]
+Description=WireGuard tunnel wg0 to HQ-FW
+Wants=network-online.target
+After=network-online.target NetworkManager-wait-online.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/wg-quick up wg0
+ExecStop=/usr/bin/wg-quick down wg0
+
+[Install]
+WantedBy=multi-user.target

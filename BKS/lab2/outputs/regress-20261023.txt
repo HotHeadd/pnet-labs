@@ -1,0 +1,143 @@
+Регресс по demo-checks.md — 2026-10-23 ~21:10 (MSK HQ-FW), сессия №4 (vlad_pc), проверял micha_pc.
+Перед проверкой: перезапущены ISP, HQ-EDGE, HQ-DMZ (линки qemu <-> IOL были мёртвыми после перезапуска qemu-узлов).
+
+== 0. HQ-FW: состояние
+root@hq-fw:~# hostname; uptime; ip -br a | grep -v ^lo; wg show wg0 | head -14
+hq-fw
+ 20:54:03 up  1:04,  1 user,  load average: 0.06, 0.02, 0.00
+ens3             UP             203.0.113.10/29 203.0.113.11/29 fe80::52fe:eeff:fe00:800/64
+ens4             UP             10.1.100.1/28 fe80::52fe:eeff:fe00:801/64
+ens5             UP             192.168.15.134/24 metric 100 fe80::52fe:eeff:fe00:802/64
+wg0              UNKNOWN        10.1.200.1/24
+interface: wg0
+  public key: gWjahjT1I6gC7gXpjqCTLyumX065fczOjPuC1yNvIEw=
+  private key: (hidden)
+  listening port: 51820
+
+peer: Vlf+dbrvo9y779wdTEytGFh8KpmpfULo0Qaf9zpTIzI=
+  allowed ips: 10.1.200.8/32
+root@hq-fw:~# iptables -S | grep -c -- -A; iptables -t nat -S | grep -- -A; iptables -t mangle -S | grep -- -A
+32
+-A PREROUTING -d 203.0.113.10/32 -i ens3 -p tcp -m tcp --dport 8080 -j DNAT --to-destination 10.1.100.12:80
+-A PREROUTING -i ens4 -p udp -m udp --dport 53 -j DNAT --to-destination 8.8.8.8:53
+-A POSTROUTING -s 10.1.100.12/32 -o ens3 -j SNAT --to-source 203.0.113.11
+-A POSTROUTING -s 10.1.100.0/28 -o ens3 -j MASQUERADE
+-A POSTROUTING -o ens3 -m ttl --ttl-eq 0 -j TTL --ttl-set 64
+root@hq-fw:~# systemctl is-active ssh fail2ban auditd netfilter-persistent wg-quick@wg0 | tr '\n' ' '
+active active active active active
+root@hq-fw:~# lsmod | grep -E 'xt_(psd|TARPIT|DELUDE)'
+xt_TARPIT              20480  1
+xt_DELUDE              16384  1
+xt_psd                 53248  1
+
+== После перезапуска IOL: туннель
+HQ-EDGE>ping 203.0.113.10
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 1/2/4 ms
+root@hq-fw:~# wg show wg0 | tail -6
+peer: Vlf+dbrvo9y779wdTEytGFh8KpmpfULo0Qaf9zpTIzI=
+  endpoint: 203.0.113.18:47093
+  allowed ips: 10.1.200.8/32
+  latest handshake: 47 seconds ago
+  transfer: 212 B received, 92 B sent
+
+== 1. Windows выходит в интернет через МЭ (SNAT)
+C:\Users\Administrator>tracert -d -h 4 8.8.8.8
+
+Tracing route to 8.8.8.8 over a maximum of 4 hops
+
+  1    <1 ms    <1 ms    <1 ms  10.1.100.1
+  2     2 ms     3 ms     1 ms  203.0.113.9
+  3     3 ms     3 ms     1 ms  8.8.8.8
+
+Trace complete.
+root@hq-fw:~# iptables -t nat -L POSTROUTING -n -v | head -4
+Chain POSTROUTING (policy ACCEPT 3499 packets, 236K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    9   638 SNAT       all  --  *      ens3    10.1.100.12          0.0.0.0/0            to:203.0.113.11
+    0     0 MASQUERADE  all  --  *      ens3    10.1.100.0/28        0.0.0.0/0
+
+== 2. DMZ изолирована от сети ГО, ГО в DMZ ходит
+C:\Users\Administrator>ping -n 2 -w 1000 10.1.10.10
+
+Pinging 10.1.10.10 with 32 bytes of data:
+Request timed out.
+Request timed out.
+
+Ping statistics for 10.1.10.10:
+    Packets: Sent = 2, Received = 0, Lost = 2 (100% loss),
+root@hq-fw:~# journalctl -k --no-pager | grep FW-DROP | tail -2 | cut -c1-150
+Oct 23 21:11:29 hq-fw kernel: FW-DROP: IN=ens4 OUT=ens3 MAC=50:fe:ee:00:08:01:50:05:97:00:09:00:08:00 SRC=10.1.100.12 DST=10.1.10.10 LEN=60 TOS=0x00 P
+Oct 23 21:11:30 hq-fw kernel: FW-DROP: IN=ens4 OUT=ens3 MAC=50:fe:ee:00:08:01:50:05:97:00:09:00:08:00 SRC=10.1.100.12 DST=10.1.10.10 LEN=60 TOS=0x00 P
+PC-HQ-ADMIN> ping 10.1.100.12 -c 2
+
+84 bytes from 10.1.100.12 icmp_seq=1 ttl=126 time=4.635 ms
+84 bytes from 10.1.100.12 icmp_seq=2 ttl=126 time=8.883 ms
+
+== 3–7. EXT-CLIENT (Kali): скрипт проверок (/root/chk.txt)
+== 3. VPN + RDP NLA
+  endpoint: 203.0.113.10:51820
+  latest handshake: 2 minutes, 2 seconds ago
+  transfer: 368 B received, 112.59 KiB sent
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 4.503/6.342/8.182/1.839 ms
+[14:17:02:918] [1902:1904] [INFO][com.freerdp.client.common.cmdline] - loading channelEx cliprdr
+[14:17:02:918] [1902:1904] [INFO][com.freerdp.client.x11] - Authentication only. Don't connect to X.
+nla auth-only rc=0
+== 4a. RDP without NLA
+RROR][com.freerdp.core.transport] - BIO_read returned a system error 104: Connection reset by peer
+RROR][com.freerdp.core.nego] - Protocol Security Negotiation Failure
+RROR][com.freerdp.core] - freerdp_set_last_error ERRCONNECT_SECURITY_NEGO_CONNECT_FAILED [0x0002000C]
+PORT     STATE SERVICE
+3389/tcp open  ms-wbt-server
+| rdp-enum-encryption:
+|   Security layer
+|     CredSSP (NLA): SUCCESS
+|     CredSSP with Early User Auth: SUCCESS
+|_    RDSTLS: SUCCESS
+
+== 4b. no tunnel
+10.1.100.12 via 192.168.15.2 dev eth1 src 192.168.15.133 uid 0
+rdp to 203.0.113.10 rc=124
+<h1>WIN-SRV (DMZ 10.1.100.12) - BKS lab 2</h1>
+
+1
+== 5. port scan
+1018
+PORT     STATE    SERVICE
+1/tcp    open     tcpmux
+2/tcp    open     compressnet
+3/tcp    open     compressnet
+Nmap done: 1 IP address (1 host up) scanned in 1.32 seconds
+== 6. DELUDE
+PORT      STATE    SERVICE
+22/tcp    filtered ssh
+80/tcp    filtered http
+12345/tcp open     netbus
+
+== 7. SSH
+hq-fw
+fwadmin@192.168.15.134: Permission denied (publickey).
+root@192.168.15.134: Permission denied (publickey).
+DONE
+
+== HQ-FW: счётчики после проверок 3–7
+root@hq-fw:~# iptables -L FORWARD -n -v | grep -E 'wg0|DNAT'; iptables -t nat -L PREROUTING -n -v | grep 8080
+    1    60 ACCEPT     tcp  --  ens3   ens4    0.0.0.0/0            10.1.100.12          tcp dpt:80 ctstate DNAT
+   10   584 ACCEPT     tcp  --  wg0    ens4    0.0.0.0/0            10.1.100.12          tcp dpt:3389
+    2   168 ACCEPT     icmp --  wg0    ens4    0.0.0.0/0            10.1.100.12          icmptype 8
+    1    60 DNAT       tcp  --  ens3   *       0.0.0.0/0            203.0.113.10         tcp dpt:8080 to:10.1.100.12:80
+root@hq-fw:~# iptables -L PORTSCAN -n -v
+Chain PORTSCAN (2 references)
+ pkts bytes target     prot opt in     out     source               destination
+    5   220 LOG        all  --  *      *       0.0.0.0/0            0.0.0.0/0            limit: avg 10/min burst 5 LOG flags 0 level 4 prefix "FW-PORTSCAN: "
+ 1018 44792 TARPIT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            -j TARPIT --tarpit
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0
+root@hq-fw:~# iptables -L INPUT -n -v | grep DELUDE; iptables -t mangle -L POSTROUTING -n -v | tail -1
+    1    44 DELUDE     tcp  --  ens3   *       0.0.0.0/0            0.0.0.0/0            tcp dpt:12345
+    1    40 TTL        all  --  *      ens3    0.0.0.0/0            0.0.0.0/0            TTL match TTL == 0 TTL set to 64
+root@hq-fw:~# fail2ban-client status sshd | head -4
+Status for the jail: sshd
+|- Filter
+|  |- Currently failed: 1
+|  |- Total failed:     1
