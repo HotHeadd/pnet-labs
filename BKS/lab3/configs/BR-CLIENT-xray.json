@@ -1,0 +1,82 @@
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "entry",
+      "listen": "127.0.0.1",
+      "port": 1080,
+      "protocol": "socks",
+      "settings": {
+        "auth": "noauth",
+        "udp": false
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "next",
+      "protocol": "vless",
+      "settings": {
+        "vnext": [
+          {
+            "address": "203.0.113.30",
+            "port": 443,
+            "users": [
+              {
+                "id": "8d64fe98-2401-4522-a7ab-8d6f636ac301",
+                "encryption": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "serverName": "relay.bks3.test",
+          "minVersion": "1.3",
+          "certificates": [
+            {
+              "usage": "verify",
+              "certificateFile": "/etc/xray/ca.crt"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "entry"
+        ],
+        "ip": [
+          "10.1.50.10/32"
+        ],
+        "port": "8080",
+        "network": "tcp",
+        "outboundTag": "next"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "entry"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}

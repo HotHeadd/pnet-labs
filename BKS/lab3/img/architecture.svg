@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="670" viewBox="0 0 1100 670">
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#526b85"/></marker></defs>
+<rect width="1100" height="670" fill="white"/>
+<text x="550" y="35" text-anchor="middle" font-family="Arial" font-size="23" font-weight="bold" fill="#18344f">Вариант 6: проект распределённой корпоративной сети</text>
+<polyline points="430,145 670,145" fill="none" stroke="#526b85" stroke-width="3" marker-end="url(#a)"/>
+<text x="550" y="130" text-anchor="middle" font-family="Arial" font-size="16" fill="#526b85">Защищённая межЦОД-связь</text>
+<polyline points="185,385 185,210" fill="none" stroke="#247b63" stroke-width="3" marker-end="url(#a)"/>
+<text x="103" y="300" text-anchor="middle" font-family="Arial" font-size="16" fill="#247b63">Основной overlay</text>
+<polyline points="260,385 785,210" fill="none" stroke="#247b63" stroke-width="3" marker-end="url(#a)" stroke-dasharray="8,5"/>
+<text x="625" y="316" text-anchor="middle" font-family="Arial" font-size="16" fill="#247b63">Резервный overlay</text>
+<polyline points="550,385 550,260 330,260 330,210" fill="none" stroke="#526b85" stroke-width="3" marker-end="url(#a)"/>
+<text x="460" y="249" text-anchor="middle" font-family="Arial" font-size="16" fill="#526b85">Радиоканал</text>
+<polyline points="915,385 915,275 850,275 850,210" fill="none" stroke="#94662f" stroke-width="3" marker-end="url(#a)"/>
+<text x="935" y="259" text-anchor="middle" font-family="Arial" font-size="16" fill="#94662f">Только веб-сервис</text>
+<rect x="80" y="80" width="350" height="130" rx="10" fill="#eff5fa" stroke="#526b85" stroke-width="2"/>
+<text x="255.0" y="108" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#18344f">ЦОД-1 / ГО</text>
+<text x="255.0" y="134" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Нижний Новгород · 10.1.0.0/16</text>
+<text x="255.0" y="157" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Шлюзы SD-WAN / МЭ / DMZ</text>
+<text x="255.0" y="180" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Основные сервисы и контроллер</text>
+<rect x="670" y="80" width="350" height="130" rx="10" fill="#eff5fa" stroke="#526b85" stroke-width="2"/>
+<text x="845.0" y="108" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#18344f">ЦОД-2</text>
+<text x="845.0" y="134" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Другая площадка · 10.3.0.0/16</text>
+<text x="845.0" y="157" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Резервные шлюзы и сервисы</text>
+<text x="845.0" y="180" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Независимый канал и питание</text>
+<rect x="30" y="385" width="310" height="140" rx="10" fill="#eff5fa" stroke="#526b85" stroke-width="2"/>
+<text x="185.0" y="413" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#18344f">20 пунктов выдачи</text>
+<text x="185.0" y="439" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Оптика и/или LTE</text>
+<text x="185.0" y="462" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">CPE с Zero-Touch Provisioning</text>
+<text x="185.0" y="485" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Зашифрованный SD-WAN overlay</text>
+<rect x="395" y="385" width="310" height="140" rx="10" fill="#eff5fa" stroke="#526b85" stroke-width="2"/>
+<text x="550.0" y="413" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#18344f">Лаборатория</text>
+<text x="550.0" y="439" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Соседнее здание</text>
+<text x="550.0" y="462" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Направленный радиомост</text>
+<text x="550.0" y="485" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Защита канала и сегментация</text>
+<rect x="760" y="385" width="310" height="140" rx="10" fill="#eff5fa" stroke="#526b85" stroke-width="2"/>
+<text x="915.0" y="413" text-anchor="middle" font-family="Arial" font-size="20" font-weight="bold" fill="#18344f">Подрядчик</text>
+<text x="915.0" y="439" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">HTTPS с аутентификацией</text>
+<text x="915.0" y="462" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Прокси в DMZ → один сервис</text>
+<text x="915.0" y="485" text-anchor="middle" font-family="Arial" font-size="16" fill="#18344f">Остальные сети закрыты</text>
+<text x="35" y="605" font-family="Arial" font-size="16" fill="#40576a">Архитектурный проект: SD-WAN и физический радиоканал описаны и обоснованы теоретически.</text>
+<text x="35" y="629" font-family="Arial" font-size="16" fill="#40576a">Практическая часть: отдельный Linux Site-to-Site стенд и каскад Xray (см. схему стенда).</text>
+<text x="35" y="653" font-family="Arial" font-size="16" fill="#40576a">Резервирование сервисов требует репликации данных и проверки переключения приложений.</text>
+</svg>

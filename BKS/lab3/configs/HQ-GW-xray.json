@@ -1,0 +1,87 @@
+{
+  "log": {
+    "access": "/var/log/xray/access.log",
+    "error": "/var/log/xray/error.log",
+    "loglevel": "warning"
+  },
+  "inbounds": [
+    {
+      "tag": "entry",
+      "listen": "203.0.113.10",
+      "port": 443,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "8d64fe98-2401-4522-a7ab-8d6f636ac302"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "tcp",
+        "security": "tls",
+        "tlsSettings": {
+          "minVersion": "1.3",
+          "certificates": [
+            {
+              "certificateFile": "/etc/xray/server.crt",
+              "keyFile": "/etc/xray/server.key"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "next",
+      "protocol": "freedom",
+      "settings": {
+        "finalRules": [
+          {
+            "action": "allow",
+            "network": "tcp",
+            "ip": [
+              "10.1.50.10/32"
+            ],
+            "port": "8080"
+          },
+          {
+            "action": "block",
+            "blockDelay": "0"
+          }
+        ]
+      }
+    },
+    {
+      "tag": "blocked",
+      "protocol": "blackhole",
+      "settings": {}
+    }
+  ],
+  "routing": {
+    "domainStrategy": "AsIs",
+    "rules": [
+      {
+        "type": "field",
+        "inboundTag": [
+          "entry"
+        ],
+        "ip": [
+          "10.1.50.10/32"
+        ],
+        "port": "8080",
+        "network": "tcp",
+        "outboundTag": "next"
+      },
+      {
+        "type": "field",
+        "inboundTag": [
+          "entry"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  }
+}

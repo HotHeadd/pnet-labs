@@ -1,0 +1,9 @@
+$ ping -M do -s 1372 -I 10.2.20.42 -c 3 10.1.50.10
+PING 10.1.50.10 (10.1.50.10) from 10.2.20.42 : 1372(1400) bytes of data.
+1380 bytes from 10.1.50.10: icmp_seq=1 ttl=62 time=12.0 ms
+1380 bytes from 10.1.50.10: icmp_seq=2 ttl=62 time=4.14 ms
+1380 bytes from 10.1.50.10: icmp_seq=3 ttl=62 time=6.66 ms
+
+--- 10.1.50.10 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 4.137/7.592/11.980/3.268 ms
