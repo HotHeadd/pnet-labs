@@ -6,3 +6,5 @@ pnet.code-workspace
 mcp-creds.json
 __pycache__/
 .pnet-account
+.codex/
+.claude/

@@ -1,3 +1,0 @@
-[mcp_servers.pnetlab]
-command = "sh"
-args = ["tools/pnet-mcp.sh"]
