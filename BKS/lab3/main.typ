@@ -4,7 +4,6 @@
   topic: "Организация централизованного взаимодействия географически распределённой сетевой инфраструктуры",
   discipline: "Безопасность компьютерных сетей",
   student: ("Доценко В. А.", "Дзюба С. Д.", "Мартюшев В. А.", "Горячев М. А."),
-  section-pagebreaks: false,
   group: "Б23-505", teacher: "Басыня Е. А.",
 )
 #show table: set par(justify: false)
@@ -252,12 +251,3 @@ HTTP через IPsec и HTTP через каскад Xray (листинг @lst-
   пересылает пакеты в соответствии с установленными правилами.
 + При большом числе площадок статические маршруты требуют множества согласованных правок
   и не отражают автоматически отказы. Динамическая маршрутизация упрощает изменение топологии.
-
-= Источники
-
-+ Лабораторная работа №3. Организация централизованного взаимодействия географически
-  распределённой сетевой инфраструктуры. Методические указания, 24 с.
-+ strongSwan: #link("https://docs.strongswan.org/docs/latest/howtos/ipsecProtocol.html")[Introduction to the IPsec Protocol].
-+ FRRouting: #link("https://docs.frrouting.org/en/latest/ospfd.html")[OSPFv2].
-+ Project X: #link("https://xtls.github.io/en/config/outbounds/freedom.html")[Freedom и finalRules];
-  #link("https://xtls.github.io/en/config/transport.html")[Transport Configuration].
