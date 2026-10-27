@@ -1,0 +1,53 @@
+
+NODE 192.168.15.211
+hq-gw
+up 1 minute
+active
+active
+active
+active
+active
+
+Neighbor ID     Pri State           Dead Time Address         Interface                        RXmtL RqstL DBsmL
+10.2.254.254      1 Full/DROther       6.536s 172.16.0.2      tun0:172.16.0.1                      0     0     0
+
+10.2.20.0/24 nhid 24 via 172.16.0.2 dev tun0 metric 20 
+
+NODE 192.168.15.212
+br-gw
+up 1 minute
+active
+active
+active
+active
+
+Neighbor ID     Pri State           Dead Time Address         Interface                        RXmtL RqstL DBsmL
+10.1.254.254      1 Full/DROther       6.980s 172.16.0.1      tun0:172.16.0.2                      0     0     0
+
+10.1.50.0/26 nhid 24 via 172.16.0.1 dev tun0 metric 20 
+
+NODE 192.168.15.213
+hq-srv
+up 3 minutes
+active
+
+NODE 192.168.15.214
+br-client
+up 3 minutes
+active
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=62 time=2.51 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=62 time=4.84 ms
+64 bytes from 10.1.50.10: icmp_seq=3 ttl=62 time=3.87 ms
+
+--- 10.1.50.10 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2004ms
+rtt min/avg/max/mdev = 2.507/3.738/4.839/0.956 ms
+BKS3: protected HQ service
+BKS3: protected HQ service
+
+NODE 192.168.15.215
+xray-relay
+up 3 minutes
+active
+active

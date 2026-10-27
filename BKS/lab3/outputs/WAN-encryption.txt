@@ -1,0 +1,22 @@
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on vnet8_1, link-type EN10MB (Ethernet), capture size 262144 bytes
+14:31:24.210512 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x35), length 108
+14:31:25.016439 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x3b), length 108
+14:31:25.410182 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x3c), length 1440
+14:31:25.413754 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x36), length 1440
+14:31:26.211333 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x37), length 108
+14:31:26.406925 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x3d), length 1440
+14:31:26.407789 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x38), length 1440
+14:31:27.016718 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x3e), length 108
+14:31:27.409592 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x3f), length 1440
+14:31:27.412145 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x39), length 1440
+14:31:28.211935 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x3a), length 108
+14:31:29.016963 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x40), length 108
+14:31:30.220809 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x3b), length 108
+14:31:31.016816 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x41), length 108
+14:31:32.212606 IP 203.0.113.10 > 203.0.113.20: ESP(spi=0xca8f765d,seq=0x3c), length 108
+14:31:33.017449 IP 203.0.113.20 > 203.0.113.10: ESP(spi=0xca0c3667,seq=0x42), length 108
+
+16 packets captured
+16 packets received by filter
+0 packets dropped by kernel

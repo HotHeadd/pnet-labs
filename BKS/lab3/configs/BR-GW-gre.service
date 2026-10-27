@@ -1,0 +1,14 @@
+[Unit]
+Description=Persistent GRE tunnel for protected site-to-site traffic
+Wants=network-online.target
+After=network-online.target
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/ip tunnel add tun0 mode gre local 203.0.113.20 remote 203.0.113.10 ttl 64
+ExecStart=/sbin/ip address add 172.16.0.2/30 dev tun0
+ExecStart=/sbin/ip link set tun0 mtu 1400 up
+ExecStart=/sbin/sysctl -w net.ipv4.conf.tun0.rp_filter=0
+ExecStop=/sbin/ip tunnel del tun0
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,31 @@
+$ BR-GW: systemctl stop strongswan-starter
+$ BR-CLIENT: ping -c 3 -W 1 10.1.50.10
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+
+--- 10.1.50.10 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2033ms
+
+$ BR-GW: ip route show proto ospf
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on vnet8_1, link-type EN10MB (Ethernet), capture size 262144 bytes
+
+0 packets captured
+0 packets received by filter
+0 packets dropped by kernel
+$ BR-GW: systemctl start strongswan-starter
+$ BR-CLIENT: ping after IPsec restore
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=62 time=3.72 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=62 time=7.01 ms
+64 bytes from 10.1.50.10: icmp_seq=3 ttl=62 time=3.18 ms
+
+--- 10.1.50.10 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2012ms
+rtt min/avg/max/mdev = 3.184/4.636/7.009/1.691 ms
+$ XRAY-RELAY: systemctl stop xray
+$ BR-CLIENT: curl via SOCKS while relay stopped
+curl_exit=56
+$ XRAY-RELAY: systemctl start xray
+curl: (56) Recv failure: Connection reset by peer
+$ BR-CLIENT: curl via SOCKS after relay restore
+BKS3: protected HQ service

@@ -1,0 +1,4 @@
+$ curl --socks5-hostname 127.0.0.1:1080 http://10.1.50.10:8080
+BKS3: protected HQ service
+$ curl via SOCKS to forbidden port 22
+forbidden_port_exit=52
