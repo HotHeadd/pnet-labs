@@ -1,0 +1,1 @@
+{"timestamp": "2026-11-06T18:02:52.361796+00:00", "source": "10.1.99.10", "user": "lab-admin", "operation": "login", "http_status": 200, "status": "success", "message": null}

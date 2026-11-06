@@ -1,0 +1,4 @@
+{"source": "10.1.99.10", "target": "192.168.100.1", "port": 6667, "application": "IRC", "tcp_connected": true, "irc_registered": true, "irc_pong": true, "result": "success", "seconds": 1.051}
+{"source": "10.1.99.10", "target": "192.168.100.1", "port": 16667, "application": "IRC", "tcp_connected": true, "irc_registered": true, "irc_pong": true, "result": "success", "seconds": 1.008}
+{"source": "10.1.99.10", "target": "192.168.100.1", "port": 6881, "application": "BitTorrent", "tcp_connected": true, "bittorrent_handshake": true, "piece_bytes": 16384, "piece_sha256": "98ac455a76358d52eb1a64d3797e84d1946a3472e01e3bb1f1690409b6730244", "result": "success", "seconds": 10.877}
+{"source": "10.1.99.10", "target": "192.168.100.1", "port": 16881, "application": "BitTorrent", "tcp_connected": true, "bittorrent_handshake": true, "piece_bytes": 16384, "piece_sha256": "98ac455a76358d52eb1a64d3797e84d1946a3472e01e3bb1f1690409b6730244", "result": "success", "seconds": 9.994}

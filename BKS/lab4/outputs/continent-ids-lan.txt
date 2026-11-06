@@ -1,0 +1,157 @@
+IDS test 2026-11-06T17:07:02+00:00 role=lan source=10.1.10.42 target=10.1.50.10
+CONTROL: harmless HTTP
+HTTP=200
+TEST: SYN/version scan (bounded)
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-11-06 17:07 UTC
+Warning: 10.1.50.10 giving up on port because retransmission cap hit (0).
+Nmap scan report for 10.1.50.10
+Host is up (0.0013s latency).
+
+PORT    STATE    SERVICE      VERSION
+22/tcp  filtered ssh
+80/tcp  open     http         nginx 1.18.0 (Ubuntu)
+443/tcp open     ssl/http     nginx 1.18.0 (Ubuntu)
+445/tcp filtered microsoft-ds
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 12.52 seconds
+TEST: Nmap HTTP user agent
+HTTP=200
+TEST: SQL injection string (nginx static server; no SQL execution)
+HTTP=404
+TEST: directory traversal string
+HTTP=400
+TEST: XMAS flags, 12 packets
+
+--- 10.1.50.10 hping statistic ---
+12 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.1.50.10 (ens3 10.1.50.10): FPU set, 40 headers + 0 data bytes
+TEST: SYN burst, 120 packets / 1.2 seconds
+HPING 10.1.50.10 (ens3 10.1.50.10): S set, 40 headers + 0 data bytes
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=0 win=65535 rtt=5.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=1 win=65535 rtt=4.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=2 win=65535 rtt=9.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=3 win=65535 rtt=5.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=4 win=65535 rtt=3.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=5 win=65535 rtt=8.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=6 win=65535 rtt=5.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=7 win=65535 rtt=2.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=8 win=65535 rtt=8.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=9 win=65535 rtt=13.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=10 win=65535 rtt=2.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=11 win=65535 rtt=8.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=12 win=65535 rtt=5.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=13 win=65535 rtt=3.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=14 win=65535 rtt=8.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=15 win=65535 rtt=6.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=16 win=65535 rtt=4.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=17 win=65535 rtt=9.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=18 win=65535 rtt=6.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=19 win=65535 rtt=3.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=20 win=65535 rtt=8.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=21 win=65535 rtt=6.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=22 win=65535 rtt=4.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=23 win=65535 rtt=2.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=24 win=65535 rtt=7.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=25 win=65535 rtt=5.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=26 win=65535 rtt=2.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=27 win=65535 rtt=8.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=28 win=65535 rtt=6.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=29 win=65535 rtt=3.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=30 win=65535 rtt=9.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=31 win=65535 rtt=6.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=32 win=65535 rtt=3.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=33 win=65535 rtt=9.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=34 win=65535 rtt=6.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=35 win=65535 rtt=4.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=36 win=65535 rtt=2.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=37 win=65535 rtt=7.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=38 win=65535 rtt=4.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=39 win=65535 rtt=10.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=40 win=65535 rtt=7.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=41 win=65535 rtt=5.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=42 win=65535 rtt=2.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=43 win=65535 rtt=7.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=44 win=65535 rtt=5.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=45 win=65535 rtt=3.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=46 win=65535 rtt=9.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=47 win=65535 rtt=6.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=48 win=65535 rtt=4.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=49 win=65535 rtt=1.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=50 win=65535 rtt=19.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=51 win=65535 rtt=6.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=52 win=65535 rtt=3.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=53 win=65535 rtt=1.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=54 win=65535 rtt=7.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=55 win=65535 rtt=4.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=56 win=65535 rtt=9.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=57 win=65535 rtt=7.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=58 win=65535 rtt=4.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=59 win=65535 rtt=1.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=60 win=65535 rtt=7.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=61 win=65535 rtt=13.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=62 win=65535 rtt=10.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=63 win=65535 rtt=8.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=64 win=65535 rtt=5.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=65 win=65535 rtt=3.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=66 win=65535 rtt=0.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=67 win=65535 rtt=6.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=68 win=65535 rtt=4.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=69 win=65535 rtt=1.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=70 win=65535 rtt=7.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=71 win=65535 rtt=4.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=72 win=65535 rtt=9.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=73 win=65535 rtt=6.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=74 win=65535 rtt=5.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=75 win=65535 rtt=2.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=76 win=65535 rtt=7.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=77 win=65535 rtt=4.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=78 win=65535 rtt=10.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=79 win=65535 rtt=7.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=80 win=65535 rtt=4.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=81 win=65535 rtt=10.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=82 win=65535 rtt=7.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=83 win=65535 rtt=5.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=84 win=65535 rtt=2.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=85 win=65535 rtt=7.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=86 win=65535 rtt=4.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=87 win=65535 rtt=2.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=88 win=65535 rtt=7.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=89 win=65535 rtt=5.5 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=90 win=65535 rtt=10.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=91 win=65535 rtt=8.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=92 win=65535 rtt=5.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=93 win=65535 rtt=2.7 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=94 win=65535 rtt=8.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=95 win=65535 rtt=5.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=96 win=65535 rtt=3.8 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=97 win=65535 rtt=9.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=98 win=65535 rtt=5.6 ms
+len=44 
+--- 10.1.50.10 hping statistic ---
+120 packets transmitted, 120 packets received, 0% packet loss
+round-trip min/avg/max = 0.7/14.3/1003.9 ms
+ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=99 win=65535 rtt=2.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=100 win=65535 rtt=6.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=101 win=65535 rtt=4.4 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=102 win=65535 rtt=1.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=103 win=65535 rtt=6.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=104 win=65535 rtt=1003.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=105 win=65535 rtt=8.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=106 win=65535 rtt=5.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=107 win=65535 rtt=3.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=108 win=65535 rtt=8.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=109 win=65535 rtt=5.3 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=110 win=65535 rtt=2.1 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=111 win=65535 rtt=8.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=112 win=65535 rtt=5.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=113 win=65535 rtt=1.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=114 win=65535 rtt=7.0 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=115 win=65535 rtt=4.9 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=116 win=65535 rtt=1.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=117 win=65535 rtt=7.2 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=118 win=65535 rtt=4.6 ms
+len=44 ip=10.1.50.10 ttl=64 DF id=0 sport=80 flags=SA seq=119 win=65535 rtt=9.2 ms
+IDS test finished 2026-11-06T17:07:18+00:00

@@ -1,0 +1,18 @@
+[
+    {
+        "DisplayName":  "Континент. Менеджер конфигурации",
+        "DisplayVersion":  "4.2.1.653"
+    },
+    {
+        "DisplayName":  "Код Безопасности CSP",
+        "DisplayVersion":  "4.0.1177.0"
+    }
+]
+
+Name    
+----    
+CCM     
+IControl
+Tools   
+
+

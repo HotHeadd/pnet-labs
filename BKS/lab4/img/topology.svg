@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1060" height="650" viewBox="0 0 1060 650">
+<rect width="1060" height="650" fill="white"/>
+<g font-family="Arial, sans-serif" fill="black" stroke="black" stroke-width="2">
+<path d="M530 130V215M530 325V385M185 385H875M185 385V430M530 385V430M875 385V430" fill="none"/>
+<rect x="355" y="35" width="350" height="95" fill="white"/>
+<rect x="305" y="215" width="450" height="110" fill="white"/>
+<rect x="35" y="430" width="300" height="150" fill="white"/>
+<rect x="380" y="430" width="300" height="150" fill="white"/>
+<rect x="725" y="430" width="300" height="150" fill="white"/>
+</g>
+<g font-family="Arial, sans-serif" text-anchor="middle" fill="black" font-size="21">
+<text x="530" y="72">WAN-TEST / Интернет</text><text x="530" y="107">192.168.100.1/24</text>
+<text x="530" y="176">WAN шлюза: 192.168.100.2/24</text>
+<text x="530" y="252">Kerio Control / «Континент 4»</text><text x="530" y="285">поочерёдное включение</text>
+<text x="185" y="466">LAN 10.1.10.0/24</text><text x="185" y="503">LAN-CLIENT .42</text><text x="185" y="542">Шлюз .1</text>
+<text x="530" y="466">DMZ 10.1.50.0/26</text><text x="530" y="503">DMZ-WEB .10</text><text x="530" y="542">Шлюз .1</text>
+<text x="875" y="466">Management 10.1.99.0/24</text><text x="875" y="503">Syslog .10 / АРМ .20</text><text x="875" y="542">Шлюз .1</text>
+<text x="530" y="625" font-size="17">OOB 192.168.15.0/24 — отдельная служебная сеть; не используется для проверки политики NGFW</text>
+</g></svg>

@@ -1,0 +1,4 @@
+ Fri Nov  6 16:10:17 2026, 6573/1671882304, VIRUS DETECTED: Eicar-Test-Signature , http client ip: 10.1.10.42, http user: -, http url: http://10.1.50.10/eicar.zip 
+ Fri Nov  6 16:10:17 2026, 6573/1671882304, VIRUS DETECTED: Eicar-Test-Signature , http client ip: 10.1.10.42, http user: -, http url: http://192.168.100.1/eicar.com 
+ Fri Nov  6 16:10:17 2026, 6573/1671882304, VIRUS DETECTED: Eicar-Test-Signature , http client ip: 10.1.10.42, http user: -, http url: http://192.168.100.1/eicar.zip 
+ 

@@ -1,0 +1,4 @@
+{"source": "10.1.10.42", "target": "192.168.100.1", "port": 6667, "application": "IRC", "tcp_connected": true, "result": "TimeoutError", "detail": "timed out", "seconds": 15.024}
+{"source": "10.1.10.42", "target": "192.168.100.1", "port": 16667, "application": "IRC", "tcp_connected": true, "result": "TimeoutError", "detail": "timed out", "seconds": 15.033}
+{"source": "10.1.10.42", "target": "192.168.100.1", "port": 6881, "application": "BitTorrent", "tcp_connected": true, "result": "TimeoutError", "detail": "timed out", "seconds": 15.02}
+{"source": "10.1.10.42", "target": "192.168.100.1", "port": 16881, "application": "BitTorrent", "tcp_connected": true, "result": "TimeoutError", "detail": "timed out", "seconds": 15.024}

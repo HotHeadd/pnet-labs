@@ -1,0 +1,1 @@
+{"timestamp": "2026-11-06 18:35:29", "src_ip": "10.1.10.42", "src_port": "34189", "dest_ip": "192.168.100.1", "dest_port": "16881", "proto": "TCP", "action": "blocked", "signature_id": "5", "signature": "BitTorrent", "category": "Firewall", "username": "labguest", "rule_name": "BKS4-Guests-Block-Messengers-P2P", "payload": "SNAT: 10.1.10.42 => 192.168.100.2"}

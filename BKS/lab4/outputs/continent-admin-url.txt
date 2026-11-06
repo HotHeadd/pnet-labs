@@ -1,0 +1,7 @@
+2026-11-06T18:03:51+00:00
+SOURCE=10.1.99.10 URL=http://wan.bks4.test/allowed.txt
+HTTP=200
+SOURCE=10.1.99.10 URL=http://chat.bks4.test/allowed.txt
+HTTP=200
+SOURCE=10.1.99.10 URL=http://files.bks4.test/allowed.txt
+HTTP=200

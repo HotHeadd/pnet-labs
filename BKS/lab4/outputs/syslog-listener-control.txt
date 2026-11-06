@@ -1,0 +1,1 @@
+Nov  6 11:14:27 pnetlab root BKS4-syslog-control

@@ -1,0 +1,14 @@
+Reference ID    : 5E64B485 (ntp1.mail.ru)
+Stratum         : 3
+Ref time (UTC)  : Fri Nov 06 15:35:40 2026
+System time     : 0.000000492 seconds fast of NTP time
+Last offset     : +0.001806425 seconds
+RMS offset      : 0.001806425 seconds
+Frequency       : 229.677 ppm slow
+Residual freq   : +319.067 ppm
+Skew            : 32.286 ppm
+Root delay      : 0.015925640 seconds
+Root dispersion : 0.017156338 seconds
+Update interval : 0.4 seconds
+Leap status     : Normal
+10.1.50.10

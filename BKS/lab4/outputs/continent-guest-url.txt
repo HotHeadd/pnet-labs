@@ -1,0 +1,10 @@
+2026-11-06T18:03:52+00:00
+SOURCE=10.1.10.42 URL=http://wan.bks4.test/allowed.txt
+curl: (28) Operation timed out after 10002 milliseconds with 0 bytes received
+HTTP=000
+SOURCE=10.1.10.42 URL=http://chat.bks4.test/allowed.txt
+curl: (28) Operation timed out after 10001 milliseconds with 0 bytes received
+HTTP=000
+SOURCE=10.1.10.42 URL=http://files.bks4.test/allowed.txt
+curl: (28) Operation timed out after 10001 milliseconds with 0 bytes received
+HTTP=000

@@ -1,0 +1,8 @@
+GeoIP test source=5.255.255.5 destination=192.168.100.2:8080
+BKS4 harmless control download
+
+HTTP=200
+GeoIP test source=8.8.8.8 destination=192.168.100.2:8080
+BKS4 harmless control download
+
+HTTP=200

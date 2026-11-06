@@ -1,0 +1,66 @@
+=== ICAP RESPMOD: allowed.txt ===
+ICAP server:10.1.99.10, ip:10.1.99.10, port:1344
+
+No modification needed (Allow 204 response)
+
+ICAP HEADERS:
+	ICAP/1.0 204 Unmodified
+	Server: C-ICAP/0.5.6
+	Connection: keep-alive
+	ISTag: CI0001-QsHp2Bkq1wJQwkP+KerASgAA
+
+REQMOD HEADERS:
+	GET http://dmz.bks4.test/allowed.txt HTTP/1.0
+	Date: Fri Nov  6 15:19:44 2026
+	User-Agent: C-ICAP-Client/x.xx
+
+=== ICAP RESPMOD: eicar.com ===
+ICAP server:10.1.99.10, ip:10.1.99.10, port:1344
+
+
+ICAP HEADERS:
+	ICAP/1.0 200 OK
+	Server: C-ICAP/0.5.6
+	Connection: keep-alive
+	ISTag: CI0001-QsHp2Bkq1wJQwkP+KerASgAA
+	X-Infection-Found: Type=0; Resolution=2; Threat=Eicar-Test-Signature;
+	X-Violations-Found: 1
+	-
+	Eicar-Test-Signature
+	0
+	0
+	Encapsulated: res-hdr=0, res-body=169
+
+RESPMOD HEADERS:
+	HTTP/1.0 403 Forbidden
+	Server: C-ICAP
+	Connection: close
+	Content-Type: text/html
+	Content-Language: en
+	Via: ICAP/1.0 admin-linux (C-ICAP/0.5.6 Antivirus service )
+
+=== ICAP RESPMOD: eicar.zip ===
+ICAP server:10.1.99.10, ip:10.1.99.10, port:1344
+
+
+ICAP HEADERS:
+	ICAP/1.0 200 OK
+	Server: C-ICAP/0.5.6
+	Connection: keep-alive
+	ISTag: CI0001-QsHp2Bkq1wJQwkP+KerASgAA
+	X-Infection-Found: Type=0; Resolution=2; Threat=Eicar-Test-Signature;
+	X-Violations-Found: 1
+	-
+	Eicar-Test-Signature
+	0
+	0
+	Encapsulated: res-hdr=0, res-body=169
+
+RESPMOD HEADERS:
+	HTTP/1.0 403 Forbidden
+	Server: C-ICAP
+	Connection: close
+	Content-Type: text/html
+	Content-Language: en
+	Via: ICAP/1.0 admin-linux (C-ICAP/0.5.6 Antivirus service )
+

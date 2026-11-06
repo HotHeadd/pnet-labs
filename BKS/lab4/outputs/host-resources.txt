@@ -1,0 +1,11 @@
+Filesystem                        Type  Size  Used Avail Use% Mounted on
+/dev/mapper/ubuntu--vg-ubuntu--lv ext4  294G   85G  197G  31% /
+NAME                       SIZE TYPE FSTYPE      MOUNTPOINT
+sda                        300G disk             
+├─sda1                       1M part             
+├─sda2                       1G part ext4        /boot
+└─sda3                     299G part LVM2_member 
+  └─ubuntu--vg-ubuntu--lv  299G lvm  ext4        /
+              total        used        free      shared  buff/cache   available
+Mem:            19G        7.9G         10G         25M        1.2G         11G
+Swap:          4.0G          0B        4.0G

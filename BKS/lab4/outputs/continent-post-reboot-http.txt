@@ -1,0 +1,5 @@
+2026-11-06T18:33:47+00:00
+Unauthenticated LAN HTTP=200
+2026-11-06T18:34:41+00:00
+Authenticated Guest HTTP=000
+curl: (28) Operation timed out after 8001 milliseconds with 0 bytes received
