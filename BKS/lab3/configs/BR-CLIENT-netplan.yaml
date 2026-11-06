@@ -1,0 +1,21 @@
+network:
+  ethernets:
+    ens3:
+      addresses:
+      - 10.2.20.42/24
+      routes:
+      - to: 10.1.0.0/16
+        via: 10.2.20.1
+      - to: 203.0.113.0/24
+        via: 10.2.20.1
+    ens4:
+      addresses:
+      - 192.168.15.214/24
+      nameservers:
+        addresses:
+        - 1.1.1.1
+        - 8.8.8.8
+      routes:
+      - to: default
+        via: 192.168.15.2
+  version: 2

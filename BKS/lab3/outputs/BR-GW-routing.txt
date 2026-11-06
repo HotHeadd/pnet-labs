@@ -1,0 +1,35 @@
+$ vtysh -c show_ip_ospf_neighbor
+
+Neighbor ID     Pri State           Dead Time Address         Interface                        RXmtL RqstL DBsmL
+10.1.254.254      1 Full/DROther       6.458s 172.16.0.1      tun0:172.16.0.2                      0     0     0
+
+$ ip route
+default via 192.168.15.2 dev ens5 proto static 
+10.1.50.0/26 nhid 24 via 172.16.0.1 dev tun0 proto ospf metric 20 
+10.2.20.0/24 dev ens4 proto kernel scope link src 10.2.20.1 
+172.16.0.0/30 dev tun0 proto kernel scope link src 172.16.0.2 
+192.168.15.0/24 dev ens5 proto kernel scope link src 192.168.15.212 
+203.0.113.0/24 dev ens3 proto kernel scope link src 203.0.113.20 
+$ ipsec statusall
+Status of IKE charon daemon (strongSwan 5.9.5, Linux 5.15.0-198-generic, x86_64):
+  uptime: 25 seconds, since Oct 27 14:30:36 2026
+  malloc: sbrk 2117632, mmap 0, used 1232560, free 885072
+  worker threads: 11 of 16 idle, 5/0/0/0 working, job queue: 0/0/0/0, scheduled: 3
+  loaded plugins: charon aesni aes rc2 sha2 sha1 md5 mgf1 random nonce x509 revocation constraints pubkey pkcs1 pkcs7 pkcs8 pkcs12 pgp dnskey sshkey pem openssl fips-prf gmp agent xcbc hmac gcm drbg attr kernel-netlink resolve socket-default connmark stroke updown eap-mschapv2 xauth-generic counters
+Listening IP addresses:
+  203.0.113.20
+  10.2.20.1
+  192.168.15.212
+  172.16.0.2
+Connections:
+    gre-site:  203.0.113.20...203.0.113.10  IKEv2, dpddelay=10s
+    gre-site:   local:  [203.0.113.20] uses pre-shared key authentication
+    gre-site:   remote: [203.0.113.10] uses pre-shared key authentication
+    gre-site:   child:  dynamic[gre] === dynamic[gre] TRANSPORT, dpdaction=restart
+Security Associations (1 up, 0 connecting):
+    gre-site[1]: ESTABLISHED 25 seconds ago, 203.0.113.20[203.0.113.20]...203.0.113.10[203.0.113.10]
+    gre-site[1]: IKEv2 SPIs: ce7471c25934362b_i* b22ec19c668f4b49_r, pre-shared key reauthentication in 2 hours
+    gre-site[1]: IKE proposal: AES_CBC_256/HMAC_SHA2_256_128/PRF_HMAC_SHA2_256/MODP_2048
+    gre-site{1}:  INSTALLED, TRANSPORT, reqid 1, ESP SPIs: ca8f765d_i ca0c3667_o
+    gre-site{1}:  AES_GCM_16_256, 1692 bytes_i (23 pkts, 1s ago), 1740 bytes_o (24 pkts, 13s ago), rekeying in 43 minutes
+    gre-site{1}:   203.0.113.20/32[gre] === 203.0.113.10/32[gre]

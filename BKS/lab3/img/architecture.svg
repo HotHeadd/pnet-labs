@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="620" viewBox="0 0 1100 620">
+<rect width="1100" height="620" fill="white"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10Z" fill="black"/></marker></defs>
+<text x="550" y="32" text-anchor="middle" font-family="Arial" font-size="24" fill="black" font-weight="bold">Вариант 6. Связь головного офиса и филиалов</text>
+<rect x="130" y="70" width="320" height="130" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="290" y="104" text-anchor="middle" font-family="Arial" font-size="23" fill="black" font-weight="bold">ЦОД-1 / ГО</text>
+<text x="290" y="133" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Шлюз · внутренние сервисы</text>
+<rect x="170" y="149" width="240" height="36" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="290" y="174" text-anchor="middle" font-family="Arial" font-size="18" fill="black">DMZ-1: HTTPS-прокси</text>
+<rect x="650" y="70" width="320" height="130" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="810" y="104" text-anchor="middle" font-family="Arial" font-size="23" fill="black" font-weight="bold">ЦОД-2 (резерв)</text>
+<text x="810" y="133" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Шлюз · внутренние сервисы</text>
+<rect x="690" y="149" width="240" height="36" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="810" y="174" text-anchor="middle" font-family="Arial" font-size="18" fill="black">DMZ-2: HTTPS-прокси</text>
+<polyline points="450,111 650,111" fill="none" stroke="black" stroke-width="2"/>
+<text x="550" y="94" text-anchor="middle" font-family="Arial" font-size="17" fill="black">Защищённая связь</text>
+<polyline points="160,390 160,250 240,250 240,200" fill="none" stroke="black" stroke-width="2"/>
+<text x="120" y="298" text-anchor="middle" font-family="Arial" font-size="19" fill="black">SD-WAN</text>
+<polyline points="240,390 240,285 740,285 740,200" fill="none" stroke="black" stroke-width="2" stroke-dasharray="8 5"/>
+<text x="500" y="274" text-anchor="middle" font-family="Arial" font-size="18" fill="black">SD-WAN: резерв</text>
+<polyline points="550,390 550,235 400,235 400,200" fill="none" stroke="black" stroke-width="2"/>
+<text x="602" y="345" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Радиомост</text>
+<text x="602" y="368" text-anchor="middle" font-family="Arial" font-size="18" fill="black">+ IPsec</text>
+<polyline points="910,390 910,167 930,167" fill="none" stroke="black" stroke-width="2" stroke-dasharray="8 5" marker-end="url(#a)"/>
+<polyline points="830,390 830,325 475,325 475,167 410,167" fill="none" stroke="black" stroke-width="2" marker-end="url(#a)"/>
+<text x="966" y="292" text-anchor="middle" font-family="Arial" font-size="18" fill="black">HTTPS/mTLS</text>
+<rect x="50" y="390" width="280" height="90" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="190" y="425" text-anchor="middle" font-family="Arial" font-size="23" fill="black" font-weight="bold">20 ПВЗ</text>
+<rect x="410" y="390" width="280" height="90" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="550" y="425" text-anchor="middle" font-family="Arial" font-size="23" fill="black" font-weight="bold">Лаборатория</text>
+<rect x="770" y="390" width="280" height="90" rx="5" fill="white" stroke="black" stroke-width="2"/>
+<text x="910" y="425" text-anchor="middle" font-family="Arial" font-size="23" fill="black" font-weight="bold">Подрядчик</text>
+<text x="190" y="457" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Оптика / LTE</text>
+<text x="550" y="457" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Соседнее здание</text>
+<text x="910" y="457" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Только один веб-сервис</text>
+<text x="550" y="523" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Линия — двусторонняя связь; стрелка — запрос к прокси (ответы разрешены).</text>
+<text x="550" y="552" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Пунктир — резерв. DMZ-1 и DMZ-2 — отдельные сегменты своих ЦОД.</text>
+<text x="550" y="587" text-anchor="middle" font-family="Arial" font-size="18" fill="black">Архитектурный проект; практический стенд GRE/IPsec и Xray показан отдельно.</text>
+</svg>
