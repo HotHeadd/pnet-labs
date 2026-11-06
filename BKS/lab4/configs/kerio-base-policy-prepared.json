@@ -1,0 +1,2542 @@
+{
+  "rules": [
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Management",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                4081,
+                443
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 17,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                161
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 1,
+            "port": {
+              "comparator": "Any",
+              "ports": []
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Deny-Untrusted-Management",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          },
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.50.0",
+            "addr2": "255.255.255.192",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          },
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleAny",
+        "entries": []
+      },
+      "ipVersion": "Ipv4",
+      "action": "Drop",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Deny-DMZ-LAN",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.50.0",
+            "addr2": "255.255.255.192",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleAny",
+        "entries": []
+      },
+      "ipVersion": "Ipv4",
+      "action": "Drop",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Admin-DMZ",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "10.1.50.10",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                22,
+                80,
+                443
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 1,
+            "port": {
+              "comparator": "Any",
+              "ports": []
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-LAN-DMZ-Web",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "10.1.50.10",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                80,
+                443
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Publish-HTTP",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                8080
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": true,
+      "translatedHost": "10.1.50.10",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": true,
+        "value": 80
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Publish-HTTPS",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                8443
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": true,
+      "translatedHost": "10.1.50.10",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": true,
+        "value": 443
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Protected-DNS-NTP",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          },
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "192.168.100.1",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                53
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 17,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                53,
+                123
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": true,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Protected-Web",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          },
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                80,
+                443
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": true,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-DMZ-DNS-NTP",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.50.0",
+            "addr2": "255.255.255.192",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "192.168.100.1",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                53
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 17,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                53,
+                123
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": true,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-DMZ-Updates",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.50.0",
+            "addr2": "255.255.255.192",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                80,
+                443
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": true,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Firewall-DNS-NTP",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "192.168.100.1",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                53
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 17,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                53,
+                123
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Firewall-Web",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityInterface",
+            "host": "",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceInternet",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                80,
+                443
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Firewall-ICMP",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "192.168.100.1",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 1,
+            "port": {
+              "comparator": "Any",
+              "ports": []
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Internal-ICMP-Gateway",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.99.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          },
+          {
+            "type": "TrafficEntityNetwork",
+            "host": "",
+            "addr1": "10.1.10.0",
+            "addr2": "255.255.255.0",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 1,
+            "port": {
+              "comparator": "Any",
+              "ports": []
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    },
+    {
+      "id": "",
+      "enabled": true,
+      "name": "BKS4-Syslog",
+      "description": "BKS4 variant 6",
+      "color": "",
+      "source": {
+        "type": "RuleSelectedEntities",
+        "firewall": true,
+        "entities": []
+      },
+      "destination": {
+        "type": "RuleSelectedEntities",
+        "firewall": false,
+        "entities": [
+          {
+            "type": "TrafficEntityHost",
+            "host": "10.1.99.10",
+            "addr1": "",
+            "addr2": "",
+            "addressGroup": {
+              "id": "",
+              "name": "",
+              "invalid": false
+            },
+            "interfaceCondition": {
+              "type": "InterfaceTrusted",
+              "interfaceType": "Ethernet",
+              "selectedInterface": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "vpnCondition": {
+              "type": "IncomingClient",
+              "tunnel": {
+                "id": "",
+                "name": "",
+                "invalid": false
+              },
+              "enabled": false
+            },
+            "userType": "AnyUser",
+            "user": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "domainName": ""
+            }
+          }
+        ]
+      },
+      "service": {
+        "type": "RuleSelectedEntities",
+        "entries": [
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 6,
+            "port": {
+              "comparator": "Equal",
+              "ports": [
+                514
+              ]
+            }
+          },
+          {
+            "definedService": false,
+            "service": {
+              "id": "",
+              "name": "",
+              "isGroup": false,
+              "invalid": false
+            },
+            "protocol": 17,
+            "port": {
+              "comparator": "List",
+              "ports": [
+                514,
+                162
+              ]
+            }
+          }
+        ]
+      },
+      "ipVersion": "Ipv4",
+      "action": "Allow",
+      "logEnabled": [
+        false,
+        true
+      ],
+      "graphEnabled": false,
+      "dscp": {
+        "enabled": false,
+        "value": 0
+      },
+      "natIpv4Only": true,
+      "enableSourceNat": false,
+      "natMode": "NatDefault",
+      "allowReverseConnection": false,
+      "balancing": "BalancingPerHost",
+      "natInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "allowFailover": false,
+      "ipAddress": "",
+      "ipv6Address": "",
+      "enableDestinationNat": false,
+      "translatedHost": "",
+      "translatedIpv6Host": "",
+      "translatedPort": {
+        "enabled": false,
+        "value": 0
+      },
+      "validTimeRange": {
+        "id": "",
+        "name": "",
+        "invalid": false
+      },
+      "inspector": "default",
+      "lastUsed": {
+        "isValid": true,
+        "days": 0,
+        "hours": 0,
+        "minutes": 0
+      }
+    }
+  ],
+  "defaultRule": {
+    "id": "",
+    "enabled": true,
+    "name": "Block other communication",
+    "description": "This rule allows remote administration",
+    "color": "",
+    "source": {
+      "type": "RuleAny",
+      "firewall": false,
+      "entities": []
+    },
+    "destination": {
+      "type": "RuleAny",
+      "firewall": false,
+      "entities": []
+    },
+    "service": {
+      "type": "RuleAny",
+      "entries": []
+    },
+    "ipVersion": "IpAll",
+    "action": "Drop",
+    "logEnabled": [
+      false,
+      true
+    ],
+    "graphEnabled": false,
+    "dscp": {
+      "enabled": false,
+      "value": 0
+    },
+    "natIpv4Only": true,
+    "enableSourceNat": false,
+    "natMode": "NatDefault",
+    "allowReverseConnection": false,
+    "balancing": "BalancingPerHost",
+    "natInterface": {
+      "id": "",
+      "name": "",
+      "invalid": false
+    },
+    "allowFailover": false,
+    "ipAddress": "",
+    "ipv6Address": "",
+    "enableDestinationNat": false,
+    "translatedHost": "",
+    "translatedIpv6Host": "",
+    "translatedPort": {
+      "enabled": false,
+      "value": 0
+    },
+    "validTimeRange": {
+      "id": "",
+      "name": "",
+      "invalid": false
+    },
+    "inspector": "default",
+    "lastUsed": {
+      "isValid": true,
+      "days": 0,
+      "hours": 0,
+      "minutes": 0
+    }
+  }
+}

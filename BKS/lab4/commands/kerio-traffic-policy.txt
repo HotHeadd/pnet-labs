@@ -1,0 +1,35 @@
+Configuration readback; final enforcement checks pending activation.
+Protocols: 1=ICMP, 6=TCP, 17=UDP.
+1. BKS4-Management Allow
+   10.1.99.0/255.255.255.0 -> Firewall [17:161]
+2. BKS4-Deny-Untrusted-Management Drop
+   10.1.10.0/255.255.255.0,10.1.50.0/255.255.255.192,InterfaceInternet -> 10.1.99.0/255.255.255.0 [Any]
+3. BKS4-Deny-DMZ-LAN Drop
+   10.1.50.0/255.255.255.192 -> 10.1.10.0/255.255.255.0 [Any]
+4. BKS4-Admin-DMZ Allow
+   10.1.99.0/255.255.255.0 -> 10.1.50.10 [Any]
+5. BKS4-LAN-DMZ-Web Allow
+   10.1.10.0/255.255.255.0 -> 10.1.50.10 [Any]
+6. BKS4-Publish-HTTP Allow DNAT=10.1.50.10:80
+   InterfaceInternet -> Firewall [6:8080]
+7. BKS4-Publish-HTTPS Allow DNAT=10.1.50.10:443
+   InterfaceInternet -> Firewall [6:8443]
+8. BKS4-Protected-DNS-NTP Allow SNAT
+   10.1.99.0/255.255.255.0,10.1.10.0/255.255.255.0 -> 192.168.100.1 [6:53]
+9. BKS4-Protected-Web Allow SNAT
+   10.1.99.0/255.255.255.0,10.1.10.0/255.255.255.0 -> InterfaceInternet [Any]
+10. BKS4-DMZ-DNS-NTP Allow SNAT
+   10.1.50.0/255.255.255.192 -> 192.168.100.1 [6:53]
+11. BKS4-DMZ-Updates Allow SNAT
+   10.1.50.0/255.255.255.192 -> InterfaceInternet [Any]
+12. BKS4-Firewall-DNS-NTP Allow
+   Firewall -> 192.168.100.1 [6:53]
+13. BKS4-Firewall-Web Allow
+   Firewall -> InterfaceInternet [Any]
+14. BKS4-Firewall-ICMP Allow
+   Firewall -> 192.168.100.1 [Any]
+15. BKS4-Internal-ICMP-Gateway Allow
+   10.1.99.0/255.255.255.0,10.1.10.0/255.255.255.0 -> Firewall [Any]
+16. BKS4-Syslog Allow
+   Firewall -> 10.1.99.10 [6:514]
+Default: Drop; connection logging enabled.

@@ -1,0 +1,11 @@
+LAN -> DMZ HTTP
+BKS4 harmless control download
+
+HTTP=200
+LAN -> DMZ SSH (expect denied)
+Connection to 10.1.50.10 22 port [tcp/ssh] succeeded!
+rc=0
+LAN -> WAN HTTP
+BKS4 harmless control download
+
+HTTP=200

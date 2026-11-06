@@ -1,0 +1,7 @@
+Management -> DMZ HTTP
+BKS4 harmless control download
+
+HTTP=200
+Management -> DMZ SSH
+Connection to 10.1.50.10 22 port [tcp/ssh] succeeded!
+rc=0
