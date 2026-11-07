@@ -1,5 +1,97 @@
 # БКС4 — вариант 6
 
+## Продолжение под vova_pc, 2026-11-07 (Mac Вовы)
+
+Окружение: на этом Mac не было venv MCP и `mcp-creds.json`; пользовательский MCP `pnetlab` ходил через прокси `localhost:1056`
+без исключения для `100.100.57.19` («All connection attempts failed»). Сделано: `mcp-creds.json` (пароль `vova_pc` взят из
+пользовательской конфигурации Claude) + `.pnet-account=vova_pc`; симлинк `~/mcp/pnetlab-mcp-server → ~/pnetlab-mcp-server`;
+пользовательский MCP переведён на `sh tools/pnet-mcp.sh` с `NO_PROXY=100.100.57.19`; после `/mcp → Reconnect` MCP работает.
+В shell всегда `export NO_PROXY=100.100.57.19` (в окружении `HTTP_PROXY=prx-squid-rev:9090`). `pypdf` поставлен в venv MCP
+(`~/pnetlab-mcp-server/.venv/bin/python -I <скрипт>`); `uv run --with` в этой сети виснет.
+SSH на хост — `access/pnetlab_ed25519`; на Linux-ВМ — с хоста `/root/.ssh/id_rsa_dy`, `labadmin@192.168.15.22{1..4}`;
+`labadmin` на всех ВМ имеет `sudo -n`. Скрипты для c4_lib запускать на ADMIN-LINUX с `PYTHONPATH=~/bks4-c4`.
+В двойных кавычках внутри `ssh host "ssh vm \"...\""` переменные `$f` раскрывает **хост** — экранировать `\$f`
+(из-за этого один прогон AV показал «200/26 байт» — качался `/`, а не `eicar.com`).
+
+- `vova_pc` присоединён к сессии 9 (`$H join`). Живое состояние: CONTINENT и 5 тестовых ВМ работают, KERIO выключен, TAP на своих мостах,
+  последняя установка `1818f852` done 100, 20 правил FW как в журнале, capabilities firewall/ips/ncc/user_authentication/advanced_dpi/geoprotection/antivirus.
+- **Регрессия гостевого HTTP воспроизведена и устранена.** До входа гость получал страницу перенаправления портала (1720 байт, ожидаемо),
+  после входа `labguest` HTTP с 10.1.10.42 зависал к WAN и DMZ. Причина — **порядок правил**: DPI-правило `BKS4-Guests-Block-Messengers-P2P`
+  (любой сервис) стояло выше правил с HTTP-AV-прокси; классификация приложений удерживала поток, уже перехваченный прокси.
+  Исправление: `BKS4-LAN-to-DMZ-HTTP-AV`, `BKS4-LAN-to-DMZ-HTTPS`, `BKS4-LAN-HTTP-AV`, `BKS4-LAN-HTTPS` подняты выше DPI-правила
+  (установка `f66248f4` done 100). После этого гость: HTTP 200, EICAR/ZIP 403 (C-ICAP «VIRUS FOUND»), HTTPS без инспекции 200/68 байт,
+  IRC 6667/16667 и BitTorrent 6881/16881 — timeout, события `blocked username=labguest rule=BKS4-Guests-Block-Messengers-P2P`.
+- Полный состав запрета возвращён: applications = IRC, Jabber, BitTorrent + категории Chat, FileSharing; dst/service пустые
+  (установка `1114b94a` done 100); проверка гостя повторена — то же.
+- **Пользовательские сигнатуры СОВ создаются через API**: `POST <draft>/ipssignature` с полным телом
+  `{name, signature, action:'alert', vendor, sid<4000000, rev, proto, classtype, is_enabled}` (без `sid` — TypeError в `is_user_sig`).
+  Добавлены sid 3900001 «BKS4 TCP SYN flood to DMZ» (`flags:S,12; flow:stateless; threshold both by_src 50/5s`),
+  3900002 «BKS4 TCP SYN port scan to DMZ» (10/60s), 3900003 «BKS4 TCP XMAS scan to DMZ» (`flags:FPU,12`); все три в `drop`
+  профиля BKS4-IDS-Alert (теперь alert 6794 / drop 8), установка `11740460` done 100.
+  Результат WAN-теста: SYN-burst hping → 3900001 и 3900002 blocked; `nmap -sS -sV --version-all -p 22,443,8080,8443` даёт ровно
+  10 SYN до DMZ (tcpdump на DMZ-WEB) → 3900002 blocked; XMAS-пакеты до СОВ не доходят (их и SYN на неопубликованные порты
+  отбрасывает МЭ, событий нет — порт 22 на адресе WAN `filtered`); веб-сигнатуры 4109359/4106447/4111038/4149401 blocked.
+  В финальном `check-ids-web.sh wan` использовать `--version-all --max-retries 1`.
+- **Найдено свойство DPI:** при правиле контроля приложений «любой сервис» TCP-handshake и первые байты (баннер SSH сервера)
+  проходят до классификации, затем поток молча гибнет без записи в журнал — `nc -z` LAN→DMZ:22 «succeeded», ssh — «timed out during
+  banner exchange». Добавлено правило `BKS4-Deny-LAN-to-DMZ-Other` (src LAN, dst DMZ, любой сервис, block, log) сразу после
+  веб-правил LAN→DMZ и выше DPI: теперь LAN→DMZ:22 — timeout на SYN, событие `blocked rule=BKS4-Deny-LAN-to-DMZ-Other username=labguest`.
+- GeoIP сравнение: правило выключено (установка `4815a18a` done 100) → RU 5.255.255.5 и US 8.8.8.8 оба HTTP 200,
+  `outputs/continent-geoip-disabled.txt` перезаписан. GeoIP включён обратно — установка `76d7bac5` done 100 (**итоговая политика**,
+  21 правило FW, порядок в `configs/continent-rule-order.txt`). US → timeout; событие blocked появилось только при повторе в 10:44 UTC
+  (узел агрегирует повторяющиеся записи) — отражено в `outputs/continent-geoip-enabled.txt`.
+- **Итоговый прогон «Континента» 10:37–10:44 UTC сохранён**: `outputs/continent-final-*` (base ×4, av guest/admin, apps guest/admin,
+  ids wan/lan + `ids-lan-443`, management ×3, events, av/ips-alerts, security-statistics). Из LAN HTTP к DMZ терминирует AV-прокси,
+  СОВ исходных запросов не видит; сетевые сигнатуры из LAN проверены на форвардируемом 443. Политика выгружена в
+  `configs/continent-{firewall,nat}-policy.json`. Выгрузка стенда `stand/pnetlab_export-20261107-121124.zip`.
+- CONTINENT штатно выключен через локальную консоль (меню «Выключение» → «Да»; `pnet-helper.py keys … Up/Enter/Right/Enter`,
+  кадр — `capture-node.py 9 7`), затем запущен KERIO (node 1). **На момент передачи работает KERIO, CONTINENT выключен.**
+- **Kerio.** Официальный trial импортирован через API: `POST /admin/api/jsonrpc/upload/` (multipart `fileUpload`) → `fileUpload.id` →
+  `ProductInfo.uploadLicense({fileId})` — принят, `getFullStatus` показывает 25 пользователей/30 дней, но `licenseSet=false`,
+  `regType=rsNoRegistration`, `Session.getLoginType=LoginReactivation`. `ProductRegistration.start` доходит до register.kerio.com
+  (TLS, ~24 КБ ответа по tcpdump на WAN-TEST), затем сервер молчит → «Less than 1 bytes/sec … 300 seconds». В этом состоянии классы
+  IntrusionPrevention/Users/Logs/IpServices/UpdateChecker отвечают 1004 «Insufficient rights», и **после 1004 сессия API убивается**
+  (следующие вызовы — «Session expired»): вызывать разрешённые методы до «опасных». AV: `AntivirusNotActive`, EICAR и IRC из LAN проходят.
+  Зафиксировано в отчёте как ограничение (методичка допускает с согласованием с преподавателем).
+- **Kerio API: изменения TrafficPolicy.set применяются сразу, но откатываются при завершении сессии**, если не подтверждены
+  `Session.getConfigTimestamp` → `Session.confirmConfig(<этот список>)`. `confirmConfig({clientTimestampList: []})` ничего не закрепляет.
+  Правильная последовательность — `tools/kerio-policy-fix.py`. Так добавлены и закреплены: `BKS4-Deny-Admin-Outside-Management`
+  (LAN/DMZ/Internet → Firewall tcp 4080/4081, позиция 2), `BKS4-LAN-DMZ-Web` только tcp 80/443, DNS/NTP-правила с udp 53/123
+  (ICMP-сервис через API не задаётся — нужен definedService, IpServices недоступен; правила «→ Firewall [Any]» оставлены).
+  Проверки `outputs/kerio-final-*`: LAN→DMZ SSH timeout, admin 4081 из LAN (через 10.1.99.1 и 10.1.10.1) и из WAN — timeout, из Mgmt — 200.
+  `configs/kerio-traffic-policy.json` и `commands/kerio-traffic-policy.txt` — 17 правил.
+- **Разбор лицензии Kerio (13:00 UTC, без изменений политики):** журналы на самом Kerio (локальная консоль Alt+F2, root, пароль Admin;
+  `/var/winroute/logs/{error,warning,config,debug}.log`): «License changed: Trial» при обоих импортах (02:05 и 11:03), но в error.log
+  «There is no valid license for the product!» и «IPS rules update: No valid license found»; после импорта 11:03 новых таких записей не было.
+  `license.key` в `/var/winroute/license/` совпадает по md5 с `access/kerio-license.key`; у Admin Rights=268435455 (полные) — 1004 не про права.
+  Часы Kerio отставали на 3 ч (RTC читался как local): NTP с самого МЭ был заблокирован, пока в DNS/NTP-правилах не было UDP 123; после
+  `SystemConfig.setTimeFromNtp` время верное (NtpUpdateOk). Регистрация всё равно стопорится: `ProductRegistration.start` → TLS к
+  `register.kerio.com` (`/registration/LD.php`, путь из strings бинаря), запрос 1213 байт, ответ ~21,6 КБ, затем ни FIN, ни данных,
+  через 300 с «Less than 1 bytes/sec». `curl` с WAN-TEST к LD.php: Apache/PHP 5.6, 200, `Connection: close` — сервер жив. По документации GFI
+  незарегистрированный trial НЕ даёт Web Filter, обновления AV и IPS — именно наше состояние (`LoginReactivation`, `licenseSet=false`).
+  Продолжение 13:10–13:45 UTC: `/etc/boxinit.d/60winroute restart` выполнен — состояние не изменилось. В `winroute.cfg`:
+  `BaseID=Trial`, `TrialId/TrialKey/TrialData` пустые, `UnregisteredTrial=0` — т.е. offline-файл даёт только «Trial», а регистрационные
+  ключи trial выдаёт лишь онлайн LD.php. В strings бинаря: «The trial license was marked as invalid by anti-tamper protection», «Kerio Control
+  Web Filter is not available in unregistered trial»; в журналах anti-tamper не встречался. Захват 13:00: сервер отдаёт ~21,5 КБ за 60 мс
+  и больше ничего, Kerio не шлёт второй запрос и ждёт 300 с; путь через NAT WAN-TEST исправен (1 МБ с cloudflare, MTU 1500). Повтор `curl`
+  к LD.php с угаданными параметрами — пустой 200 (тело запроса Kerio подписано, воспроизвести нельзя). Вывод: сервер регистрации GFI отвечает
+  клиенту 10.0.1 неполным/несовместимым ответом; с нашей стороны остаётся только обращение в поддержку GFI. Root-сессия на консоли закрыта.
+- Отчёт `main.typ` переписан по структуре методички (11 разделов, таблицы правил из JSON, таблица тестов, сравнение), 40 страниц (таблица тестов, таблицы правил из JSON обеих платформ),
+  PDF собран и просмотрен. Скриншотов CCM/Kerio GUI в отчёте нет (только листинги) — при желании добавить вручную.
+- Новые инструменты: `tools/select-native-events.py` (sudo, ADMIN-LINUX), `reorder-continent-rules.py`, `add-continent-user-signatures.py`,
+  `restore-guest-app-set.py`, `add-lan-dmz-deny.py <on|off> <order>`, `kerio-policy-fix.py`. `commands/check-ids-web.sh`: nmap `--version-all --max-retries 1`.
+- Остальные сегодняшние проверки (исследовательские, в outputs ещё не сохранены): базовая политика LAN/WAN/DMZ/Admin в норме;
+  AV с Admin и гостя — 200/403/403 + HTTPS 200/68; `lab-admin` на 10.1.99.10 вошёл, все 4 порта IRC/BT success (исключение работает);
+  управление API444: LAN и WAN ConnectTimeout, Mgmt 200; SNMP-доставка IPS-событий (3900002, 4109359) подтверждена `check-alert-delivery.py`.
+  В журнале после админского IRC-теста есть лишнее `blocked … Default-Deny username=lab-admin` на том же src_port — вероятно, завершающий
+  пакет после QUIT; не разбирали.
+- Итоговый порядок правил — `/tmp/order2.txt` на ADMIN-LINUX (скрипты `/tmp/reorder.py`, `/tmp/denydmz.py <on|off> <order>`,
+  `/tmp/addsigs.py`, `/tmp/fullset.py`, `/tmp/evsel.py <префикс timestamp_str MSK> [k=v…]` — компактный просмотр событий).
+  Перенести полезные в `tools/` при оформлении.
+- **Что осталось (по желанию):** скриншоты GUI (CCM: правила, профиль СОВ, пользовательские сигнатуры; Kerio: политика) для отчёта;
+  согласовать с преподавателем замену испытаний модулей Kerio; перед защитой решить, какую платформу держать включённой
+  (сейчас KERIO), и повторить `demo-checks.md` п. 3 (TAP после переключения). Коммит не делался.
+
 ## Передача товарищу по просьбе пользователя, 2026-11-07
 
 **Работа со стендом остановлена пользователем. Продолжать только после нового поручения.** Сессия9/pod7 `/BKS labs/BKS4.unl` сохранена: CONTINENT2 и клиенты3–7 status2, KERIO1 status0. Сессии/диски не закрывали, образы не публиковали. Локальная консоль может показывать меню завершения работы: перезагрузка через меню НЕ подтверждалась, API вернулся самостоятельно. Не нажимать Enter вслепую.

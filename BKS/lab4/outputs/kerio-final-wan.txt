@@ -1,0 +1,22 @@
+Kerio Control 10.0.1, WAN source 192.168.100.1; 2026-11-07T11:14:09+00:00
+WAN -> published HTTPS
+BKS4 harmless control download
+
+HTTPS=200
+WAN -> published HTTP
+BKS4 harmless control download
+
+HTTP=200
+WAN -> unpublished port 22 on 192.168.100.2 (expect denied)
+rc=124
+WAN -> Kerio admin 4081 (expect denied)
+curl: (28) Connection timed out after 8001 milliseconds
+HTTPS=000
+WAN scan of the published address (same bounded nmap as for Continent)
+22/tcp   filtered ssh
+443/tcp  filtered https
+8080/tcp open     http     nginx 1.18.0 (Ubuntu)
+8443/tcp open     ssl/http nginx 1.18.0 (Ubuntu)
+Nmap done: 1 IP address (1 host up) scanned in 13.72 seconds
+WAN -> published DMZ, Nmap User-Agent (no IPS on Kerio without activation)
+HTTP=200

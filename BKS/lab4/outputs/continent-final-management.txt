@@ -1,0 +1,11 @@
+Authenticated read of /api-v1-objects/config on 10.1.99.1:444 with the same credentials from each segment; 2026-11-07T10:40:52+00:00
+## LAN
+Data source: 10.1.10.42
+Transport result: ConnectTimeout HTTPSConnectionPool(host='10.1.99.1', port=444): Max retries exceeded with url: /api-v1-objects/config ... ConnectTimeoutError)
+## WAN
+Data source: 192.168.100.1
+Transport result: ConnectTimeout HTTPSConnectionPool(host='10.1.99.1', port=444): Max retries exceeded with url: /api-v1-objects/config ... ConnectTimeoutError)
+## Management
+Data source: 10.1.99.10
+HTTP status: 200
+Authenticated read: configurations 1

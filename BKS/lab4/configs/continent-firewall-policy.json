@@ -89,103 +89,6 @@
     ]
   },
   {
-    "name": "BKS4-Guests-Block-Messengers-P2P",
-    "is_enabled": true,
-    "rule_action": "block",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": false,
-    "order": 5,
-    "src": [
-      "BKS4 Guests"
-    ],
-    "dst": [],
-    "service": [],
-    "applications": [
-      "IRC",
-      "BitTorrent"
-    ],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-Authenticated-Lab-Protocols",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 6,
-    "src": [
-      "BKS4 Guests",
-      "BKS4 Administrators"
-    ],
-    "dst": [
-      "BKS4_WAN_TEST"
-    ],
-    "service": [
-      "BKS4_LAB_IRC_BT_PORTS"
-    ],
-    "applications": [],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-Admin-to-DMZ",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 7,
-    "src": [
-      "BKS4_MGMT"
-    ],
-    "dst": [
-      "BKS4_DMZ_WEB"
-    ],
-    "service": [
-      "BKS4_ICMP",
-      "BKS4_HTTPS",
-      "BKS4_SSH"
-    ],
-    "applications": [],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-Admin-to-DMZ-HTTP-AV",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 8,
-    "src": [
-      "BKS4_MGMT"
-    ],
-    "dst": [
-      "BKS4_DMZ_WEB"
-    ],
-    "service": [
-      "BKS4_HTTP"
-    ],
-    "applications": [],
-    "app_profile": [
-      "BKS4-HTTP-AV"
-    ],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
     "name": "BKS4-LAN-to-DMZ-HTTP-AV",
     "is_enabled": true,
     "rule_action": "pass",
@@ -193,7 +96,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 9,
+    "order": 5,
     "src": [
       "BKS4_LAN"
     ],
@@ -219,7 +122,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 10,
+    "order": 6,
     "src": [
       "BKS4_LAN"
     ],
@@ -235,90 +138,21 @@
     ]
   },
   {
-    "name": "BKS4-Admin-Docs-IPS-Exception",
+    "name": "BKS4-Deny-LAN-to-DMZ-Other",
     "is_enabled": true,
-    "rule_action": "pass",
+    "rule_action": "block",
     "is_inverse_src": false,
     "is_inverse_dst": false,
     "logging": true,
     "passips": false,
-    "order": 11,
+    "order": 7,
     "src": [
-      "BKS4_ADMIN_LINUX"
+      "BKS4_LAN"
     ],
     "dst": [
-      "BKS4_WAN_PUBLIC"
+      "BKS4_DMZ"
     ],
-    "service": [
-      "BKS4_PUBLISHED_HTTP"
-    ],
-    "applications": [],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-WAN-Published-Web",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 12,
-    "src": [],
-    "dst": [
-      "BKS4_WAN_PUBLIC"
-    ],
-    "service": [
-      "BKS4_PUBLISHED_HTTP",
-      "BKS4_PUBLISHED_HTTPS"
-    ],
-    "applications": [],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-Admin-HTTP-AV",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 13,
-    "src": [
-      "BKS4_MGMT"
-    ],
-    "dst": [],
-    "service": [
-      "BKS4_HTTP"
-    ],
-    "applications": [],
-    "app_profile": [
-      "BKS4-HTTP-AV"
-    ],
-    "install_on": [
-      "BKS4-NCC"
-    ]
-  },
-  {
-    "name": "BKS4-Admin-HTTPS",
-    "is_enabled": true,
-    "rule_action": "pass",
-    "is_inverse_src": false,
-    "is_inverse_dst": false,
-    "logging": true,
-    "passips": true,
-    "order": 14,
-    "src": [
-      "BKS4_MGMT"
-    ],
-    "dst": [],
-    "service": [
-      "BKS4_HTTPS"
-    ],
+    "service": [],
     "applications": [],
     "install_on": [
       "BKS4-NCC"
@@ -332,7 +166,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 15,
+    "order": 8,
     "src": [
       "BKS4_LAN"
     ],
@@ -356,9 +190,199 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 16,
+    "order": 9,
     "src": [
       "BKS4_LAN"
+    ],
+    "dst": [],
+    "service": [
+      "BKS4_HTTPS"
+    ],
+    "applications": [],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Guests-Block-Messengers-P2P",
+    "is_enabled": true,
+    "rule_action": "block",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": false,
+    "order": 10,
+    "src": [
+      "BKS4 Guests"
+    ],
+    "dst": [],
+    "service": [],
+    "applications": [
+      "IRC",
+      "Jabber",
+      "BitTorrent",
+      "FileSharing",
+      "Chat"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Authenticated-Lab-Protocols",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 11,
+    "src": [
+      "BKS4 Guests",
+      "BKS4 Administrators"
+    ],
+    "dst": [
+      "BKS4_WAN_TEST"
+    ],
+    "service": [
+      "BKS4_LAB_IRC_BT_PORTS"
+    ],
+    "applications": [],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Admin-to-DMZ",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 12,
+    "src": [
+      "BKS4_MGMT"
+    ],
+    "dst": [
+      "BKS4_DMZ_WEB"
+    ],
+    "service": [
+      "BKS4_ICMP",
+      "BKS4_HTTPS",
+      "BKS4_SSH"
+    ],
+    "applications": [],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Admin-to-DMZ-HTTP-AV",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 13,
+    "src": [
+      "BKS4_MGMT"
+    ],
+    "dst": [
+      "BKS4_DMZ_WEB"
+    ],
+    "service": [
+      "BKS4_HTTP"
+    ],
+    "applications": [],
+    "app_profile": [
+      "BKS4-HTTP-AV"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Admin-Docs-IPS-Exception",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": false,
+    "order": 14,
+    "src": [
+      "BKS4_ADMIN_LINUX"
+    ],
+    "dst": [
+      "BKS4_WAN_PUBLIC"
+    ],
+    "service": [
+      "BKS4_PUBLISHED_HTTP"
+    ],
+    "applications": [],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-WAN-Published-Web",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 15,
+    "src": [],
+    "dst": [
+      "BKS4_WAN_PUBLIC"
+    ],
+    "service": [
+      "BKS4_PUBLISHED_HTTP",
+      "BKS4_PUBLISHED_HTTPS"
+    ],
+    "applications": [],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Admin-HTTP-AV",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 16,
+    "src": [
+      "BKS4_MGMT"
+    ],
+    "dst": [],
+    "service": [
+      "BKS4_HTTP"
+    ],
+    "applications": [],
+    "app_profile": [
+      "BKS4-HTTP-AV"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Admin-HTTPS",
+    "is_enabled": true,
+    "rule_action": "pass",
+    "is_inverse_src": false,
+    "is_inverse_dst": false,
+    "logging": true,
+    "passips": true,
+    "order": 17,
+    "src": [
+      "BKS4_MGMT"
     ],
     "dst": [],
     "service": [
@@ -377,7 +401,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 17,
+    "order": 18,
     "src": [
       "BKS4_LAN",
       "BKS4_DMZ",
@@ -404,7 +428,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 18,
+    "order": 19,
     "src": [
       "BKS4_DMZ"
     ],
@@ -428,7 +452,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": true,
-    "order": 19,
+    "order": 20,
     "src": [
       "BKS4_DMZ"
     ],
@@ -449,7 +473,7 @@
     "is_inverse_dst": false,
     "logging": true,
     "passips": false,
-    "order": 20,
+    "order": 21,
     "src": [],
     "dst": [],
     "service": [],

@@ -1,8 +1,19 @@
+GeoIP rule BKS4-GeoIP-Block-US-to-DMZ enabled, policy task 76d7bac5 done; 2026-11-07T10:37:17+00:00
 GeoIP test source=5.255.255.5 destination=192.168.100.2:8080
 BKS4 harmless control download
 
 HTTP=200
 GeoIP test source=8.8.8.8 destination=192.168.100.2:8080
-curl: (28) Connection timed out after 8000 milliseconds
+curl: (28) Connection timed out after 8001 milliseconds
 
 HTTP=000
+
+Retest of the emulated US source (HTTP twice, HTTPS once); 2026-11-07T10:44:16+00:00
+curl: (28) Connection timed out after 6001 milliseconds
+US HTTP=000
+curl: (28) Connection timed out after 6001 milliseconds
+US HTTP=000
+curl: (28) Connection timed out after 6001 milliseconds
+US HTTPS=000
+Native event for the retest (first attempt of the series at 10:37 produced no separate record; the appliance aggregates repeated records):
+2026-11-07T13:44:18+03:00 C4FW event_type="firewall" src_ip="8.8.8.8" src_port="54686" dest_ip="192.168.100.2" dest_port="8080" proto="TCP" action="blocked" signature="BKS4_PUBLISHED_HTTP" src_country="US" rule_name="BKS4-GeoIP-Block-US-to-DMZ"

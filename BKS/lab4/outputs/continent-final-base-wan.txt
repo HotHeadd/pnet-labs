@@ -1,0 +1,9 @@
+Final run, policy task 76d7bac5 done (GeoIP enabled); 2026-11-07T10:37:17+00:00
+WAN -> published HTTPS
+BKS4 harmless control download
+
+HTTPS=200
+WAN -> published HTTP
+BKS4 harmless control download
+
+HTTP=200

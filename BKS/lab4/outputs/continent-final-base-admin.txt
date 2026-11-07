@@ -1,0 +1,8 @@
+Final run (lab-admin logged in at 10.1.99.10); 2026-11-07T10:39:58+00:00
+Management -> DMZ HTTP
+BKS4 harmless control download
+
+HTTP=200
+Management -> DMZ SSH
+Connection to 10.1.50.10 22 port [tcp/ssh] succeeded!
+rc=0

@@ -1,37 +1,37 @@
 # БКС4, вариант 6 — проверки и готовность
 
-Состояние после интеграции `68bfe11`, 2026-11-07. Исторические выводы подтверждают конкретный прогон, но не одновременную работу всех функций текущей политики.
+Состояние на 2026-11-07 после итогового прогона (установка `76d7bac5`, `outputs/continent-final-*`). Все пункты ниже подтверждены **одним** прогоном 10:37–10:44 UTC с событиями журнала (`continent-final-events.txt`).
 
 ## Что готово и что осталось
 
 | Пункт | Подтверждение | Текущий статус |
 |---|---|---|
-| LAN → WAN, NAT | `outputs/continent-base-lan.txt`, `continent-base-admin.txt` | Исторический успех; нужен итоговый повтор |
-| Публикация DMZ 8080/8443 | `outputs/continent-base-wan.txt` | После восстановления повторно HTTP/HTTPS200; `outputs/continent-post-restore-base-wan.txt` |
-| Изоляция DMZ → LAN | `outputs/continent-base-dmz.txt` | После восстановления повторный timeout SSH; `outputs/continent-post-restore-base-dmz.txt` |
-| Антивирус plain/ZIP/HTTPS | `outputs/continent-gateway-av.txt`, `https-origin-reference.txt` | Свежий сквозной прогон с Management: HTTP200/EICAR+ZIP403/HTTPS200 на DMZ и WAN; гостевой HTTP отложен |
+| LAN → WAN, NAT | `outputs/continent-final-base-lan.txt` | Готово |
+| Публикация DMZ 8080/8443 | `outputs/continent-final-base-wan.txt` | Готово |
+| Изоляция DMZ → LAN | `outputs/continent-final-base-dmz.txt`, событие в `continent-final-events.txt` | Готово; LAN → DMZ кроме 80/443 — `BKS4-Deny-LAN-to-DMZ-Other` |
+| Антивирус plain/ZIP/HTTPS | `outputs/continent-final-av-{guest,admin}.txt` | Готово для гостя LAN и администратора (DMZ и WAN) |
 | Категории URL и типы файлов | Условие варианта 6 | Отдельные ограничения URL/типов файлов вариантом не заданы; не подменять их тестом DPI |
-| Исключение администратора | `outputs/continent-admin-apps.txt` | Четыре предыдущих клиентских успеха; свежие нативные события ещё собрать |
-| Гостевой DPI на двух портах | `outputs/continent-guest-apps-{unrestricted,blocked}.txt` | IRC/BitTorrent проверялись; текущий сокращённый набор ещё не доказывает запрет всех мессенджеров и файлообменных сервисов |
-| IDS/IPS, сканирование | `outputs/continent-ids-wan.txt`, `continent-ips-wan.txt` | Само обнаружение/ограничение SYN-сканирования целиком не подтверждено; Nmap User-Agent — отдельная веб-сигнатура |
-| IDS/IPS, веб-сигнатуры | `outputs/continent-ips-events.txt` | Свежие blocked SID4109359 и4149401 подтверждены; нужен итоговый общий прогон |
-| Управление только из Management | `outputs/continent-management-access.txt` | Прежний аутентифицированный API-тест есть; Management восстановлен после исправления привязок TAP, повторить сегментные ограничения |
-| GeoIP выключен/включён | `outputs/continent-geoip-{disabled,enabled}.txt` | Есть RU/US сравнение на эмулированных источниках |
-| Три статистических представления | `outputs/continent-security-statistics.json`, раздел отчёта | Готово; это число записей исторического журнала, не соединения/пакеты/байты |
-| SNMP-оповещения AV | `outputs/continent-av-alert-delivery.txt` | После восстановления доставлены четыре детекта сквозного AV с Management; точное сравнение payload |
-| SNMP-оповещения IPS | `outputs/continent-ips-alert-{test,delivery}.txt` | Свежий SID 4109359 заблокирован, доставка одного уведомления проверена |
+| Исключение администратора | `outputs/continent-final-apps-admin.txt` + события | Готово |
+| Гостевой DPI на двух портах | `outputs/continent-final-apps-guest.txt` + события | Готово: IRC, Jabber, BitTorrent + категории Chat/FileSharing, любой получатель; HTTP гостя при этом работает (веб-правила выше DPI) |
+| IDS/IPS, сканирование | `outputs/continent-final-ids-wan.txt`, `-ids-lan-443.txt`, `configs/continent-ips-user-signatures.txt` | Готово: пользовательские сигнатуры 3900001/3900002 blocked (nmap --version-all и hping SYN); XMAS режет МЭ |
+| IDS/IPS, веб-сигнатуры | `outputs/continent-final-ids-wan.txt`, события | Готово |
+| Управление только из Management | `outputs/continent-final-management.txt` | Готово |
+| GeoIP выключен/включён | `outputs/continent-geoip-{disabled,enabled}.txt` | Готово, с событием `src_country=US` blocked |
+| Три статистических представления | `outputs/continent-final-security-statistics.json` | Готово |
+| SNMP-оповещения AV | `outputs/continent-final-av-alerts.txt` | Готово: 8 уведомлений итогового прогона |
+| SNMP-оповещения IPS | `outputs/continent-final-ips-alerts.txt` | Готово: 5 уведомлений |
 | Ложное срабатывание IPS | `outputs/continent-docs-exception*.txt` | Выполнено: Admin200 после исключения, WAN всё ещё блокируется SID4149401 |
 | Резервное копирование | `outputs/continent-native-backup.txt` | Свежая зашифрованная копия, штатное восстановление CDC done100; описание и контрольные хеши проверены |
-| Kerio | `commands/kerio-traffic-policy.txt`, новые записи `AGENTS.md` | Trial выдан и импортирован, полная активация/модули не подтверждены; по просьбе пользователя отложено |
+| Kerio | `outputs/kerio-final-*.txt`, `commands/kerio-traffic-policy.txt` | МЭ/NAT/публикация/управление только из Management — готово; AV/IPS/контроль приложений недоступны: онлайн-активация не завершается на стороне register.kerio.com |
 
 ## Перед демонстрацией
 
-1. Проверить сессии PNETLab и присоединиться к `/BKS labs/BKS4.unl` под своим `*_pc`. Не создавать второй pod с теми же MAC/IP.
-2. Проверить, что работает только одна из платформ Kerio/Континент. Не применять Stop/Destroy Lab или Wipe.
-3. На ADMIN-LINUX проверить `ip route get 10.1.99.1` и доступность Management. Недоступность адреса самого шлюза не считается успешным тестом ограничения управления. После остановки/смены NGFW проверить, что TAP тестовых машин остались присоединены к своим мостам: при их пересоздании встречалась потеря привязки. Для текущего pod есть защищённый проверками `tools/repair-bks4-links.py`; сначала сверить node session через API и выполнить его без `--apply`.
-4. Проверять трафик с рабочих адресов, а не через служебный OOB. OOB используется для администрирования и сбора файлов.
-5. Использовать отдельные адреса для ролей: Guest — `10.1.10.42`, Admin — `10.1.99.10`. Не менять роли подряд на одном IP без штатного logout.
-
+1. Сейчас включён KERIO, CONTINENT выключен штатно (локальная консоль → «Выключение»). Для демонстрации «Континента» выключить Kerio (консоль/`stop_node 1`) и `start_node 2`; дождаться API 444.
+2. Проверить сессии PNETLab и присоединиться к `/BKS labs/BKS4.unl` под своим `*_pc`. Не создавать второй pod с теми же MAC/IP.
+3. Проверить, что работает только одна из платформ Kerio/Континент. Не применять Stop/Destroy Lab или Wipe.
+4. На ADMIN-LINUX проверить `ip route get 10.1.99.1` и доступность Management. Недоступность адреса самого шлюза не считается успешным тестом ограничения управления. После остановки/смены NGFW проверить, что TAP тестовых машин остались присоединены к своим мостам: при их пересоздании встречалась потеря привязки. Для текущего pod есть защищённый проверками `tools/repair-bks4-links.py`; сначала сверить node session через API и выполнить его без `--apply`.
+5. Проверять трафик с рабочих адресов, а не через служебный OOB. OOB используется для администрирования и сбора файлов.
+6. Использовать отдельные адреса для ролей: Guest — `10.1.10.42`, Admin — `10.1.99.10`. Не менять роли подряд на одном IP без штатного logout.
 ## Независимые проверки мониторинга на ADMIN-LINUX
 
 ```bash

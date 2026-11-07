@@ -1,0 +1,36 @@
+IDS test 2026-11-07T10:39:38+00:00 role=lan source=10.1.10.42 target=10.1.50.10
+CONTROL: harmless HTTP
+HTTP=200
+TEST: SYN/version scan (bounded)
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-11-07 10:39 UTC
+Nmap scan report for 10.1.50.10
+Host is up (0.0011s latency).
+
+PORT    STATE    SERVICE      VERSION
+22/tcp  filtered ssh
+80/tcp  open     http         nginx 1.18.0 (Ubuntu)
+443/tcp open     ssl/http     nginx 1.18.0 (Ubuntu)
+445/tcp filtered microsoft-ds
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 14.06 seconds
+TEST: Nmap HTTP user agent
+HTTP=200
+TEST: SQL injection string (nginx static server; no SQL execution)
+HTTP=404
+TEST: directory traversal string
+HTTP=400
+TEST: XMAS flags, 12 packets
+
+--- 10.1.50.10 hping statistic ---
+12 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.1.50.10 (ens3 10.1.50.10): FPU set, 40 headers + 0 data bytes
+TEST: SYN burst, 120 packets / 1.2 seconds
+
+--- 10.1.50.10 hping statistic ---
+120 packets transmitted, 120 packets received, 0% packet loss
+round-trip min/avg/max = 0.8/5.6/18.2 ms
+HPING 10.1.50.10 (ens3 10.1.50.10): S set, 40 headers + 0 data bytes
+IDS test finished 2026-11-07T10:39:55+00:00

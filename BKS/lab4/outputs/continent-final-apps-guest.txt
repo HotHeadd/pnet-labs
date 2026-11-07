@@ -1,0 +1,5 @@
+Guest labguest, source 10.1.10.42, applications blocked; 2026-11-07T10:38:37+00:00
+{"timestamp": "2026-11-07T10:38:37.917628+00:00", "source": "10.1.10.42", "target": "192.168.100.1", "port": 6667, "application": "IRC", "tcp_connected": true, "source_port": 44695, "result": "TimeoutError", "detail": "timed out", "seconds": 15.047}
+{"timestamp": "2026-11-07T10:38:52.965184+00:00", "source": "10.1.10.42", "target": "192.168.100.1", "port": 16667, "application": "IRC", "tcp_connected": true, "source_port": 36291, "result": "TimeoutError", "detail": "timed out", "seconds": 15.026}
+{"timestamp": "2026-11-07T10:39:07.992375+00:00", "source": "10.1.10.42", "target": "192.168.100.1", "port": 6881, "application": "BitTorrent", "tcp_connected": true, "source_port": 44551, "result": "TimeoutError", "detail": "timed out", "seconds": 15.013}
+{"timestamp": "2026-11-07T10:39:23.006141+00:00", "source": "10.1.10.42", "target": "192.168.100.1", "port": 16881, "application": "BitTorrent", "tcp_connected": true, "source_port": 41841, "result": "TimeoutError", "detail": "timed out", "seconds": 15.008}

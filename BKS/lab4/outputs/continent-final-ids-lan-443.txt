@@ -1,0 +1,11 @@
+LAN network-level IDS test against DMZ HTTPS (443 is forwarded, not proxied); 2026-11-07T10:42:59+00:00
+TEST: SYN/version scan of 443
+443/tcp open  ssl/http nginx 1.18.0 (Ubuntu)
+Nmap done: 1 IP address (1 host up) scanned in 12.42 seconds
+TEST: SYN burst, 120 packets / 1.2 seconds to 443
+
+--- 10.1.50.10 hping statistic ---
+120 packets transmitted, 0 packets received, 100% packet loss
+round-trip min/avg/max = 0.0/0.0/0.0 ms
+HPING 10.1.50.10 (ens3 10.1.50.10): S set, 40 headers + 0 data bytes
+finished 2026-11-07T10:43:13+00:00

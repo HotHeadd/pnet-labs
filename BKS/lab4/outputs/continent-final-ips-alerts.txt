@@ -1,0 +1,60 @@
+External monitor SNMP delivery: verified
+Component: IPS
+Sender/receiver: 10.1.99.10 -> 10.1.99.10:162
+Notification OID: 1.3.6.1.3.9999.4.0.1
+Matched events: 5
+
+Monitor UTC: 2026-11-07T10:37:42.146769+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T13:37:41.393089+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900002
+signature: BKS4 TCP SYN port scan to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-07T10:37:43.193102+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T13:37:41.506588+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 4109359
+signature: Nmap Scripting Engine User-Agent Detected (Nmap Scripting Engine)
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-07T10:38:19.286104+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T13:38:18.889188+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 4149401
+signature: /etc/passwd Detected in URI
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-07T10:38:28.317959+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T13:38:27.519959+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900002
+signature: BKS4 TCP SYN port scan to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-07T10:38:31.339931+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T13:38:27.952499+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900001
+signature: BKS4 TCP SYN flood to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes

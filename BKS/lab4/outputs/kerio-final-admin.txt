@@ -1,0 +1,19 @@
+Kerio Control 10.0.1, Management source 10.1.99.10; 2026-11-07T11:14:44+00:00
+Management -> DMZ HTTP
+BKS4 harmless control download
+
+HTTP=200
+Management -> DMZ SSH
+Connection to 10.1.50.10 22 port [tcp/ssh] succeeded!
+rc=0
+Management -> Kerio admin 4081 (expect allowed)
+HTTPS=200 url=https://10.1.99.1:4081/admin/login/
+
+Kerio product and module status via administration API (ADMIN-LINUX):
+## ProductInfo.get {"productInfo": {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": false}}
+## ProductRegistration.getFullStatus {"status": {"regType": "rsNoRegistration", "Id": "", "company": "megalool", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 30, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 30, "date": 1796601599}]}}
+## Session.getLoginType {"type": "LoginReactivation"}
+## Antivirus.get {"antivirus": {"internalEnabled": true, "externalEnabled": false, "status": "AntivirusNotActive", "externalList": [], "selectedExternalId": "", "internal": {"updateCheckInterval": {"enabled": true, "value": 8}, "available": false, "expired": true}}, "protocols": {"http": true, "ftp": true, "smtp": false, "pop3": true}}
+## SystemConfig.get {"config": {"hostname": "control", "forceHostname": false, "ntpServer": {"enabled": true, "value": "192.168.100.1"}, "timeZoneId": "Moscow, St.Petersburg, Volgograd"}}
+## IntrusionPrevention.get ERR {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
+## UpdateChecker.getStatus ERR {"code": -32001, "message": "Session expired.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}

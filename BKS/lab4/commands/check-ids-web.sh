@@ -8,7 +8,7 @@ echo "IDS test $(date -Is) role=$role source=$src target=$target"
 echo 'CONTROL: harmless HTTP'
 curl --noproxy '*' --interface "$src" -sS --max-time 10 -o /dev/null -w 'HTTP=%{http_code}\n' "http://$target:$port/allowed.txt" 2>&1
 echo 'TEST: SYN/version scan (bounded)'
-sudo nmap -Pn -n -sS -sV --version-light -S "$src" -e ens3 -p "$ports" --max-retries 0 --host-timeout 35s "$target" 2>&1
+sudo nmap -Pn -n -sS -sV --version-all -S "$src" -e ens3 -p "$ports" --max-retries 1 --host-timeout 35s "$target" 2>&1
 echo 'TEST: Nmap HTTP user agent'
 curl --noproxy '*' --interface "$src" -sS --max-time 10 -A 'Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)' -o /dev/null -w 'HTTP=%{http_code}\n' "http://$target:$port/allowed.txt" 2>&1
 echo 'TEST: SQL injection string (nginx static server; no SQL execution)'

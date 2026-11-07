@@ -1,3 +1,4 @@
+GeoIP rule BKS4-GeoIP-Block-US-to-DMZ disabled, policy task 4815a18a done; 2026-11-07T10:22:58+00:00
 GeoIP test source=5.255.255.5 destination=192.168.100.2:8080
 BKS4 harmless control download
 
