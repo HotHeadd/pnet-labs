@@ -1,0 +1,93 @@
+[
+  {
+    "name": "BKS4-No-NAT-Internal",
+    "is_enabled": true,
+    "nat_type": "original",
+    "address_type": "none",
+    "port_type": "none",
+    "order": 1,
+    "src": [
+      "BKS4_LAN",
+      "BKS4_DMZ",
+      "BKS4_MGMT"
+    ],
+    "dst": [
+      "BKS4_LAN",
+      "BKS4_DMZ",
+      "BKS4_MGMT"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  },
+  {
+    "name": "BKS4-Publish-DMZ-HTTP",
+    "is_enabled": true,
+    "nat_type": "dnat",
+    "address_type": "netobject",
+    "port_type": "service",
+    "order": 2,
+    "dst": [
+      "BKS4_WAN_PUBLIC"
+    ],
+    "service": [
+      "BKS4_PUBLISHED_HTTP"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ],
+    "value": {
+      "name": "BKS4_DMZ_WEB",
+      "ip": "10.1.50.10"
+    },
+    "port_value": {
+      "name": "BKS4_HTTP",
+      "src": "",
+      "dst": "80",
+      "proto": 6
+    }
+  },
+  {
+    "name": "BKS4-Publish-DMZ-HTTPS",
+    "is_enabled": true,
+    "nat_type": "dnat",
+    "address_type": "netobject",
+    "port_type": "service",
+    "order": 3,
+    "dst": [
+      "BKS4_WAN_PUBLIC"
+    ],
+    "service": [
+      "BKS4_PUBLISHED_HTTPS"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ],
+    "value": {
+      "name": "BKS4_DMZ_WEB",
+      "ip": "10.1.50.10"
+    },
+    "port_value": {
+      "name": "BKS4_HTTPS",
+      "src": "",
+      "dst": "443",
+      "proto": 6
+    }
+  },
+  {
+    "name": "BKS4-Source-NAT",
+    "is_enabled": true,
+    "nat_type": "masquerade",
+    "address_type": "",
+    "port_type": "",
+    "order": 4,
+    "src": [
+      "BKS4_LAN",
+      "BKS4_DMZ",
+      "BKS4_MGMT"
+    ],
+    "install_on": [
+      "BKS4-NCC"
+    ]
+  }
+]

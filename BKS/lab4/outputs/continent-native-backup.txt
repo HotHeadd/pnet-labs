@@ -1,0 +1,5 @@
+Backup name: BKS4-68bfe11-before-restore-20261107
+Backup task {"status": "ok", "tasks": ["d6f77e78-b0e7-4f83-9a87-8debb07f37f2"]}
+Backup staged 0 []
+Backup done 100 []
+{"name": "BKS4-68bfe11-before-restore-20261107", "uuid": "a5963f06-91dc-4290-89d1-cb952c3777df", "filename": "backup_2026-11-07_a5963f06-91dc-4290-89d1-cb952c3777df.tgz", "bytes": 9665773, "sha256": "309753fdcddbd10f10705b853193b4d085a0ef71041b9aff19c5978bcce52f33"}

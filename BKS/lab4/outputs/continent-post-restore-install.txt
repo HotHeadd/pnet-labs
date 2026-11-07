@@ -1,0 +1,6 @@
+Install {'status': 'ok', 'tasks': ['1818f852-f177-4e70-9095-108d9b7d86a7']}
+Task 1818f852-f177-4e70-9095-108d9b7d86a7 staged 0 []
+Task 1818f852-f177-4e70-9095-108d9b7d86a7 running 0 []
+Task 1818f852-f177-4e70-9095-108d9b7d86a7 running 0 []
+Task 1818f852-f177-4e70-9095-108d9b7d86a7 running 60 []
+Task 1818f852-f177-4e70-9095-108d9b7d86a7 done 100 []

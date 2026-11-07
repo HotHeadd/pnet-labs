@@ -1,0 +1,9 @@
+UTC 2026-11-07T07:46:35Z
+WAN -> published HTTPS
+BKS4 harmless control download
+
+HTTPS=200
+WAN -> published HTTP
+BKS4 harmless control download
+
+HTTP=200

@@ -1,0 +1,6 @@
+Post-restore IPS test 2026-11-07T07:50:10.083050+00:00
+CONTROL returncode 0
+HTTP=200
+Nmap UA signature returncode 28
+HTTP=000
+curl: (28) Operation timed out after 10000 milliseconds with 0 bytes received

@@ -1,0 +1,16 @@
+External monitor SNMP delivery: verified
+Component: IPS
+Sender/receiver: 10.1.99.10 -> 10.1.99.10:162
+Notification OID: 1.3.6.1.3.9999.4.0.1
+Matched events: 1
+
+Monitor UTC: 2026-11-07T07:50:10.788062+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-07T10:50:10.115248+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 4109359
+signature: Nmap Scripting Engine User-Agent Detected (Nmap Scripting Engine)
+action: blocked
+Exact payload found in snmptrapd log: yes

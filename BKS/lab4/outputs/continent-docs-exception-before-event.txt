@@ -1,0 +1,1 @@
+{"timestamp": "2026-11-07 00:31:30", "timestamp_str": "2026-11-07T03:31:30.785827+03:00", "src_ip": "10.1.99.10", "dest_ip": "10.1.50.10", "dest_port": "80", "signature_id": "4149401", "signature": "/etc/passwd Detected in URI", "action": "blocked"}

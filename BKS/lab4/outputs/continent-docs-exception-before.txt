@@ -1,0 +1,4 @@
+Trusted documentation check 2026-11-07T00:31:31.380616+00:00
+returncode 28
+HTTP=000
+curl: (28) Operation timed out after 10001 milliseconds with 0 bytes received

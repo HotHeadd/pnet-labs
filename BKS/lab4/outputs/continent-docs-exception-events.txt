@@ -1,0 +1,18 @@
+Trusted source exception
+timestamp_str: 2026-11-07T03:39:21.842972+03:00
+src_ip: 10.1.99.10
+dest_ip: 192.168.100.2
+dest_port: 8080
+signature_id: 11
+signature: BKS4_PUBLISHED_HTTP
+rule_name: BKS4-Admin-Docs-IPS-Exception
+action: allowed
+
+Untrusted source still protected
+timestamp_str: 2026-11-07T03:39:20.888851+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+dest_port: 80
+signature_id: 4149401
+signature: /etc/passwd Detected in URI
+action: blocked

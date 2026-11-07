@@ -1,0 +1,5 @@
+2026-11-07T00:08:07+00:00
+active
+active
+State  Recv-Q Send-Q Local Address:Port Peer Address:PortProcess
+UNCONN 0      0         10.1.99.10:162       0.0.0.0:*    users:(("snmptrapd",pid=26616,fd=8))

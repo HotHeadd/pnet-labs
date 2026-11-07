@@ -1,0 +1,64 @@
+{
+  "generated_utc": "2026-11-06T22:23:23.546777+00:00",
+  "source": "/var/log/bks4/10.1.99.1/events.log",
+  "unit": "native firewall log records",
+  "scope": "all retained BKS4 rule events; includes historical experiments",
+  "first_event": "2026-11-06T18:54:24.124770+03:00",
+  "last_event": "2026-11-07T01:14:12.699267+03:00",
+  "actions": {
+    "allowed": 26,
+    "blocked": 63
+  },
+  "by_user": [
+    {
+      "user": "(unauthenticated)",
+      "records": 48
+    },
+    {
+      "user": "labguest",
+      "records": 25
+    },
+    {
+      "user": "lab-admin",
+      "records": 16
+    }
+  ],
+  "by_recognized_application": [
+    {
+      "application": "IRC",
+      "action": "blocked",
+      "records": 7
+    },
+    {
+      "application": "BitTorrent",
+      "action": "blocked",
+      "records": 7
+    }
+  ],
+  "blocked_by_rule": [
+    {
+      "rule": "BKS4-Default-Deny",
+      "records": 37
+    },
+    {
+      "rule": "BKS4-Guests-Block-Messengers-P2P",
+      "records": 14
+    },
+    {
+      "rule": "BKS4-GeoIP-Block-US-to-DMZ",
+      "records": 6
+    },
+    {
+      "rule": "BKS4-DMZ-HTTPS-Updates",
+      "records": 3
+    },
+    {
+      "rule": "BKS4-LAN-to-DMZ-HTTP-AV",
+      "records": 2
+    },
+    {
+      "rule": "BKS4-Deny-DMZ-to-LAN",
+      "records": 1
+    }
+  ]
+}

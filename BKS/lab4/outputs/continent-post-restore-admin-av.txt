@@ -1,0 +1,21 @@
+UTC 2026-11-07T07:47:38Z
+HTTP source=10.1.99.10 server=10.1.50.10 file=allowed.txt
+HTTP=200 bytes=31
+HTTP source=10.1.99.10 server=10.1.50.10 file=eicar.com
+HTTP=403 bytes=483
+HTTP source=10.1.99.10 server=10.1.50.10 file=eicar.zip
+HTTP=403 bytes=483
+HTTPS without inspection source=10.1.99.10 server=10.1.50.10 file=eicar.com
+HTTPS=200 bytes=68
+275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f  /tmp/bks4-gateway-av/10.1.50.10-https-eicar.com
+HTTP source=10.1.99.10 server=192.168.100.1 file=allowed.txt
+HTTP=200 bytes=31
+HTTP source=10.1.99.10 server=192.168.100.1 file=eicar.com
+HTTP=403 bytes=486
+HTTP source=10.1.99.10 server=192.168.100.1 file=eicar.zip
+HTTP=403 bytes=486
+HTTPS without inspection source=10.1.99.10 server=192.168.100.1 file=eicar.com
+HTTPS=200 bytes=68
+275a021bbfb6489e54d471899f7db9d1663fc695ec2fe2a2c4538aabf651fd0f  /tmp/bks4-gateway-av/192.168.100.1-https-eicar.com
+subject=CN = bks4-test.local
+sha256 Fingerprint=18:F7:C6:B4:7C:FB:AF:58:40:8C:CE:9A:47:DC:48:67:8B:F3:B0:FF:A6:F8:65:7F:AE:E6:9E:41:3F:9B:15:80

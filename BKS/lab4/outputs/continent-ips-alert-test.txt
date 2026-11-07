@@ -1,0 +1,6 @@
+IPS notification test 2026-11-07T00:26:39.371733+00:00
+CONTROL returncode 0
+HTTP=200
+Nmap UA signature returncode 28
+HTTP=000
+curl: (28) Operation timed out after 10001 milliseconds with 0 bytes received

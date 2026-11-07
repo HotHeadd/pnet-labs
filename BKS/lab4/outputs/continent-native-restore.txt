@@ -1,0 +1,14 @@
+Backup name: BKS4-68bfe11-before-restore-20261107
+Control change: description of BKS4_WAN_TEST only
+Native restore: accepted, CDC component
+Restore task: 73f96e50-dcab-4e36-8e96-7e3b0cafc2eb
+Original description restored: True
+FW/NAT/address/service fingerprints unchanged: True
+fwrule objects=20 SHA256=09bba1fda403e3e35c23efc1a67ee228e871e71f7586e61a1ceae485ec814d9b
+natrule objects=4 SHA256=d3e166a2cd1b490fd962cbd3ceaebb43026d4b447b928ab851409fe88845e9e2
+netobject objects=10 SHA256=27ff0ea4f7267754ea5fb1af9cb352359b15daafbf1826206a797c56c22d9f6c
+service objects=75 SHA256=da4ba00e5ed690a7559eb94a5c0b1d15beb03b983f6ff315189c3f0573070e81
+Native restore task: 73f96e50-dcab-4e36-8e96-7e3b0cafc2eb done 100 []
+Original description restored: True
+FW/NAT/address/service fingerprints unchanged: True
+Native restore request: {"status": "accepted", "backup_uuid": "a5963f06-91dc-4290-89d1-cb952c3777df", "components": ["cdc"], "id_field": "uuid", "tasks": ["73f96e50-dcab-4e36-8e96-7e3b0cafc2eb"]}
