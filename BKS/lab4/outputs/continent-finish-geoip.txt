@@ -1,0 +1,5 @@
+source=5.255.255.5
+HTTP=200
+source=8.8.8.8
+HTTP=000
+curl: (28) Connection timed out after 6000 milliseconds

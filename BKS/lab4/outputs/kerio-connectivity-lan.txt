@@ -1,0 +1,10 @@
+2026-11-13T21:07:14+00:00
+PING 10.1.10.1 (10.1.10.1) from 10.1.10.42 : 56(84) bytes of data.
+64 bytes from 10.1.10.1: icmp_seq=1 ttl=64 time=1.18 ms
+64 bytes from 10.1.10.1: icmp_seq=2 ttl=64 time=1.86 ms
+
+--- 10.1.10.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1001ms
+rtt min/avg/max/mdev = 1.176/1.518/1.860/0.342 ms
+traceroute to 10.1.50.10 (10.1.50.10), 4 hops max, 60 byte packets
+ 1  10.1.50.10  3.786 ms

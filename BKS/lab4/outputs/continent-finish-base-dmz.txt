@@ -1,0 +1,3 @@
+2026-11-13T21:19:57+00:00
+DMZ -> LAN SSH (expect denied)
+rc=124

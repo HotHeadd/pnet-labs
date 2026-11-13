@@ -4,11 +4,11 @@
 
 Работают KERIO, Linux3–6 и ADMIN-WIN7; CONTINENT выключен. Сессия9/pod7. Континент повторно проверен по сохранённой политике21FW/4NAT: AV, DPI гостя/администратора, IPS, GeoIP и доставка событий подтверждены outputs/continent-demo-* и img/continent-*-current.png. Даты полного прогона ниже сохранены явно.
 
-Kerio активирован: licenseSet=true/rsTrialRegistered/LoginRegular. Итог22FW/defaultDrop, без TemporarySSH. Группы Guests/Administrators и nativeAppID: гость блокируется на6667/16667/6881/16881, администратор проходит IRC/PONG и получает16384байт BitTorrent. GeoIP: off RU/US200, on RU200/US000, nativeклассификацияUS. NativeIPS: log-only Alert, High/Medium DropAndLog блокирует SQL/path traversal WAN; Lowсканирование толькоAlert. Исключение SID1:2000345 глобально, не по IP. NativeSyslog/внешниеIPSSNMP/статистика/нативныйrestoreсемиразделов проверены. Артефакты outputs/kerio-*, configs/kerio-*.
+Kerio: licenseSet=true/rsTrialRegistered/LoginRegular, 22FW/defaultDrop, без временных правил. AV AntivirusOk/база10903722: EICAR и ZIP по HTTP прерываются с0байт и нативным детектом; HTTPS без инспекции пропускает68байт. IPS5.150/2.3546, все уровни DropAndLog; сканирование подтверждено парой Log/open и Drop/filtered после nativeStartup. Исключения SID1:2000345/2002825/2013028 глобальные. Группы Guests/Administrators:4запрета гостю,4успеха администратору, включая BT16384байт. GeoIP off/on, nativeSyslog, внешние AV/IPS SNMP, статистика и nativeRestore подтверждены.
 
-Не закрыто: первоначальная базаAV (EICAR/ZIP200), свежие обновленияIPS, подавление сканирования именноIPS и веб-детекты прямогоLAN→DMZ. См. manual-actions.md. Не заявлять полную готовность этих пунктов и не повторять регистрацию/CAPTCHA.
+Прямой путь LAN→DMZ: тест выполнен, nginx отвечает404 на тестовые URI, соответствующего IPS-детекта нет. Это ограничение области действия Kerio IPS; дополнительный IPS или смена зон в вариант6 не входят. WAN те же URI блокируются с Packetdrop. Будущая устойчивость автоматических обновлений не доказана; выполненное обновление и рабочие базы подтверждены.
 
-Для Kerio проверки выполняются из ~/bks4-checks/ на соответствующей LinuxВМ: check-kerio.sh lan/wan/dmz/admin, check-app-protocols.py с10.1.10.42 или10.1.99.10. Полные ответы API — kerio-status.py на ADMIN; пароли берутся из приватных файлов. Проверка доставки IPS: check-alert-delivery.py --component IPS --origin kerio --since <UTC> --output <файл>. Пользовательские группы привязаны к рабочим IP автоматически; это не парольный портал.
+Для Kerio проверки выполняются из ~/bks4-checks/ на соответствующей LinuxВМ: check-kerio.sh lan/wan/dmz/admin, check-app-protocols.py с10.1.10.42 или10.1.99.10. Полные ответы API — kerio-status.py на ADMIN; пароли берутся из приватных файлов. Проверка доставки AV/IPS: check-alert-delivery.py --component AV (либо IPS) --origin kerio --since <UTC> --output <файл>. Пользовательские группы привязаны к рабочим IP автоматически; это не парольный портал.
 
 Состояние на 2026-11-07 после итогового прогона (установка `76d7bac5`, `outputs/continent-final-*`). Все пункты ниже подтверждены **одним** прогоном 10:37–10:44 UTC с событиями журнала (`continent-final-events.txt`).
 
@@ -70,3 +70,33 @@ sudo python3 ~/check-alert-delivery.py --component AV --since '<UTC-время �
 В `outputs/continent-ips-events.txt` событие `2026-11-06 17:43:01` (UTC) относится к источнику `192.168.100.1:60596`, цели `10.1.50.10:80`, SID `4109359`, сигнатуре Nmap HTTP User-Agent и действию `blocked`. Входящий опубликованный порт — `192.168.100.2:8080`, внутренний адрес виден после DNAT. Это лабораторный тест строки User-Agent, а не доказательство блокировки произвольного портового сканирования.
 
 Критерий готовности к защите: единый актуальный прогон применимых тестов, клиентский результат и соответствующее нативное событие с совпадающими временем/источником. Незавершённые и отложенные этапы должны остаться явно отмеченными.
+
+## Карта доказательств для минимальных тестов
+
+Таблица относится к результатам, включённым в main.typ. Даты исходных прогонов указаны в тексте и записях; кадры сохранённых выводов не объявляются новым измерением.
+
+| Тест | Kerio: результат / событие | Континент: результат / событие |
+|---|---|---|
+| 1 LAN→WAN | kerio-audit-lan.txt; kerio-evidence-baseline-events.png | continent-final-base-lan.txt; continent-final-events.txt, текущие кадры AV/событий |
+| 2 Публикация | kerio-tests-wan.png; kerio-evidence-baseline-events.png | continent-ids-current.png; continent-events-current.png |
+| 3 Изоляция | kerio-tests-dmz.png; kerio-evidence-baseline-events.png | continent-isolation-current.png; continent-final-events.txt |
+| 4 AV | kerio-evidence-av.png; kerio-av-native-events.txt | continent-av-current.png; continent-demo-av-delivery.txt и nativeappfilter |
+| 5 URL-категория | Не задана вариантом6 | Не задана вариантом6 |
+| 6 Исключение Admin | kerio-apps-current.png; kerio-events-final.txt | continent-apps-admin-current.png; nativeuser/rule |
+| 7 DPI Guest | kerio-apps-current.png и kerio-events.png; nativeDENY | continent-apps-guest-current.png; nativeblocked |
+| 8 IDS/IPS scan | kerio-evidence-scan-log/drop.png; Alert/Packetdrop того жеSID | continent-ids-current.png; continent-events-current.png |
+| 9 Веб-сигнатуры | kerio-evidence-paths/path-events.png; LAN404/WANdrop | continent-ids-current.png; continent-events-current.png |
+| 10 Управление | kerio-tests-admin/wan.png; kerio-evidence-baseline-events.png | continent-management-current.png; continent-final-management.txt |
+| Вариант6 GeoIP | kerio-evidence-geoip.png; nativeCountryUS | continent-geoip-disabled/enabled.txt; nativeGeoIPblocked |
+
+Все пути таблицы относительны img/ либо outputs/. Для нового запуска AV/IPS-проверки доставки использовать --origin kerio при Kerio и --origin continent при Континенте. Установленный ~/check-alert-delivery.py синхронизирован с текущим исходником; старый KeyError detail устранён заменой копии.
+
+## Ожидание готовности IPS Kerio
+
+После изменения IPS или загрузки ОС запускать на ADMIN-LINUX:
+
+```bash
+sudo python3 ~/wait-kerio-ips.py --since '<UTC перед изменением/запуском>' --timeout 120
+```
+
+Учитывается последнее событие движка; для одинаковой секунды важен порядок строк. Startup должен оставаться последним не менее8с. APIenabled/UpdateOk не заменяют этот контроль. Исправление проверено на реальных последовательностях Startup→Shutdown и Shutdown→Startup с одинаковой меткой времени. После возврата стенда получены HTTPcontrol200, EICARreset/0байт, WANSQLtimeout и nativePacketdrop; outputs/kerio-return-check.txt.

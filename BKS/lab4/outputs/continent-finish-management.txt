@@ -1,0 +1,9 @@
+Authenticated Management API: 21 FW / 4 NAT read successfully (same policy as saved).
+10.1.10.42 -> 10.1.99.1:444
+2026-11-13T21:20:42+00:00
+rc=124
+
+192.168.100.1 -> 192.168.100.2:444
+2026-11-13T21:20:46+00:00
+rc=124
+

@@ -1,0 +1,89 @@
+External monitor SNMP delivery: verified
+Component: AV
+Sender/receiver: 10.1.99.10 -> 10.1.99.10:162
+Notification OID: 1.3.6.1.3.9999.4.0.1
+Matched events: 4
+
+Monitor UTC: 2026-11-13T21:21:22.915733+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://10.1.50.10/eicar.com
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:21:22.934058+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://10.1.50.10/eicar.zip
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:21:22.951856+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://192.168.100.1/eicar.com
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:21:22.970180+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://192.168.100.1/eicar.zip
+Exact payload found in snmptrapd log: yes
+External monitor SNMP delivery: verified
+Component: IPS
+Sender/receiver: 10.1.99.10 -> 10.1.99.10:162
+Notification OID: 1.3.6.1.3.9999.4.0.1
+Matched events: 5
+
+Monitor UTC: 2026-11-13T21:20:28.705368+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-14T00:20:27.828819+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900002
+signature: BKS4 TCP SYN port scan to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:20:29.721857+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-14T00:20:27.899564+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 4109359
+signature: Nmap Scripting Engine User-Agent Detected (Nmap Scripting Engine)
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:20:59.803150+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-14T00:20:58.264743+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 4149401
+signature: /etc/passwd Detected in URI
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:21:11.862193+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-14T00:21:09.944816+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900002
+signature: BKS4 TCP SYN port scan to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T21:21:11.873659+00:00
+Origin: NGFW syslog
+syslog_app: suricata
+timestamp_str: 2026-11-14T00:21:10.371386+03:00
+src_ip: 192.168.100.1
+dest_ip: 10.1.50.10
+signature_id: 3900001
+signature: BKS4 TCP SYN flood to DMZ
+action: blocked
+Exact payload found in snmptrapd log: yes

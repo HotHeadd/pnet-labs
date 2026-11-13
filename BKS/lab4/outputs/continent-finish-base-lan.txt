@@ -1,0 +1,11 @@
+2026-11-13T21:19:49+00:00
+LAN -> DMZ HTTP
+BKS4 harmless control download
+
+HTTP=200
+LAN -> DMZ SSH (expect denied)
+rc=124
+LAN -> WAN HTTP
+BKS4 harmless control download
+
+HTTP=200
