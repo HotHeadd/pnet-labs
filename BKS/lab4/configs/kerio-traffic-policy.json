@@ -137,13 +137,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 0
-   }
+   "inspector": "default"
   },
   {
    "id": "112",
@@ -342,13 +336,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 3,
-    "minutes": 20
-   }
+   "inspector": "default"
   },
   {
    "id": "16",
@@ -556,13 +544,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 6,
-    "hours": 3,
-    "minutes": 7
-   }
+   "inspector": "default"
   },
   {
    "id": "17",
@@ -696,13 +678,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 3,
-    "minutes": 20
-   }
+   "inspector": "default"
   },
   {
    "id": "18",
@@ -893,13 +869,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 4
-   }
+   "inspector": "default"
   },
   {
    "id": "19",
@@ -1062,13 +1032,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 1
-   }
+   "inspector": "default"
   },
   {
    "id": "20",
@@ -1181,13 +1145,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 3,
-    "minutes": 20
-   }
+   "inspector": "default"
   },
   {
    "id": "21",
@@ -1300,13 +1258,155 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 3,
-    "minutes": 20
-   }
+   "inspector": "default"
+  },
+  {
+   "id": "155",
+   "enabled": true,
+   "name": "BKS4-Internal-DNS-Gateway",
+   "description": "Internal clients may use the gateway DNS forwarder",
+   "color": "",
+   "source": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.99.0/255.255.255.0",
+      "addr1": "10.1.99.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     },
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.10.0/255.255.255.0",
+      "addr1": "10.1.10.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "destination": {
+    "type": "RuleSelectedEntities",
+    "firewall": true,
+    "entities": []
+   },
+   "service": {
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "7",
+       "name": "DNS",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
+   },
+   "ipVersion": "Ipv4",
+   "action": "Allow",
+   "logEnabled": [
+    false,
+    true
+   ],
+   "graphEnabled": false,
+   "dscp": {
+    "enabled": false,
+    "value": 0
+   },
+   "natIpv4Only": true,
+   "enableSourceNat": false,
+   "natMode": "NatDefault",
+   "allowReverseConnection": false,
+   "balancing": "BalancingPerHost",
+   "natInterface": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "allowFailover": false,
+   "ipAddress": "",
+   "ipv6Address": "",
+   "enableDestinationNat": false,
+   "translatedHost": "",
+   "translatedIpv6Host": "",
+   "translatedPort": {
+    "enabled": false,
+    "value": 0
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "inspector": "default"
   },
   {
    "id": "22",
@@ -1506,13 +1606,759 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": false,
-    "days": 0,
-    "hours": 0,
-    "minutes": 0
-   }
+   "inspector": "default"
+  },
+  {
+   "id": "150",
+   "enabled": true,
+   "name": "BKS4-Controlled-App-Test-6667",
+   "description": "Owned WAN protocol peer; content policy selects the user",
+   "color": "",
+   "source": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.99.0/255.255.255.0",
+      "addr1": "10.1.99.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     },
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.10.0/255.255.255.0",
+      "addr1": "10.1.10.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "destination": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityHost",
+      "host": "192.168.100.1",
+      "addr1": "192.168.100.1",
+      "addr2": "192.168.100.1",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "service": {
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": false,
+      "service": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 6,
+      "port": {
+       "comparator": "Equal",
+       "ports": [
+        6667
+       ]
+      }
+     }
+    ]
+   },
+   "ipVersion": "Ipv4",
+   "action": "Allow",
+   "logEnabled": [
+    false,
+    true
+   ],
+   "graphEnabled": false,
+   "dscp": {
+    "enabled": false,
+    "value": 0
+   },
+   "natIpv4Only": true,
+   "enableSourceNat": true,
+   "natMode": "NatDefault",
+   "allowReverseConnection": false,
+   "balancing": "BalancingPerHost",
+   "natInterface": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "allowFailover": true,
+   "ipAddress": "",
+   "ipv6Address": "",
+   "enableDestinationNat": false,
+   "translatedHost": "",
+   "translatedIpv6Host": "",
+   "translatedPort": {
+    "enabled": false,
+    "value": 0
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "inspector": "default"
+  },
+  {
+   "id": "151",
+   "enabled": true,
+   "name": "BKS4-Controlled-App-Test-16667",
+   "description": "Owned WAN protocol peer; content policy selects the user",
+   "color": "",
+   "source": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.99.0/255.255.255.0",
+      "addr1": "10.1.99.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     },
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.10.0/255.255.255.0",
+      "addr1": "10.1.10.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "destination": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityHost",
+      "host": "192.168.100.1",
+      "addr1": "192.168.100.1",
+      "addr2": "192.168.100.1",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "service": {
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": false,
+      "service": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 6,
+      "port": {
+       "comparator": "Equal",
+       "ports": [
+        16667
+       ]
+      }
+     }
+    ]
+   },
+   "ipVersion": "Ipv4",
+   "action": "Allow",
+   "logEnabled": [
+    false,
+    true
+   ],
+   "graphEnabled": false,
+   "dscp": {
+    "enabled": false,
+    "value": 0
+   },
+   "natIpv4Only": true,
+   "enableSourceNat": true,
+   "natMode": "NatDefault",
+   "allowReverseConnection": false,
+   "balancing": "BalancingPerHost",
+   "natInterface": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "allowFailover": true,
+   "ipAddress": "",
+   "ipv6Address": "",
+   "enableDestinationNat": false,
+   "translatedHost": "",
+   "translatedIpv6Host": "",
+   "translatedPort": {
+    "enabled": false,
+    "value": 0
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "inspector": "default"
+  },
+  {
+   "id": "152",
+   "enabled": true,
+   "name": "BKS4-Controlled-App-Test-6881",
+   "description": "Owned WAN protocol peer; content policy selects the user",
+   "color": "",
+   "source": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.99.0/255.255.255.0",
+      "addr1": "10.1.99.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     },
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.10.0/255.255.255.0",
+      "addr1": "10.1.10.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "destination": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityHost",
+      "host": "192.168.100.1",
+      "addr1": "192.168.100.1",
+      "addr2": "192.168.100.1",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "service": {
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": false,
+      "service": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 6,
+      "port": {
+       "comparator": "Equal",
+       "ports": [
+        6881
+       ]
+      }
+     }
+    ]
+   },
+   "ipVersion": "Ipv4",
+   "action": "Allow",
+   "logEnabled": [
+    false,
+    true
+   ],
+   "graphEnabled": false,
+   "dscp": {
+    "enabled": false,
+    "value": 0
+   },
+   "natIpv4Only": true,
+   "enableSourceNat": true,
+   "natMode": "NatDefault",
+   "allowReverseConnection": false,
+   "balancing": "BalancingPerHost",
+   "natInterface": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "allowFailover": true,
+   "ipAddress": "",
+   "ipv6Address": "",
+   "enableDestinationNat": false,
+   "translatedHost": "",
+   "translatedIpv6Host": "",
+   "translatedPort": {
+    "enabled": false,
+    "value": 0
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "inspector": "default"
+  },
+  {
+   "id": "153",
+   "enabled": true,
+   "name": "BKS4-Controlled-App-Test-16881",
+   "description": "Owned WAN protocol peer; content policy selects the user",
+   "color": "",
+   "source": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.99.0/255.255.255.0",
+      "addr1": "10.1.99.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     },
+     {
+      "type": "TrafficEntityNetwork",
+      "host": "10.1.10.0/255.255.255.0",
+      "addr1": "10.1.10.0",
+      "addr2": "255.255.255.0",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "destination": {
+    "type": "RuleSelectedEntities",
+    "firewall": false,
+    "entities": [
+     {
+      "type": "TrafficEntityHost",
+      "host": "192.168.100.1",
+      "addr1": "192.168.100.1",
+      "addr2": "192.168.100.1",
+      "addressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "interfaceCondition": {
+       "type": "InterfaceInternet",
+       "interfaceType": "Ethernet",
+       "selectedInterface": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "vpnCondition": {
+       "type": "IncomingClient",
+       "tunnel": {
+        "id": "",
+        "name": "",
+        "invalid": false
+       },
+       "enabled": false
+      },
+      "userType": "AnyUser",
+      "user": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "service": {
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": false,
+      "service": {
+       "id": "",
+       "name": "",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 6,
+      "port": {
+       "comparator": "Equal",
+       "ports": [
+        16881
+       ]
+      }
+     }
+    ]
+   },
+   "ipVersion": "Ipv4",
+   "action": "Allow",
+   "logEnabled": [
+    false,
+    true
+   ],
+   "graphEnabled": false,
+   "dscp": {
+    "enabled": false,
+    "value": 0
+   },
+   "natIpv4Only": true,
+   "enableSourceNat": true,
+   "natMode": "NatDefault",
+   "allowReverseConnection": false,
+   "balancing": "BalancingPerHost",
+   "natInterface": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "allowFailover": true,
+   "ipAddress": "",
+   "ipv6Address": "",
+   "enableDestinationNat": false,
+   "translatedHost": "",
+   "translatedIpv6Host": "",
+   "translatedPort": {
+    "enabled": false,
+    "value": 0
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   },
+   "inspector": "default"
   },
   {
    "id": "23",
@@ -1712,13 +2558,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 3,
-    "minutes": 20
-   }
+   "inspector": "default"
   },
   {
    "id": "24",
@@ -1881,13 +2721,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": false,
-    "days": 0,
-    "hours": 0,
-    "minutes": 0
-   }
+   "inspector": "default"
   },
   {
    "id": "25",
@@ -2050,13 +2884,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 6,
-    "hours": 3,
-    "minutes": 2
-   }
+   "inspector": "default"
   },
   {
    "id": "26",
@@ -2181,13 +3009,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 0
-   }
+   "inspector": "default"
   },
   {
    "id": "27",
@@ -2312,13 +3134,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 2
-   }
+   "inspector": "default"
   },
   {
    "id": "28",
@@ -2429,13 +3245,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": false,
-    "days": 0,
-    "hours": 0,
-    "minutes": 0
-   }
+   "inspector": "default"
   },
   {
    "id": "29",
@@ -2583,13 +3393,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 7
-   }
+   "inspector": "default"
   },
   {
    "id": "30",
@@ -2700,13 +3504,7 @@
     "name": "",
     "invalid": false
    },
-   "inspector": "default",
-   "lastUsed": {
-    "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 1
-   }
+   "inspector": "default"
   }
  ],
  "defaultRule": {
@@ -2765,12 +3563,6 @@
    "name": "",
    "invalid": false
   },
-  "inspector": "",
-  "lastUsed": {
-   "isValid": true,
-   "days": 0,
-   "hours": 0,
-   "minutes": 1
-  }
+  "inspector": ""
  }
 }

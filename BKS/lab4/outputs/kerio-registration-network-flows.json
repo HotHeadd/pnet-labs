@@ -1,0 +1,438 @@
+{
+  "inside": {
+    "43994": {
+      "duration_seconds": 307.073504,
+      "packet_count": 47,
+      "last_payload_seconds": 0.443462,
+      "flags": [
+        {
+          "t": 0.0,
+          "direction": "client",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.064668,
+          "direction": "server",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 307.072183,
+          "direction": "client",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        }
+      ],
+      "client": {
+        "unique_payload_bytes": 1856,
+        "sha256": "7da3ca57757c0235d3d6b296952b1b18bb96df7158989effd0fc34d5d6e37411",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 512
+          },
+          {
+            "type": 22,
+            "length": 70
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 1208
+          }
+        ],
+        "tls_parsed_bytes": 1856,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      },
+      "server": {
+        "unique_payload_bytes": 28811,
+        "sha256": "604d3d78022f4f2646896de3a60661a10a735e825c4e5076e0c8056ab66a5490",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 93
+          },
+          {
+            "type": 22,
+            "length": 6454
+          },
+          {
+            "type": 22,
+            "length": 589
+          },
+          {
+            "type": 22,
+            "length": 4
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 555
+          },
+          {
+            "type": 23,
+            "length": 16408
+          }
+        ],
+        "tls_parsed_bytes": 24184,
+        "trailing_bytes": 4627,
+        "incomplete_record": {
+          "type": 23,
+          "declared_payload": 16408,
+          "available_payload": 4622
+        }
+      },
+      "matches_outside_payload": true
+    },
+    "48812": {
+      "duration_seconds": 0.433421,
+      "packet_count": 28,
+      "last_payload_seconds": 0.427705,
+      "flags": [
+        {
+          "t": 0.0,
+          "direction": "client",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.063549,
+          "direction": "server",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.42161,
+          "direction": "server",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        },
+        {
+          "t": 0.428536,
+          "direction": "client",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        }
+      ],
+      "client": {
+        "unique_payload_bytes": 804,
+        "sha256": "43235e6bff6a51ef59777e609ee00068ad14e975d22471e3d53c0c53018ea46d",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 512
+          },
+          {
+            "type": 22,
+            "length": 70
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 125
+          },
+          {
+            "type": 21,
+            "length": 26
+          }
+        ],
+        "tls_parsed_bytes": 804,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      },
+      "server": {
+        "unique_payload_bytes": 7749,
+        "sha256": "86fbc5c71e20d94576feec1c611d90e0551e40e5d286d485b7aceea5b23abfa4",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 93
+          },
+          {
+            "type": 22,
+            "length": 6454
+          },
+          {
+            "type": 22,
+            "length": 589
+          },
+          {
+            "type": 22,
+            "length": 4
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 533
+          }
+        ],
+        "tls_parsed_bytes": 7749,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      },
+      "matches_outside_payload": true
+    }
+  },
+  "outside": {
+    "43994": {
+      "duration_seconds": 307.071535,
+      "packet_count": 47,
+      "last_payload_seconds": 0.441259,
+      "flags": [
+        {
+          "t": 0.0,
+          "direction": "client",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.062566,
+          "direction": "server",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 307.071535,
+          "direction": "client",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        }
+      ],
+      "client": {
+        "unique_payload_bytes": 1856,
+        "sha256": "7da3ca57757c0235d3d6b296952b1b18bb96df7158989effd0fc34d5d6e37411",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 512
+          },
+          {
+            "type": 22,
+            "length": 70
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 1208
+          }
+        ],
+        "tls_parsed_bytes": 1856,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      },
+      "server": {
+        "unique_payload_bytes": 28811,
+        "sha256": "604d3d78022f4f2646896de3a60661a10a735e825c4e5076e0c8056ab66a5490",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 93
+          },
+          {
+            "type": 22,
+            "length": 6454
+          },
+          {
+            "type": 22,
+            "length": 589
+          },
+          {
+            "type": 22,
+            "length": 4
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 555
+          },
+          {
+            "type": 23,
+            "length": 16408
+          }
+        ],
+        "tls_parsed_bytes": 24184,
+        "trailing_bytes": 4627,
+        "incomplete_record": {
+          "type": 23,
+          "declared_payload": 16408,
+          "available_payload": 4622
+        }
+      }
+    },
+    "48812": {
+      "duration_seconds": 0.432105,
+      "packet_count": 28,
+      "last_payload_seconds": 0.431626,
+      "flags": [
+        {
+          "t": 0.0,
+          "direction": "client",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.062036,
+          "direction": "server",
+          "FIN": false,
+          "SYN": true,
+          "RST": false
+        },
+        {
+          "t": 0.411668,
+          "direction": "server",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        },
+        {
+          "t": 0.431864,
+          "direction": "client",
+          "FIN": true,
+          "SYN": false,
+          "RST": false
+        }
+      ],
+      "client": {
+        "unique_payload_bytes": 804,
+        "sha256": "43235e6bff6a51ef59777e609ee00068ad14e975d22471e3d53c0c53018ea46d",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 512
+          },
+          {
+            "type": 22,
+            "length": 70
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 125
+          },
+          {
+            "type": 21,
+            "length": 26
+          }
+        ],
+        "tls_parsed_bytes": 804,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      },
+      "server": {
+        "unique_payload_bytes": 7749,
+        "sha256": "86fbc5c71e20d94576feec1c611d90e0551e40e5d286d485b7aceea5b23abfa4",
+        "contiguous": true,
+        "fully_acknowledged": true,
+        "tls_records": [
+          {
+            "type": 22,
+            "length": 93
+          },
+          {
+            "type": 22,
+            "length": 6454
+          },
+          {
+            "type": 22,
+            "length": 589
+          },
+          {
+            "type": 22,
+            "length": 4
+          },
+          {
+            "type": 20,
+            "length": 1
+          },
+          {
+            "type": 22,
+            "length": 40
+          },
+          {
+            "type": 23,
+            "length": 533
+          }
+        ],
+        "tls_parsed_bytes": 7749,
+        "trailing_bytes": 0,
+        "incomplete_record": null
+      }
+    }
+  }
+}

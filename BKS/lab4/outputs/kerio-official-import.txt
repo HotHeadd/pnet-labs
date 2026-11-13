@@ -1,0 +1,13 @@
+UTC: 2026-11-13T15:01:07.298680+00:00
+License file: 1606 bytes; known original SHA256 matched
+License number matches Base-ID: True
+Before: {"versionString": "9.5.0 patch 3 build 9017", "licenseSet": false}
+Upload completed; file identifier received
+ProductInfo.uploadLicense: {}
+After import: {"versionString": "9.5.0 patch 3 build 9017", "licenseSet": false}
+Config timestamps: {"clientTimestampList": []}
+Confirm: {"confirmed": true}
+Fresh login type: {"type": "LoginAutomatic"}
+Fresh product: {"versionString": "9.5.0 patch 3 build 9017", "licenseSet": false}
+Registration: {"regType": "rsNoRegistration", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
+Antivirus: {"status": "AntivirusNotActive", "available": false, "expired": true}

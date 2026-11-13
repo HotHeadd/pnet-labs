@@ -1,4 +1,4 @@
-2026-11-13T12:45:26+00:00
+2026-11-13T16:49:57+00:00
 WAN -> published HTTPS
 BKS4 harmless control download
 
@@ -8,13 +8,13 @@ BKS4 harmless control download
 
 HTTP=200
 WAN -> Kerio administration (expect denied)
-curl: (28) Connection timed out after 5001 milliseconds
+curl: (28) Connection timed out after 5002 milliseconds
 HTTPS=000
 WAN ports (bounded scan)
-Starting Nmap 7.80 ( https://nmap.org ) at 2026-11-13 12:45 UTC
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-11-13 16:50 UTC
 Warning: 192.168.100.2 giving up on port because retransmission cap hit (0).
 Nmap scan report for 192.168.100.2
-Host is up (0.0021s latency).
+Host is up (0.0060s latency).
 
 PORT     STATE    SERVICE
 22/tcp   filtered ssh
@@ -22,6 +22,6 @@ PORT     STATE    SERVICE
 8080/tcp open     http-proxy
 8443/tcp open     https-alt
 
-Nmap done: 1 IP address (1 host up) scanned in 0.21 seconds
-Nmap User-Agent: no IPS blocking expected before activation
+Nmap done: 1 IP address (1 host up) scanned in 0.13 seconds
+Nmap User-Agent control: result must be correlated with native IPS events
 HTTP=200

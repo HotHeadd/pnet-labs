@@ -1,0 +1,8 @@
+{
+ "ignored": [
+  {
+   "id": "1:2000345",
+   "description": "ET TROJAN IRC Nick change on non-standard port"
+  }
+ ]
+}

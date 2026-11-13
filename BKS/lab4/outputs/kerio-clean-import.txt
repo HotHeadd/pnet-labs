@@ -1,0 +1,13 @@
+UTC: 2026-11-13T14:54:12.842760+00:00
+License file: 1606 bytes; known original SHA256 matched
+License number matches Base-ID: True
+Before: {"versionString": "10.0.1 build 9439", "licenseSet": false}
+Upload completed; file identifier received
+ProductInfo.uploadLicense: {}
+After import: {"versionString": "10.0.1 build 9439", "licenseSet": false}
+Config timestamps: {"clientTimestampList": []}
+Confirm: {"confirmed": true}
+Fresh login type: {"type": "LoginAutomatic"}
+Fresh product: {"versionString": "10.0.1 build 9439", "licenseSet": false}
+Registration: {"regType": "rsNoRegistration", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
+Antivirus: {"status": "AntivirusNotActive", "available": false, "expired": true}

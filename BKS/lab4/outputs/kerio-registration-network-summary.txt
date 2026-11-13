@@ -1,0 +1,24 @@
+Online registration capture, 2026-11-13 15:05:35–15:10:42 UTC.
+Target DNS: register.kerio.com -> 52.31.87.138.
+Inside capture: Kerio WAN TAP vunl6_0, source 192.168.100.2.
+Outside capture: pnet0 after WAN-TEST NAT, source 192.168.15.223.
+Both captures: 125 packets captured/received, 0 packets dropped by kernel.
+Registration TCP flow: client port43994 -> 52.31.87.138:443.
+TCP handshake succeeded; unique TLS payload client1856/server28811 bytes.
+Both TCP payload streams are contiguous and fully acknowledged.
+Client and server encrypted payload SHA256 match between inside and outside.
+All server payload arrived within0.443462s after the SYN; no later server payload.
+Server TLS stream ends with an incomplete ApplicationData record:
+  announced payload16408 bytes; received4622; missing11786.
+The incomplete record persists until the registration timeout.
+Kerio sends FIN after307.072183s; no server FIN/RST was captured before it.
+Wireshark4.6.9: no retransmission/lost_segment/zero_window flags for this flow.
+API result: code1000, Operation too slow / less than1 byte/sec for300 seconds.
+Independent GET from Kerio to the same HTTPS endpoint succeeds in1.242834s,
+normal certificate validation, HTTP200, TLS_verify0; this flow has complete TLS records.
+Conclusion: registration stalls on an incomplete encrypted TLS response, not a
+failure to resolve DNS or open TCP. Captured bytes are delivered through lab NAT.
+The capture cannot distinguish a remote-server issue from interference beyond
+WAN-TEST; HTTP status/body of the encrypted registration exchange are unknown.
+No license flags, certificates, firewall rules or routes were changed.
+Raw PCAPs remain private outside Git; only metadata and encrypted-stream hashes exported.

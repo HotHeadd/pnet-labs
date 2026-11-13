@@ -1,0 +1,9 @@
+Control HTTPS request from the Kerio root console, 2026-11-13 15:06:46 UTC.
+Target: https://register.kerio.com/registration/LD.php
+Method: GET, no license number or registration payload supplied.
+Normal certificate verification enabled (no -k).
+HTTP=200 TLS_verify=0 IP=52.31.87.138
+DNS=0.814507 TCP=0.880720 TLS=1.069650
+FirstByte=1.242774 Total=1.242834 Bytes=0
+This establishes endpoint reachability and TLS verification for this GET only.
+It does not establish successful product registration.

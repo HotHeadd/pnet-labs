@@ -1,0 +1,8 @@
+Users.set errors=[]
+Users.set errors=[]
+ContentFilter.set errors=[]
+TrafficPolicy.set errors=[]
+Application IDs verified in fresh session: 88
+Content rules: [('BKS4-Administrators-Application-Exception', 'Allow'), ('BKS4-Guests-Deny-Messaging-FileSharing', 'Deny'), ('Kerio sites', 'Allow'), ('Updates and MS Windows activation', 'Allow')]
+Groups: [('Guests', 1), ('Administrators', 1)]
+Traffic rules: 22

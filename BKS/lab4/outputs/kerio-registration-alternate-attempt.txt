@@ -1,0 +1,5 @@
+Temporary registration-only DNAT installed.
+Registration through alternate Mac exit: 2026-11-13T15:19:12.031766+00:00
+SUCCESS: response keys ['token', 'image', 'showImage']
+Finished: 2026-11-13T15:19:12.687102+00:00
+Temporary DNAT removed.

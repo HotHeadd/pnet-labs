@@ -20,6 +20,18 @@ OID = '.1.3.6.1.3.9999.4'
 
 
 def parse(line, kind):
+    if kind == 'ngfw' and ' kerio-security ' in line:
+        match = re.search(
+            r'IPS: (.*?), severity: (\w+), Rule ID: (\d+:\d+) (.*?), '
+            r'proto:(\w+), ip/port:([\d.]+):(\d+).*?-> ([\d.]+):(\d+)', line)
+        if not match:
+            return None
+        mode, severity, sid, signature, proto, src, sport, dst, dport = match.groups()
+        return {'origin': 'Kerio native syslog', 'component': 'IPS',
+                'syslog_app': 'kerio-security', 'signature_id': sid,
+                'signature': signature, 'severity': severity, 'proto': proto,
+                'src_ip': src, 'src_port': sport, 'dest_ip': dst, 'dest_port': dport,
+                'action': 'blocked' if mode == 'Packet drop' else 'allowed'}
     if kind == 'ngfw':
         header = line.split(' ', 6)
         if len(header) < 7 or header[3] != 'suricata':

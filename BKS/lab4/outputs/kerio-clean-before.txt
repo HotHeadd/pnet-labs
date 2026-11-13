@@ -1,0 +1,5 @@
+Login successful
+ProductInfo.get {"versionString": "10.0.1 build 9439", "licenseSet": false, "passwordSet": false, "clientStatisticsSet": false, "centralManagementSet": false}
+Session.getLoginType {"type": "LoginAutomatic"}
+EULA.status {"accepted": true}
+ProductRegistration.getFullStatus {"regType": "rsNoRegistration", "users": 0, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 31, "date": 1797206399}, {"type": "Subscription", "isUnlimited": true, "remainingDays": 0, "date": 0}]}

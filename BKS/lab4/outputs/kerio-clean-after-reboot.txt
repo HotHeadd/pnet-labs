@@ -1,0 +1,8 @@
+UTC: 2026-11-13T14:56:26.606381+00:00
+ProductInfo.get {"versionString": "10.0.1 build 9439", "licenseSet": false, "passwordSet": true}
+ProductRegistration.getFullStatus {"regType": "rsNoRegistration", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
+Session.getLoginType {"type": "LoginReactivation"}
+Antivirus.get {"status": "AntivirusNotActive", "available": false, "expired": true}
+IntrusionPrevention.get ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
+Logs.getLogSet ERROR {"code": 1004, "message": "Cannot list log set. Permission denied.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
+Configuration.exportConfig ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}

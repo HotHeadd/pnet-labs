@@ -1,8 +1,11 @@
-UTC: 2026-11-13T12:47:11.178078+00:00
-ProductInfo.get {"versionString": "10.0.1 build 9439", "licenseSet": false, "passwordSet": true}
-ProductRegistration.getFullStatus {"regType": "rsNoRegistration", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
-Session.getLoginType {"type": "LoginReactivation"}
-Antivirus.get {"status": "AntivirusNotActive", "available": false, "expired": true}
-IntrusionPrevention.get ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
-Logs.getLogSet ERROR {"code": 1004, "message": "Cannot list log set. Permission denied.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
-Configuration.exportConfig ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
+UTC: 2026-11-13T16:50:45.964138+00:00
+ProductInfo.get {"versionString": "10.0.1 build 9439", "licenseSet": true, "passwordSet": true}
+ProductRegistration.getFullStatus {"regType": "rsTrialRegistered", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
+Session.getLoginType {"type": "LoginRegular"}
+Antivirus.get {"status": "AntivirusWaitingForInitialDb", "available": true, "expired": false}
+Antivirus.getUpdateStatus {"phase": "AntivirusUpdateChecking", "percentage": 1, "databaseVersion": "", "engineVersion": ""}
+IntrusionPrevention.getUpdateStatus {"status": {"lastUpdateCheck": {"isValid": true, "days": 0, "hours": 0, "minutes": 16}, "databaseVersion": "5.0/2.1215", "phase": "IntrusionPreventionUpdateError", "errorMessage": "Download error."}}
+IntrusionPrevention.get {"enabled": true, "high": "IntrusionPreventionActionDropAndLog", "medium": "IntrusionPreventionActionDropAndLog", "low": "IntrusionPreventionActionLog"}
+ContentFilter.getUrlFilterConfig {"config": {"whiteList": [], "status": "UrlFilterActivated", "activationErrorDescr": "", "enabled": true, "statisticsEnabled": true, "allowMiscategorizedReporting": false, "appidEnabled": true}}
+Geoip.get {"config": {"enabled": true, "blockedCountries": ["US"]}}
+TrafficPolicy.get {"rules": 22, "temporary_ssh": false}

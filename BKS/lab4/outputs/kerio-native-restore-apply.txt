@@ -1,0 +1,3 @@
+UTC 2026-11-13T16:22:50.780789+00:00
+Fresh upload parsed; restoring in the same session.
+Connection result: TimeoutError

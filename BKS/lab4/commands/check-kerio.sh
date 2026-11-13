@@ -20,7 +20,7 @@ case "$role" in
   curl --noproxy '*' --interface 192.168.100.1 -ksS --max-time 5 -o /dev/null -w 'HTTPS=%{http_code}\n' https://192.168.100.2:4081/admin/login/ 2>&1
   echo 'WAN ports (bounded scan)'
   nmap -Pn -n -sT --max-retries 0 --host-timeout 10s -p 22,443,8080,8443 192.168.100.2
-  echo 'Nmap User-Agent: no IPS blocking expected before activation'
+  echo 'Nmap User-Agent control: result must be correlated with native IPS events'
   curl --noproxy '*' --interface 192.168.100.1 -sS --max-time 6 -A 'Nmap Scripting Engine' -o /dev/null -w 'HTTP=%{http_code}\n' http://192.168.100.2:8080/allowed.txt
   ;;
  admin)

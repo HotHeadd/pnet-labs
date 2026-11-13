@@ -1,0 +1,7 @@
+Login successful
+Users.set: {'errors': []}
+Client statistics: {}
+Central management: {}
+Confirm: {'confirmed': True}
+Fresh flags: {'licenseSet': False, 'passwordSet': True, 'clientStatisticsSet': True, 'centralManagementSet': True}
+Login type: {'type': 'LoginReactivation'}

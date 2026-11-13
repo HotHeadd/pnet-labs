@@ -1,0 +1,5 @@
+Login successful
+ProductInfo.get {"versionString": "9.5.0 patch 3 build 9017", "licenseSet": false, "passwordSet": false, "clientStatisticsSet": false, "centralManagementSet": false}
+Session.getLoginType {"type": "LoginAutomatic"}
+EULA.status {"code": 1004, "message": "Insufficient rights to perform the requested operation.", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}
+ProductRegistration.getFullStatus {"code": 1004, "message": "Access Denied", "data": {"messageParameters": {"positionalParameters": [], "plurality": 1}}}

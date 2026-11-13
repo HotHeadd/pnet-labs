@@ -1,0 +1,22 @@
+UTC 2026-11-13T16:00:24.079647+00:00
+[13/Nov/2026 18:50:42] IPS: Packet drop, severity: High, Rule ID: 1:2000345 ET TROJAN IRC Nick change on non-standard port, proto:TCP, ip/port:10.1.10.42:49489 (10.1.10.42, user:labguest) -> 192.168.100.1:16667 (192.168.100.1)
+[13/Nov/2026 18:50:57] IPS: Packet drop, severity: High, Rule ID: 1:2000345 ET TROJAN IRC Nick change on non-standard port, proto:TCP, ip/port:10.1.99.10:54295 (10.1.99.10, user:lab-admin) -> 192.168.100.1:16667 (192.168.100.1)
+[13/Nov/2026 18:53:48] IPS: Packet drop, severity: High, Rule ID: 1:2000345 ET TROJAN IRC Nick change on non-standard port, proto:TCP, ip/port:10.1.99.10:57635 (10.1.99.10, user:lab-admin) -> 192.168.100.1:16667 (192.168.100.1)
+[13/Nov/2026 18:55:40] IPS: Packet drop, severity: High, Rule ID: 1:2000345 ET TROJAN IRC Nick change on non-standard port, proto:TCP, ip/port:10.1.99.10:42587 (10.1.99.10, user:lab-admin) -> 192.168.100.1:16667 (192.168.100.1)
+[13/Nov/2026 18:59:30] Intrusion Prevention engine: Shutdown
+[13/Nov/2026 18:59:44] Intrusion Prevention engine: Startup
+[13/Nov/2026 18:59:14] DROP "Block other traffic" packet from Management, proto:UDP, len:58, 10.1.99.20:65103 -> 10.1.99.1:53, udplen:30
+[13/Nov/2026 18:59:14] DROP "Block other traffic" packet from Management, proto:UDP, len:58, 10.1.99.20:65103 -> 10.1.99.1:53, udplen:30
+[13/Nov/2026 18:59:15] DROP "Block other traffic" packet from Management, proto:UDP, len:58, 10.1.99.20:65103 -> 10.1.99.1:53, udplen:30
+[13/Nov/2026 18:59:17] DROP "Block other traffic" packet from Management, proto:UDP, len:58, 10.1.99.20:65103 -> 10.1.99.1:53, udplen:30
+[13/Nov/2026 18:59:21] DROP "Block other traffic" packet from Management, proto:UDP, len:58, 10.1.99.20:65103 -> 10.1.99.1:53, udplen:30
+[13/Nov/2026 18:59:29] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:50203 -> 192.168.100.2:48505, flags:[ SYN ], seq:2878399841 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:30] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:50203 -> 192.168.100.2:48505, flags:[ SYN ], seq:2878399841 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:32] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:50203 -> 192.168.100.2:48505, flags:[ SYN ], seq:2878399841 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:36] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:50203 -> 192.168.100.2:48505, flags:[ SYN ], seq:2878399841 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:38] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:42573 -> 192.168.100.2:41167, flags:[ SYN ], seq:2544302025 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:40] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:42573 -> 192.168.100.2:41167, flags:[ SYN ], seq:2544302025 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:42] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:42573 -> 192.168.100.2:41167, flags:[ SYN ], seq:2544302025 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:44] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:50203 -> 192.168.100.2:48505, flags:[ SYN ], seq:2878399841 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:46] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:42573 -> 192.168.100.2:41167, flags:[ SYN ], seq:2544302025 ack:0, win:7300, tcplen:0
+[13/Nov/2026 18:59:54] DROP "Block other traffic" packet from WAN, proto:TCP, len:60, 192.168.100.1:42573 -> 192.168.100.2:41167, flags:[ SYN ], seq:2544302025 ack:0, win:7300, tcplen:0

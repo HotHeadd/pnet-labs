@@ -14,6 +14,7 @@ p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--since', required=True, help='UTC ISO timestamp before test start')
 p.add_argument('--component', choices=['AV', 'IPS'], required=True)
 p.add_argument('--output', type=Path, required=True)
+p.add_argument('--origin', choices=['continent', 'kerio'], default='continent')
 args = p.parse_args()
 since = datetime.fromisoformat(args.since.replace('Z', '+00:00'))
 received = {}
@@ -36,7 +37,11 @@ for line in Path('/var/log/bks4/security-alerts.jsonl').read_text().splitlines()
     if event['component'] != args.component or datetime.fromisoformat(event['monitor_utc']) < since:
         continue
     if args.component == 'IPS':
-        assert event.get('syslog_app') == 'suricata', 'A firewall record is not an IPS detection'
+        expected_app = 'kerio-security' if args.origin == 'kerio' else 'suricata'
+        if event.get('syslog_app') != expected_app:
+            continue
+        if args.origin == 'kerio':
+            assert event.get('origin') == 'Kerio native syslog', 'Not a native Kerio detection'
     actual = received.get((event['monitor_utc'], event['component']))
     assert actual and actual[0] == '10.1.99.10' and actual[1] == event, 'Missing or different SNMP payload'
     verified.append(event)
@@ -54,7 +59,8 @@ for event in verified:
                   'Object: ' + (url.group(1) if url else 'not parsed')]
     else:
         for key in ['syslog_app', 'timestamp_str', 'src_ip', 'dest_ip', 'signature_id', 'signature', 'action']:
-            lines.extend(textwrap.wrap(key + ': ' + str(event.get(key)), width=88))
+            if event.get(key) is not None:
+                lines.extend(textwrap.wrap(key + ': ' + str(event[key]), width=88))
     lines.append('Exact payload found in snmptrapd log: yes')
 text = '\n'.join(lines) + '\n'
 args.output.write_text(text)

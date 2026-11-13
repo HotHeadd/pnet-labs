@@ -1,0 +1,11 @@
+{
+ "config": {
+  "whiteList": [],
+  "status": "UrlFilterActivated",
+  "activationErrorDescr": "",
+  "enabled": true,
+  "statisticsEnabled": true,
+  "allowMiscategorizedReporting": false,
+  "appidEnabled": true
+ }
+}

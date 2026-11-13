@@ -13,7 +13,7 @@ def exact(s,n):
   data+=v
  return data
 def irc(s,port,out):
- nick='bks4p'+str(port)
+ nick='b4'+hashlib.sha256((source+str(port)+str(time.time_ns())).encode()).hexdigest()[:6]
  s.sendall(('NICK '+nick+'\r\nUSER bks4 0 * :BKS4 isolated protocol check\r\n').encode())
  data=b''
  while (' 001 '+nick+' ').encode() not in data:

@@ -1,0 +1,12 @@
+Independent official distribution test, 2026-11-13.
+Source archive: https://download.kerio.com/archive/
+Product: Kerio Control 9.5.0 Patch 3, build 9017.
+Download: https://cdn.kerio.com/dwn/control/control-9.5.0-9017/kerio-control-appliance-9.5.0-9017-p3-vmware.zip
+Downloaded over HTTPS with normal certificate validation.
+Archive SHA256: dc8b35f76d95eec1a596fa861ff98200beac068ab2c57e0990a06e5fad0297d1
+Archive extracted and original VMDK converted to a separate QCOW2 disk.
+VM: BKS4-Kerio-official-9.5-license-test, outside PNETLab session9.
+Two QEMU usernet networks with restrict=on; no TAP or cloud connection.
+Only host-loopback ports 15481-15483 forwarded to WebAdmin.
+Private experiment directory: /root/bks4-kerio-official-test/ (mode700).
+The existing license file is reused without modifications or new trial registration.

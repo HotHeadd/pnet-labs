@@ -1,0 +1,8 @@
+{
+ "config": {
+  "enabled": true,
+  "blockedCountries": [
+   "US"
+  ]
+ }
+}

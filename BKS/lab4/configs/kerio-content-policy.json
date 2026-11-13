@@ -1,0 +1,296 @@
+{
+ "list": [
+  {
+   "id": "59",
+   "enabled": true,
+   "name": "BKS4-Administrators-Application-Exception",
+   "description": "BKS4 variant 6",
+   "color": "C9EEC6",
+   "action": "Allow",
+   "logEnabled": true,
+   "skipAvScan": false,
+   "skipKeywords": false,
+   "skipAuthentication": false,
+   "denialCondition": {
+    "denialText": "",
+    "redirectUrl": {
+     "enabled": false,
+     "value": ""
+    },
+    "sendEmail": false
+   },
+   "contentCondition": {
+    "type": "RuleAny",
+    "entities": []
+   },
+   "sourceCondition": {
+    "type": "RuleSelectedEntities",
+    "entities": [
+     {
+      "type": "SourceConditonEntityUsers",
+      "ipAddressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "userType": "SelectedUsers",
+      "user": {
+       "id": "a2693b8c-9170-0c47-937e-49004febaae0",
+       "name": "Administrators",
+       "isGroup": true,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   }
+  },
+  {
+   "id": "60",
+   "enabled": true,
+   "name": "BKS4-Guests-Deny-Messaging-FileSharing",
+   "description": "BKS4 variant 6",
+   "color": "C9EEC6",
+   "action": "Deny",
+   "logEnabled": true,
+   "skipAvScan": false,
+   "skipKeywords": false,
+   "skipAuthentication": false,
+   "denialCondition": {
+    "denialText": "",
+    "redirectUrl": {
+     "enabled": false,
+     "value": ""
+    },
+    "sendEmail": false
+   },
+   "contentCondition": {
+    "type": "RuleSelectedEntities",
+    "entities": [
+     {
+      "type": "ContentConditionEntityApplication",
+      "applications": [
+       86,
+       88,
+       95,
+       448,
+       1016,
+       1017,
+       1000029,
+       1000061,
+       1000118,
+       1000136,
+       1000153,
+       1000165,
+       1000166,
+       1000167,
+       1000168,
+       1000222,
+       1000240,
+       1000307,
+       1000420,
+       1000442,
+       1000497,
+       1000536,
+       1000547,
+       1000553,
+       1000571,
+       1000599,
+       1000623,
+       1000657,
+       1000658,
+       1000659,
+       1000673,
+       1000679,
+       1000685,
+       1000687,
+       1000692,
+       1000697,
+       1000724,
+       1000743,
+       1000745,
+       1000782,
+       1000783,
+       1000786,
+       1000862,
+       1000913,
+       1000924,
+       1000927,
+       1000936,
+       1000944,
+       1000957,
+       1000997,
+       1001013,
+       1001049,
+       1001097,
+       1001101,
+       1001107,
+       1001108,
+       1001118,
+       1001125,
+       1001143,
+       1001148,
+       1001344,
+       1001405,
+       1001541,
+       1001665,
+       1001763,
+       1002043,
+       1002044,
+       1002110,
+       1002176,
+       1002214,
+       1002270,
+       1002299,
+       1002368,
+       1002499,
+       1002566,
+       1002618,
+       1002667,
+       1002945,
+       1002960,
+       1003183,
+       1003350,
+       1003648,
+       1003706,
+       1003815,
+       1003838,
+       1003858,
+       1004002,
+       1004003
+      ],
+      "value": "",
+      "urlType": "ContentEntityUrlWildcard",
+      "matchSecured": false,
+      "urlGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      }
+     }
+    ]
+   },
+   "sourceCondition": {
+    "type": "RuleSelectedEntities",
+    "entities": [
+     {
+      "type": "SourceConditonEntityUsers",
+      "ipAddressGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      },
+      "userType": "SelectedUsers",
+      "user": {
+       "id": "f32b27c8-b7d3-0b4d-ac21-090152ddd53a",
+       "name": "Guests",
+       "isGroup": true,
+       "domainName": ""
+      }
+     }
+    ]
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   }
+  },
+  {
+   "id": "1",
+   "enabled": true,
+   "name": "Kerio sites",
+   "description": "Allow interoperability and automatic updates for all Kerio software.",
+   "color": "C9EEC6",
+   "action": "Allow",
+   "logEnabled": false,
+   "skipAvScan": false,
+   "skipKeywords": true,
+   "skipAuthentication": true,
+   "denialCondition": {
+    "denialText": "",
+    "redirectUrl": {
+     "enabled": false,
+     "value": ""
+    },
+    "sendEmail": false
+   },
+   "contentCondition": {
+    "type": "RuleSelectedEntities",
+    "entities": [
+     {
+      "type": "ContentConditionEntityUrl",
+      "applications": [],
+      "value": "kerio.com",
+      "urlType": "ContentEntityUrlWildcard",
+      "matchSecured": true,
+      "urlGroup": {
+       "id": "",
+       "name": "",
+       "invalid": false
+      }
+     }
+    ]
+   },
+   "sourceCondition": {
+    "type": "RuleAny",
+    "entities": []
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   }
+  },
+  {
+   "id": "3",
+   "enabled": true,
+   "name": "Updates and MS Windows activation",
+   "description": "Allow the most popular software to be updated or activated without the need to authenticate on gateway.",
+   "color": "C9EEC6",
+   "action": "Allow",
+   "logEnabled": false,
+   "skipAvScan": true,
+   "skipKeywords": true,
+   "skipAuthentication": true,
+   "denialCondition": {
+    "denialText": "",
+    "redirectUrl": {
+     "enabled": false,
+     "value": ""
+    },
+    "sendEmail": false
+   },
+   "contentCondition": {
+    "type": "RuleSelectedEntities",
+    "entities": [
+     {
+      "type": "ContentConditionEntityUrlGroup",
+      "applications": [],
+      "value": "",
+      "urlType": "ContentEntityUrlWildcard",
+      "matchSecured": false,
+      "urlGroup": {
+       "id": "YXV0b21hdGljIHVwZGF0ZXM=",
+       "name": "Automatic Updates",
+       "invalid": false
+      }
+     }
+    ]
+   },
+   "sourceCondition": {
+    "type": "RuleAny",
+    "entities": []
+   },
+   "validTimeRange": {
+    "id": "",
+    "name": "",
+    "invalid": false
+   }
+  }
+ ]
+}
