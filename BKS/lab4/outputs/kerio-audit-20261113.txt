@@ -1,0 +1,39 @@
+Read-only audit after starting KERIO and Linux test guests in session 9/pod 7.
+2026-11-13 10:55-10:57 UTC. CONTINENT and ADMIN-WIN remained stopped.
+
+API from ADMIN-LINUX 10.1.99.10:
+ProductInfo.get: versionString=10.0.1 build 9439, licenseSet=false, passwordSet=true
+ProductRegistration.getFullStatus: regType=rsNoRegistration, users=25,
+License and Subscription remainingDays=24, date=1796601599
+Session.getLoginType: LoginReactivation
+Antivirus.get: status=AntivirusNotActive, available=false, expired=true
+IntrusionPrevention.get: code=1004, Insufficient rights to perform the requested operation.
+Logs.getLogSet: code=1004, Cannot list log set. Permission denied.
+Users.get without params: code=-32602, Invalid params. This does not establish user-management availability.
+TrafficPolicy.get: 17 enabled BKS4 rules retained, including BKS4-Deny-Admin-Outside-Management.
+Default rule: Drop, logEnabled=[false,true].
+SystemConfig.get: NTP enabled, server 192.168.100.1; Moscow timezone.
+Registration was not retried; the current cause of the activation failure was not re-diagnosed.
+
+Fresh client checks, bound to data addresses:
+LAN 10.1.10.42 -> DMZ 10.1.50.10 HTTP allowed.txt: HTTP=200
+LAN -> DMZ SSH: timeout, rc=124
+LAN -> WAN 192.168.100.1 HTTP allowed.txt: HTTP=200
+WAN 192.168.100.1 -> published 192.168.100.2:8080: HTTP=200
+WAN -> published 192.168.100.2:8443: HTTPS=200
+DMZ 10.1.50.10 -> LAN 10.1.10.42 SSH: timeout, rc=124
+Management 10.1.99.10 -> DMZ HTTP allowed.txt: HTTP=200
+Management -> DMZ SSH: succeeded, rc=0
+Management -> Kerio 10.1.99.1:4081/admin/login/: HTTP=200
+LAN -> Kerio 10.1.99.1:4081: timeout, curl_rc=28
+WAN -> Kerio 10.1.99.1:4081 and 192.168.100.2:4081: timeout, curl_rc=28
+LAN -> DMZ HTTP eicar.com: HTTP=200 bytes=68
+LAN -> DMZ HTTP eicar.zip: HTTP=200 bytes=186
+No native Kerio event correlation was performed in this audit.
+
+ADMIN-LINUX monitoring infrastructure:
+rsyslog, bks4-snmptrap, bks4-security-alerts, c-icap, clamav-daemon active.
+snmptrapd bound to 10.1.99.10:162.
+These service checks do not establish delivery of fresh Kerio events.
+
+No policy, license, backup or restore changes were performed.

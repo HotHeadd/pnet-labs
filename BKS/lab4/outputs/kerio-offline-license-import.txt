@@ -1,0 +1,22 @@
+UTC: 2026-11-13T13:27:48.520492+00:00
+License file: 1606 bytes; known original SHA256 matched
+License number matches Base-ID: True
+Before: {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": false}
+Upload completed; file identifier received
+ProductInfo.uploadLicense: {}
+After import: {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": false}
+Config timestamps: {"clientTimestampList": []}
+Confirm: {"confirmed": true}
+Fresh login type: {"type": "LoginReactivation"}
+Fresh product: {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": false}
+Registration: {"regType": "rsNoRegistration", "users": 25, "expirations": [{"type": "License", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}, {"type": "Subscription", "isUnlimited": false, "remainingDays": 24, "date": 1796601599}]}
+Antivirus: {"status": "AntivirusNotActive", "available": false, "expired": true}
+EULA.status {"accepted": true}
+Product flags {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": false}
+CentralManagement.confirmAppManager {}
+Product flags {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": true}
+Session.reset {}
+Product flags {"versionString": "10.0.1 build 9439", "osDescription": "Linux", "finalVersion": true, "boxEdition": "", "boxName": "", "wifiAvailable": false, "ip6Available": true, "licenseSet": false, "passwordSet": true, "clientStatisticsSet": true, "centralManagementSet": true}
+ProductInfo.configUpdate ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation."}
+IntrusionPrevention.get ERROR {"code": 1004, "message": "Insufficient rights to perform the requested operation."}
+EICAR HTTP=200 bytes=68

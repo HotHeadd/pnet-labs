@@ -58,19 +58,45 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "11",
+       "name": "HTTPS",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 17,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        161
-       ]
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "50",
+       "name": "Kerio Control WebAdmin",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "30",
+       "name": "SNMP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -113,7 +139,7 @@
    },
    "inspector": "default",
    "lastUsed": {
-    "isValid": false,
+    "isValid": true,
     "days": 0,
     "hours": 0,
     "minutes": 0
@@ -251,35 +277,31 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "50",
+       "name": "Kerio Control WebAdmin",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        4080
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      },
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "51",
+       "name": "Kerio Control WebInterface",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        4081
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -287,7 +309,7 @@
    "ipVersion": "Ipv4",
    "action": "Drop",
    "logEnabled": [
-    false,
+    true,
     false
    ],
    "graphEnabled": false,
@@ -322,10 +344,10 @@
    },
    "inspector": "default",
    "lastUsed": {
-    "isValid": false,
+    "isValid": true,
     "days": 0,
-    "hours": 0,
-    "minutes": 0
+    "hours": 3,
+    "minutes": 20
    }
   },
   {
@@ -501,7 +523,7 @@
    "ipVersion": "Ipv4",
    "action": "Drop",
    "logEnabled": [
-    false,
+    true,
     false
    ],
    "graphEnabled": false,
@@ -537,9 +559,9 @@
    "inspector": "default",
    "lastUsed": {
     "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 2
+    "days": 6,
+    "hours": 3,
+    "minutes": 7
    }
   },
   {
@@ -641,7 +663,7 @@
    "ipVersion": "Ipv4",
    "action": "Drop",
    "logEnabled": [
-    false,
+    true,
     false
    ],
    "graphEnabled": false,
@@ -678,8 +700,8 @@
    "lastUsed": {
     "isValid": true,
     "days": 0,
-    "hours": 0,
-    "minutes": 4
+    "hours": 3,
+    "minutes": 20
    }
   },
   {
@@ -775,8 +797,65 @@
     ]
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "2",
+       "name": "Any ICMP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "8",
+       "name": "HTTP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "11",
+       "name": "HTTPS",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "4",
+       "name": "SSH",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -819,14 +898,14 @@
     "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 2
+    "minutes": 4
    }
   },
   {
    "id": "19",
    "enabled": true,
    "name": "BKS4-LAN-DMZ-Web",
-   "description": "BKS4 variant 6: LAN reaches the DMZ web server only on 80/443",
+   "description": "BKS4 variant 6: LAN reaches DMZ web only on HTTP/HTTPS",
    "color": "",
    "source": {
     "type": "RuleSelectedEntities",
@@ -918,35 +997,31 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "8",
+       "name": "HTTP",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        80
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      },
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "11",
+       "name": "HTTPS",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        443
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -992,7 +1067,7 @@
     "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 0
+    "minutes": 1
    }
   },
   {
@@ -1110,8 +1185,8 @@
    "lastUsed": {
     "isValid": true,
     "days": 0,
-    "hours": 0,
-    "minutes": 5
+    "hours": 3,
+    "minutes": 20
    }
   },
   {
@@ -1229,8 +1304,8 @@
    "lastUsed": {
     "isValid": true,
     "days": 0,
-    "hours": 0,
-    "minutes": 5
+    "hours": 3,
+    "minutes": 20
    }
   },
   {
@@ -1366,51 +1441,31 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "7",
+       "name": "DNS",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      },
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "25",
+       "name": "NTP",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 17,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
-      }
-     },
-     {
-      "definedService": false,
-      "service": {
-       "id": "",
-       "name": "",
-       "isGroup": false,
-       "invalid": false
-      },
-      "protocol": 17,
-      "port": {
-       "comparator": "Equal",
-       "ports": [
-        123
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -1589,8 +1644,37 @@
     ]
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "8",
+       "name": "HTTP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "11",
+       "name": "HTTPS",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -1632,8 +1716,8 @@
    "lastUsed": {
     "isValid": true,
     "days": 0,
-    "hours": 0,
-    "minutes": 2
+    "hours": 3,
+    "minutes": 20
    }
   },
   {
@@ -1732,51 +1816,31 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "7",
+       "name": "DNS",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      },
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "25",
+       "name": "NTP",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 17,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
-      }
-     },
-     {
-      "definedService": false,
-      "service": {
-       "id": "",
-       "name": "",
-       "isGroup": false,
-       "invalid": false
-      },
-      "protocol": 17,
-      "port": {
-       "comparator": "Equal",
-       "ports": [
-        123
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -1918,8 +1982,37 @@
     ]
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "8",
+       "name": "HTTP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "11",
+       "name": "HTTPS",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -1960,9 +2053,9 @@
    "inspector": "default",
    "lastUsed": {
     "isValid": true,
-    "days": 0,
-    "hours": 0,
-    "minutes": 4
+    "days": 6,
+    "hours": 3,
+    "minutes": 2
    }
   },
   {
@@ -2023,51 +2116,31 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "7",
+       "name": "DNS",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      },
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "25",
+       "name": "NTP",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 17,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        53
-       ]
-      }
-     },
-     {
-      "definedService": false,
-      "service": {
-       "id": "",
-       "name": "",
-       "isGroup": false,
-       "invalid": false
-      },
-      "protocol": 17,
-      "port": {
-       "comparator": "Equal",
-       "ports": [
-        123
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -2113,7 +2186,7 @@
     "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 3
+    "minutes": 0
    }
   },
   {
@@ -2171,8 +2244,37 @@
     ]
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "8",
+       "name": "HTTP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     },
+     {
+      "definedService": true,
+      "service": {
+       "id": "11",
+       "name": "HTTPS",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -2215,7 +2317,7 @@
     "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 0
+    "minutes": 2
    }
   },
   {
@@ -2273,8 +2375,23 @@
     ]
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "2",
+       "name": "Any ICMP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -2412,8 +2529,23 @@
     "entities": []
    },
    "service": {
-    "type": "RuleAny",
-    "entries": []
+    "type": "RuleSelectedEntities",
+    "entries": [
+     {
+      "definedService": true,
+      "service": {
+       "id": "2",
+       "name": "Any ICMP",
+       "isGroup": false,
+       "invalid": false
+      },
+      "protocol": 0,
+      "port": {
+       "comparator": "Any",
+       "ports": []
+      }
+     }
+    ]
    },
    "ipVersion": "Ipv4",
    "action": "Allow",
@@ -2456,7 +2588,7 @@
     "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 0
+    "minutes": 7
    }
   },
   {
@@ -2517,19 +2649,17 @@
     "type": "RuleSelectedEntities",
     "entries": [
      {
-      "definedService": false,
+      "definedService": true,
       "service": {
-       "id": "",
-       "name": "",
+       "id": "72",
+       "name": "Syslog",
        "isGroup": false,
        "invalid": false
       },
-      "protocol": 6,
+      "protocol": 0,
       "port": {
-       "comparator": "Equal",
-       "ports": [
-        514
-       ]
+       "comparator": "Any",
+       "ports": []
       }
      }
     ]
@@ -2538,7 +2668,7 @@
    "action": "Allow",
    "logEnabled": [
     false,
-    true
+    false
    ],
    "graphEnabled": false,
    "dscp": {
@@ -2572,10 +2702,10 @@
    },
    "inspector": "default",
    "lastUsed": {
-    "isValid": false,
+    "isValid": true,
     "days": 0,
     "hours": 0,
-    "minutes": 0
+    "minutes": 1
    }
   }
  ],
@@ -2602,7 +2732,7 @@
   "ipVersion": "IpAll",
   "action": "Drop",
   "logEnabled": [
-   false,
+   true,
    true
   ],
   "graphEnabled": false,
@@ -2640,7 +2770,7 @@
    "isValid": true,
    "days": 0,
    "hours": 0,
-   "minutes": 3
+   "minutes": 1
   }
  }
 }

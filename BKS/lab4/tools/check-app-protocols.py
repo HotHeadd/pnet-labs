@@ -3,7 +3,8 @@
 No public service, external tracker, exploit, or executable payload is used.
 """
 import socket,struct,time,json,hashlib,sys,datetime
-source=sys.argv[1];target='192.168.100.1';infohash=bytes.fromhex('95a1a7e4e94239ad013553d1f12aa70ea16e5028')
+source=sys.argv[1];timeout=float(sys.argv[2]) if len(sys.argv)>2 else 15
+target='192.168.100.1';infohash=bytes.fromhex('95a1a7e4e94239ad013553d1f12aa70ea16e5028')
 def exact(s,n):
  data=b''
  while len(data)<n:
@@ -52,7 +53,7 @@ def bittorrent(s,port,out):
 for kind,port in [('IRC',6667),('IRC',16667),('BitTorrent',6881),('BitTorrent',16881)]:
  out={'timestamp':datetime.datetime.now(datetime.timezone.utc).isoformat(),'source':source,'target':target,'port':port,'application':kind};started=time.monotonic()
  try:
-  with socket.create_connection((target,port),timeout=15,source_address=(source,0)) as s:
+  with socket.create_connection((target,port),timeout=timeout,source_address=(source,0)) as s:
    out['tcp_connected']=True;out['source_port']=s.getsockname()[1]
    (irc if kind=='IRC' else bittorrent)(s,port,out)
    out['result']='success'

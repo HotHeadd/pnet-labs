@@ -1,0 +1,6 @@
+timestamp_str=2026-11-13T15:59:35.385734+03:00 event_type=firewall action=allowed src_ip=10.1.10.42 src_port=54266 dest_ip=192.168.100.1 dest_port=443 signature_id=9 signature=BKS4_HTTPS rule_name=BKS4-LAN-HTTPS username=labguest payload=SNAT: 10.1.10.42 => 192.168.100.2
+timestamp_str=2026-11-13T15:59:35.385670+03:00 event_type=firewall action=allowed src_ip=10.1.10.42 src_port=43292 dest_ip=10.1.50.10 dest_port=443 signature_id=6 signature=BKS4_HTTPS rule_name=BKS4-LAN-to-DMZ-HTTPS username=labguest
+timestamp_str=2026-11-13T16:00:24.507032+03:00 event_type=firewall action=blocked src_ip=10.1.10.42 src_port=43969 dest_ip=192.168.100.1 dest_port=6881 signature_id=10 signature=BitTorrent rule_name=BKS4-Guests-Block-Messengers-P2P username=labguest payload=SNAT: 10.1.10.42 => 192.168.100.2
+total 3
+timestamp_str=2026-11-13T16:02:01.561552+03:00 event_type=firewall action=allowed src_ip=10.1.99.10 src_port=47473 dest_ip=192.168.100.1 dest_port=6667 signature_id=4 signature=BKS4_LAB_IRC_BT_PORTS rule_name=BKS4-Administrators-Lab-Protocol username=lab-admin payload=SNAT: 10.1.99.10 => 192.168.100.2
+total 1

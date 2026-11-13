@@ -1,0 +1,31 @@
+{
+  "since_utc": "2026-11-13T12:45:00Z",
+  "unit": "log record; packets and completed connections counted separately",
+  "actions": {
+    "completed_connection": 14,
+    "blocked_packet": 14
+  },
+  "by_rule": {
+    "BKS4-Management": 6,
+    "BKS4-Deny-Admin-Outside-Management": 6,
+    "Block other traffic": 5,
+    "BKS4-LAN-DMZ-Web": 4,
+    "BKS4-Deny-DMZ-LAN": 3,
+    "BKS4-Admin-DMZ": 2,
+    "BKS4-Protected-DNS-NTP": 1,
+    "BKS4-Protected-Web": 1
+  },
+  "by_network_service": {
+    "Kerio Control WebAdmin": 6,
+    "HTTP": 5,
+    "NTP": 1,
+    "HTTPS": 1,
+    "SSH": 1
+  },
+  "by_source_ipv4": {
+    "10.1.10.42": 12,
+    "10.1.99.10": 8,
+    "192.168.100.1": 5,
+    "10.1.50.10": 3
+  }
+}

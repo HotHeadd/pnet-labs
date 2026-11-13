@@ -1,4 +1,4 @@
-Kerio Control 10.0.1, LAN source 10.1.10.42; policy confirmed with Session.getConfigTimestamp/confirmConfig; 2026-11-07T11:13:29+00:00
+2026-11-13T12:45:24+00:00
 LAN -> DMZ HTTP
 BKS4 harmless control download
 
@@ -9,16 +9,12 @@ LAN -> WAN HTTP
 BKS4 harmless control download
 
 HTTP=200
-LAN -> Kerio admin 4081 on Management address (expect denied)
-curl: (28) Connection timed out after 8001 milliseconds
-HTTPS=000
-LAN -> Kerio admin 4081 on LAN address 10.1.10.1 (expect denied)
-curl: (28) Connection timed out after 8001 milliseconds
-HTTPS=000
-LAN -> gateway ICMP
-2 packets transmitted, 2 received, 0% packet loss, time 1001ms
-rtt min/avg/max/mdev = 1.022/1.046/1.071/0.024 ms
-LAN -> WAN EICAR over HTTP (Kerio antivirus engine not active: license not activated)
+LAN -> DMZ HTTPS
+HTTPS=200
+LAN HTTP eicar.com
 HTTP=200 bytes=68
-LAN -> WAN IRC 6667 (no application control on Kerio without activation)
-{"timestamp": "2026-11-07T11:13:51.873497+00:00", "source": "10.1.10.42", "target": "192.168.100.1", "port": 6667, "application": "IRC", "tcp_connected": true, "source_port": 38119, "irc_registered": 
+LAN HTTP eicar.zip
+HTTP=200 bytes=186
+LAN -> Kerio administration (expect denied)
+curl: (28) Connection timed out after 5001 milliseconds
+HTTPS=000

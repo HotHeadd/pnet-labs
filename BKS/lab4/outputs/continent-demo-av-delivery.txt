@@ -1,0 +1,29 @@
+External monitor SNMP delivery: verified
+Component: AV
+Sender/receiver: 10.1.99.10 -> 10.1.99.10:162
+Notification OID: 1.3.6.1.3.9999.4.0.1
+Matched events: 4
+
+Monitor UTC: 2026-11-13T12:59:34.368115+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://10.1.50.10/eicar.com
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T12:59:34.409434+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://10.1.50.10/eicar.zip
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T12:59:34.420231+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://192.168.100.1/eicar.com
+Exact payload found in snmptrapd log: yes
+
+Monitor UTC: 2026-11-13T12:59:34.431448+00:00
+Origin: ICAP engine log
+Threat: Eicar-Test-Signature
+Object: http://192.168.100.1/eicar.zip
+Exact payload found in snmptrapd log: yes

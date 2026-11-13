@@ -11,6 +11,8 @@ import subprocess
 
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('--apply', action='store_true')
+p.add_argument('--node-sessions', nargs='+', choices=['8', '9', '10', '11', '12'],
+               help='Only these node sessions; verify their running state in the lab API first')
 args = p.parse_args()
 bindings = [
     ('8', 'LAN-CLIENT', 'vunl8_0', 'vnet9_2'),
@@ -19,6 +21,8 @@ bindings = [
     ('11', 'ADMIN-LINUX', 'vunl11_0', 'vnet9_4'),
     ('12', 'ADMIN-WIN', 'vunl12_0', 'vnet9_4'),
 ]
+if args.node_sessions:
+    bindings = [row for row in bindings if row[0] in args.node_sessions]
 running = set()
 for proc in Path('/proc').iterdir():
     if not proc.name.isdigit():

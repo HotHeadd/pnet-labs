@@ -1,0 +1,14 @@
+Offline import of the existing license.key, 2026-11-13.
+Original file: 1606 bytes.
+SHA256: 660a3f9e990dc09d93e8f3eb3c346ecf24d16eba0d5023fc67344e01d9b3544a
+Saved trial number matches the file Base-ID: yes.
+ProductInfo.uploadLicense: {} (no import error).
+EULA accepted, password/statistics/central-management steps confirmed.
+Installed license.key SHA256 matched the original in the local console.
+Appliance rebooted normally after import.
+Fresh licenseSet: False
+Fresh antivirus: AntivirusNotActive, available=False
+Fresh login type: LoginReactivation.
+IPS API: 1004 Insufficient rights.
+EICAR after reboot: HTTP=200, 68 bytes.
+Result: file imported; activation not confirmed.
