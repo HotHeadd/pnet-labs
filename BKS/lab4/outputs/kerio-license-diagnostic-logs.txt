@@ -1,0 +1,13 @@
+Controlled import, 2026-11-13, 13:49:09 UTC.
+Offsets recorded before import: error=12, warning=9, debug=1504, config=682 lines.
+New error.log records: none.
+New warning.log records: none.
+Relevant new debug.log record:
+[13/Nov/2026 16:49:09] License changed.
+Relevant new config.log record:
+[13/Nov/2026 16:49:10] Admin - License changed: Trial
+Times inside native records are local UTC+3.
+Other fresh debug records: interface GRO update SUCCESS and one deferred job scheduled.
+No explicit license rejection reason was recorded in these fresh log records.
+API after new login: licenseSet=false, LoginReactivation, AntivirusNotActive.
+The absence of a logged error does not establish successful activation.
