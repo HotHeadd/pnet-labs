@@ -1,0 +1,9 @@
+2026-11-13T19:40:24.752122+00:00
+/allowed.txt
+HTTP=200
+/weblinks-categories?id=1%20union%20select%20password
+HTTP=000
+curl: (28) Operation timed out after 6002 milliseconds with 0 bytes received
+/magmi-importer/web/download_file.php?file=../../etc/passwd
+HTTP=000
+curl: (28) Operation timed out after 6001 milliseconds with 0 bytes received

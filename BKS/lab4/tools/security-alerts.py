@@ -20,6 +20,14 @@ OID = '.1.3.6.1.3.9999.4'
 
 
 def parse(line, kind):
+    if kind == 'ngfw' and ' kerio-alert ' in line and ' VIRUS ' in line:
+        fields = dict(re.findall(r'(\w+)="([^"\n]*)"', line))
+        if not all(fields.get(k) for k in ['file', 'hostip', 'virus']):
+            return None
+        return {'origin': 'Kerio native syslog', 'component': 'AV',
+                'syslog_app': 'kerio-alert', 'src_ip': fields['hostip'],
+                'user': fields.get('username'), 'url': fields['file'],
+                'threat': fields['virus'], 'action': 'detected'}
     if kind == 'ngfw' and ' kerio-security ' in line:
         match = re.search(
             r'IPS: (.*?), severity: (\w+), Rule ID: (\d+:\d+) (.*?), '

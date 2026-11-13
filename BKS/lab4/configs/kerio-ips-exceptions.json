@@ -2,7 +2,15 @@
  "ignored": [
   {
    "id": "1:2000345",
-   "description": "ET TROJAN IRC Nick change on non-standard port"
+   "description": "Unknown Rule ID"
+  },
+  {
+   "id": "1:2002825",
+   "description": "ET POLICY POSSIBLE Web Crawl using Curl"
+  },
+  {
+   "id": "1:2013028",
+   "description": "Unknown Rule ID"
   }
  ]
 }

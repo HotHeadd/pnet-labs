@@ -1,0 +1,8 @@
+Native Kerio export after final IPS configuration
+UTC: 2026-11-13T20:22:20Z
+File: kerio-native-20261113-202220.tar.gz
+Bytes: 29255
+SHA256: 6b94a11b56724fcde6acb75adaa8eb8021dceb913d3fe47cb41e33aeffdaa989
+Stored outside Git on ADMIN-LINUX and PNETLab, mode 600
+Independent copy SHA256: matched
+This export was not re-imported; the earlier restore test is separate.

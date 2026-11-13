@@ -3,7 +3,7 @@
   "enabled": true,
   "high": "IntrusionPreventionActionDropAndLog",
   "medium": "IntrusionPreventionActionDropAndLog",
-  "low": "IntrusionPreventionActionLog",
+  "low": "IntrusionPreventionActionDropAndLog",
   "updateCheckInterval": {
    "enabled": true,
    "value": 24

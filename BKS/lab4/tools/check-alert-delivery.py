@@ -36,6 +36,12 @@ for line in Path('/var/log/bks4/security-alerts.jsonl').read_text().splitlines()
     event = json.loads(line)
     if event['component'] != args.component or datetime.fromisoformat(event['monitor_utc']) < since:
         continue
+    if args.component == 'AV' and args.origin == 'kerio':
+        if event.get('syslog_app') != 'kerio-alert':
+            continue
+        assert event.get('origin') == 'Kerio native syslog'
+    elif args.component == 'AV' and event.get('origin') != 'ICAP engine log':
+        continue
     if args.component == 'IPS':
         expected_app = 'kerio-security' if args.origin == 'kerio' else 'suricata'
         if event.get('syslog_app') != expected_app:
@@ -51,7 +57,10 @@ lines = ['External monitor SNMP delivery: verified', 'Component: ' + args.compon
          'Notification OID: 1.3.6.1.3.9999.4.0.1', 'Matched events: ' + str(len(verified))]
 for event in verified:
     lines += ['', 'Monitor UTC: ' + event['monitor_utc'], 'Origin: ' + event['origin']]
-    if event['component'] == 'AV':
+    if event['component'] == 'AV' and args.origin == 'kerio':
+        for key in ['syslog_app', 'src_ip', 'user', 'url', 'threat', 'action']:
+            lines.extend(textwrap.wrap(key + ': ' + str(event.get(key)), width=88))
+    elif event['component'] == 'AV':
         detail = event['detail']
         threat = re.search(r'VIRUS DETECTED:\s*([^,]+)', detail)
         url = re.search(r'http url:\s*(\S+)', detail)

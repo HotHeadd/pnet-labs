@@ -1,0 +1,16 @@
+UTC start: 2026-11-13T20:45:59.853208+00:00
+Sources and targets are bound to the lab data interfaces.
+10.1.10.42 -> 10.1.50.10/allowed.txt
+HTTP=200 local_port=36628
+10.1.10.42 -> 10.1.50.10/weblinks-categories?id=1%20union%20select%20password
+HTTP=404 local_port=36644
+10.1.10.42 -> 10.1.50.10/magmi-importer/web/download_file.php?file=../../etc/passwd
+HTTP=404 local_port=36650
+192.168.100.1 -> 192.168.100.2:8080/allowed.txt
+HTTP=200 local_port=44774
+192.168.100.1 -> 192.168.100.2:8080/weblinks-categories?id=1%20union%20select%20password
+HTTP=000 local_port=44782
+curl: (28) Operation timed out after 5002 milliseconds with 0 bytes received
+192.168.100.1 -> 192.168.100.2:8080/magmi-importer/web/download_file.php?file=../../etc/passwd
+HTTP=000 local_port=44784
+curl: (28) Operation timed out after 5000 milliseconds with 0 bytes received

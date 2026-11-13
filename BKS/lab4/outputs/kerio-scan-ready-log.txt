@@ -1,0 +1,28 @@
+Mode: log
+<133>1 2026-11-13T23:15:25+03:00 control kerio-security - - - ﻿ Intrusion Prevention engine: Startup
+Native IPS startup confirmed; tests may start
+Starting Nmap 7.80 ( https://nmap.org ) at 2026-11-13 20:15 UTC
+Nmap scan report for 192.168.100.2
+Host is up (0.00071s latency).
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 8.9p1 Ubuntu 3ubuntu0.18 (Ubuntu Linux; protocol 2.0)
+MAC Address: 50:B6:58:00:06:00 (Unknown)
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 0.35 seconds
+
+DMZ packet capture:
+20:15:28.131319 IP 192.168.100.1.44654 > 10.1.50.10.22: Flags [S], seq 852566064, win 1024, options [mss 1460], length 0
+20:15:28.131586 IP 10.1.50.10.22 > 192.168.100.1.44654: Flags [S.], seq 1941449189, ack 852566065, win 64240, options [mss 1460], length 0
+20:15:28.132640 IP 192.168.100.1.44654 > 10.1.50.10.22: Flags [R], seq 852566065, win 0, length 0
+20:15:28.198843 IP 192.168.100.1.36151 > 10.1.50.10.22: Flags [S], seq 3686025351, win 64240, options [mss 1460,sackOK,TS val 3507948954 ecr 0,nop,wscale 7], length 0
+20:15:28.199249 IP 10.1.50.10.22 > 192.168.100.1.36151: Flags [S.], seq 2100997026, ack 3686025352, win 65160, options [mss 1460,sackOK,TS val 3630213420 ecr 3507948954,nop,wscale 7], length 0
+20:15:28.201502 IP 192.168.100.1.36151 > 10.1.50.10.22: Flags [.], ack 1, win 502, options [nop,nop,TS val 3507948957 ecr 3630213420], length 0
+20:15:28.220740 IP 10.1.50.10.22 > 192.168.100.1.36151: Flags [P.], seq 1:43, ack 1, win 510, options [nop,nop,TS val 3630213441 ecr 3507948957], length 42
+20:15:28.223335 IP 192.168.100.1.36151 > 10.1.50.10.22: Flags [.], ack 43, win 502, options [nop,nop,TS val 3507948979 ecr 3630213441], length 0
+20:15:28.223700 IP 192.168.100.1.36151 > 10.1.50.10.22: Flags [F.], seq 1, ack 43, win 502, options [nop,nop,TS val 3507948979 ecr 3630213441], length 0
+20:15:28.226187 IP 10.1.50.10.22 > 192.168.100.1.36151: Flags [.], ack 2, win 510, options [nop,nop,TS val 3630213447 ecr 3507948979], length 0
+20:15:28.228758 IP 10.1.50.10.22 > 192.168.100.1.36151: Flags [F.], seq 43, ack 2, win 510, options [nop,nop,TS val 3630213449 ecr 3507948979], length 0
+20:15:28.232089 IP 192.168.100.1.36151 > 10.1.50.10.22: Flags [.], ack 44, win 502, options [nop,nop,TS val 3507948987 ecr 3630213449], length 0

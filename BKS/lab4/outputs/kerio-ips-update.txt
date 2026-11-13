@@ -1,0 +1,3 @@
+UTC: 2026-11-13T19:39:24.534122+00:00
+IntrusionPrevention.getUpdateStatus {"status": {"lastUpdateCheck": {"isValid": true, "days": 0, "hours": 0, "minutes": 3}, "databaseVersion": "5.150/2.3546", "phase": "IntrusionPreventionUpdateOk", "errorMessage": ""}}
+IntrusionPrevention.get {"enabled": true, "high": "IntrusionPreventionActionDropAndLog", "medium": "IntrusionPreventionActionDropAndLog", "low": "IntrusionPreventionActionLog"}
