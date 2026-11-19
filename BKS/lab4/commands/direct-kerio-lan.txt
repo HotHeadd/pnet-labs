@@ -1,0 +1,6 @@
+ip route get 10.1.50.10
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 http://10.1.50.10/allowed.txt
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 'http://192.168.100.1/allowed.txt?report-nat=lan'
+timeout 5 nc -s 10.1.10.42 -vz 10.1.50.10 22
+echo $?
+curl --noproxy '*' --interface 10.1.10.42 -ksS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' https://10.1.10.1:4081/admin/

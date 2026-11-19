@@ -1,0 +1,4 @@
+date -Is
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 -A 'Mozilla/5.0 (compatible; Nmap Scripting Engine; https://nmap.org/book/nse.html)' http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 'http://192.168.100.2:8080/docs?topic=/etc/passwd'

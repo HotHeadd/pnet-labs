@@ -1,0 +1,1 @@
+sudo grep 'report-nat=lan' /var/log/nginx/access.log | tail -n 1 | fold -s -w 95

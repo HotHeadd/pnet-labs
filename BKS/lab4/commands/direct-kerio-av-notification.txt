@@ -1,0 +1,1 @@
+sudo grep -i 'EICAR-Test-File' /var/log/bks4/snmp-traps.log | grep '2026-11-19' | tail -n 1 | fold -s -w 95

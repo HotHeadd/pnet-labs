@@ -22,5 +22,7 @@ else:raise RuntimeError("Screenshot not created")
 ssh_options=['-o','BatchMode=yes','-o','ConnectTimeout=5','-o','ServerAliveInterval=3','-o','ServerAliveCountMax=1']
 subprocess.run(['ssh',*ssh_options,'root@100.100.57.19','python3 -c '+shlex.quote(code)],check=True,timeout=20)
 ppm=out.with_suffix('.ppm');subprocess.run(['scp',*ssh_options,'root@100.100.57.19:'+remote,str(ppm)],check=True,timeout=20)
+subprocess.run(['ssh',*ssh_options,'root@100.100.57.19','rm -- '+shlex.quote(remote)],check=True,timeout=20)
 subprocess.run(['sips','-s','format','png',str(ppm),'--out',str(out)],check=True,stdout=subprocess.DEVNULL)
+ppm.unlink()
 print(out)

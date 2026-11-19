@@ -1,0 +1,4 @@
+date -Is
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' http://10.1.50.10/allowed.txt
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' 'http://10.1.50.10/weblinks-categories?id=1%20union%20select%20password'
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' 'http://10.1.50.10/magmi-importer/web/download_file.php?file=../../etc/passwd'

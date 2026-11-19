@@ -1,0 +1,2 @@
+date -Is
+sha256sum /tmp/bks4-lines-files-admin-6881/harmless.txt /tmp/bks4-lines-files-admin-16881/harmless.txt

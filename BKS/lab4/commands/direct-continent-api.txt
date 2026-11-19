@@ -1,0 +1,6 @@
+date -Is
+umask 077
+export OPENSSL_ENGINE_PATH="$HOME/bks4-c4/c4_lib"
+export OPENSSL_CONF="$OPENSSL_ENGINE_PATH/openssl.cnf"
+curl --noproxy '*' --interface 10.1.99.10 --config /tmp/bks4-api.private.conf -ksS -m 10 -o /tmp/bks4-api-result.private.json -w 'HTTP=%{http_code}\n' https://10.1.99.1:444/api-v1-objects/config
+jq -M '{configurations:(.data|length)}' /tmp/bks4-api-result.private.json

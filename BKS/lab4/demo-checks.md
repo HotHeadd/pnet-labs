@@ -1,102 +1,139 @@
-# БКС4, вариант 6 — проверки и готовность
+# БКС4 — проверки прямыми командами
 
-## Текущее состояние 13.11.2026
+Гайд по устройству стенда — [HUMAN.md](HUMAN.md). Ниже команды для ввода в консолях; каждый опыт показывается вместе с результатом и соответствующим событием NGFW.
 
-Работают KERIO, Linux3–6 и ADMIN-WIN7; CONTINENT выключен. Сессия9/pod7. Континент повторно проверен по сохранённой политике21FW/4NAT: AV, DPI гостя/администратора, IPS, GeoIP и доставка событий подтверждены outputs/continent-demo-* и img/continent-*-current.png. Даты полного прогона ниже сохранены явно.
+## Подготовка
 
-Kerio: licenseSet=true/rsTrialRegistered/LoginRegular, 22FW/defaultDrop, без временных правил. AV AntivirusOk/база10903722: EICAR и ZIP по HTTP прерываются с0байт и нативным детектом; HTTPS без инспекции пропускает68байт. IPS5.150/2.3546, все уровни DropAndLog; сканирование подтверждено парой Log/open и Drop/filtered после nativeStartup. Исключения SID1:2000345/2002825/2013028 глобальные. Группы Guests/Administrators:4запрета гостю,4успеха администратору, включая BT16384байт. GeoIP off/on, nativeSyslog, внешние AV/IPS SNMP, статистика и nativeRestore подтверждены.
+Присоединиться через Join к `/BKS labs/BKS4.unl`, session 9/pod 7. Проверить, какой NGFW включён: Kerio и Континент имеют одинаковые адреса, работают поочерёдно. Для переключения сначала штатно выключить текущую ОС и проверить status 0. Не применять Stop Lab, Destroy или Wipe.
 
-Прямой путь LAN→DMZ: тест выполнен, nginx отвечает404 на тестовые URI, соответствующего IPS-детекта нет. Это ограничение области действия Kerio IPS; дополнительный IPS или смена зон в вариант6 не входят. WAN те же URI блокируются с Packetdrop. Будущая устойчивость автоматических обновлений не доказана; выполненное обновление и рабочие базы подтверждены.
+Проверять рабочие источники: Guest — LAN-CLIENT 10.1.10.42, Admin — ADMIN-LINUX 10.1.99.10; OOB используется только для обслуживания. После переключения проверить Management и привязки TAP. В Континенте заново войти гостем и администратором через портал auth.bks4.test. В Kerio роли определяются автоматически по IP.
 
-Для Kerio проверки выполняются из ~/bks4-checks/ на соответствующей LinuxВМ: check-kerio.sh lan/wan/dmz/admin, check-app-protocols.py с10.1.10.42 или10.1.99.10. Полные ответы API — kerio-status.py на ADMIN; пароли берутся из приватных файлов. Проверка доставки AV/IPS: check-alert-delivery.py --component AV (либо IPS) --origin kerio --since <UTC> --output <файл>. Пользовательские группы привязаны к рабочим IP автоматически; это не парольный портал.
+## Разрешённый HTTP и запрещённые направления
 
-Состояние на 2026-11-07 после итогового прогона (установка `76d7bac5`, `outputs/continent-final-*`). Все пункты ниже подтверждены **одним** прогоном 10:37–10:44 UTC с событиями журнала (`continent-final-events.txt`).
+На LAN-CLIENT:
 
-## Что готово и что осталось
-
-| Пункт | Подтверждение | Текущий статус |
-|---|---|---|
-| LAN → WAN, NAT | `outputs/continent-final-base-lan.txt` | Готово |
-| Публикация DMZ 8080/8443 | `outputs/continent-final-base-wan.txt` | Готово |
-| Изоляция DMZ → LAN | `outputs/continent-final-base-dmz.txt`, событие в `continent-final-events.txt` | Готово; LAN → DMZ кроме 80/443 — `BKS4-Deny-LAN-to-DMZ-Other` |
-| Антивирус plain/ZIP/HTTPS | `outputs/continent-final-av-{guest,admin}.txt` | Готово для гостя LAN и администратора (DMZ и WAN) |
-| Категории URL и типы файлов | Условие варианта 6 | Отдельные ограничения URL/типов файлов вариантом не заданы; не подменять их тестом DPI |
-| Исключение администратора | `outputs/continent-final-apps-admin.txt` + события | Готово |
-| Гостевой DPI на двух портах | `outputs/continent-final-apps-guest.txt` + события | Готово: IRC, Jabber, BitTorrent + категории Chat/FileSharing, любой получатель; HTTP гостя при этом работает (веб-правила выше DPI) |
-| IDS/IPS, сканирование | `outputs/continent-final-ids-wan.txt`, `-ids-lan-443.txt`, `configs/continent-ips-user-signatures.txt` | Готово: пользовательские сигнатуры 3900001/3900002 blocked (nmap --version-all и hping SYN); XMAS режет МЭ |
-| IDS/IPS, веб-сигнатуры | `outputs/continent-final-ids-wan.txt`, события | Готово |
-| Управление только из Management | `outputs/continent-final-management.txt` | Готово |
-| GeoIP выключен/включён | `outputs/continent-geoip-{disabled,enabled}.txt` | Готово, с событием `src_country=US` blocked |
-| Три статистических представления | `outputs/continent-final-security-statistics.json` | Готово |
-| SNMP-оповещения AV | `outputs/continent-final-av-alerts.txt` | Готово: 8 уведомлений итогового прогона |
-| SNMP-оповещения IPS | `outputs/continent-final-ips-alerts.txt` | Готово: 5 уведомлений |
-| Ложное срабатывание IPS | `outputs/continent-docs-exception*.txt` | Выполнено: Admin200 после исключения, WAN всё ещё блокируется SID4149401 |
-| Резервное копирование | `outputs/continent-native-backup.txt` | Свежая зашифрованная копия, штатное восстановление CDC done100; описание и контрольные хеши проверены |
-| Kerio | `outputs/kerio-final-*.txt`, `configs/kerio-*.json` | Текущее состояние и ограничения приведены в начале; строка не относится к старому прогону Континента |
-
-## Перед демонстрацией
-
-1. Сейчас включён KERIO, CONTINENT штатно выключен. Для демонстрации Континента сначала штатно выключить Kerio и убедиться в status0, затем запустить Континент. Для возврата — обратный порядок; оба одновременно не запускать.
-2. Проверить сессии PNETLab и присоединиться к `/BKS labs/BKS4.unl` под своим `*_pc`. Не создавать второй pod с теми же MAC/IP.
-3. Проверить, что работает только одна из платформ Kerio/Континент. Не применять Stop/Destroy Lab или Wipe.
-4. На ADMIN-LINUX проверить `ip route get 10.1.99.1` и доступность Management. Недоступность адреса самого шлюза не считается успешным тестом ограничения управления. После остановки/смены NGFW проверить, что TAP тестовых машин остались присоединены к своим мостам: при их пересоздании встречалась потеря привязки. Для текущего pod есть защищённый проверками `tools/repair-bks4-links.py`; сначала сверить node session через API и выполнить его без `--apply`.
-5. Проверять трафик с рабочих адресов, а не через служебный OOB. OOB используется для администрирования и сбора файлов.
-6. Использовать отдельные адреса для ролей: Guest — `10.1.10.42`, Admin — `10.1.99.10`. Не менять роли подряд на одном IP без штатного logout.
-## Независимые проверки мониторинга на ADMIN-LINUX
-
-```bash
-bash ~/check-alert-services.sh
-sudo python3 ~/summarize-security-log.py --output /home/labadmin/bks4-security-statistics.json
+```sh
+ip route get 10.1.50.10
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 http://10.1.50.10/allowed.txt
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 http://192.168.100.1/allowed.txt
+timeout 5 nc -s 10.1.10.42 -vz 10.1.50.10 22
+echo $?
 ```
 
-Прямой `check-icap.sh` проверяет backend ICAP: контрольный файл — 204, EICAR и ZIP — вложенный HTTP 403. Это **не** гостевой HTTP через NGFW. Проверку доставки запускают с UTC-меткой до начала нового теста:
+Оба HTTP-запроса возвращают текст контрольного файла. SSH ограничен таймаутом; 124 означает истечение времени ожидания. На DMZ-WEB проверить другое запрещённое направление:
 
-```bash
-sudo python3 ~/check-alert-delivery.py --component AV --since '<UTC-время начала теста>' --output /home/labadmin/av-alert-delivery.txt
+```sh
+timeout 5 nc -s 10.1.50.10 -vz 10.1.10.42 22
+echo $?
 ```
 
-Для IPS используется `--component IPS` после реального события на шлюзе. Проверочный скрипт не генерирует детекты и не выдаёт старые записи за свежие. Уведомление отправляет внешний монитор `10.1.99.10`; native LinkUp от `10.1.99.1` не подтверждает IPS/AV.
+На ADMIN-LINUX проверить, что сам SSH-сервис доступен администратору:
 
-## После восстановления Management
-
-- Повторить базовые проверки `commands/check-base-policy.sh` на LAN/WAN/Admin/DMZ с рабочим источником.
-- Для IPS сначала разрешённый HTTP к собственному опубликованному DMZ, затем ограниченный тест из `commands/check-ids-web.sh wan`. Сопоставить время, SID, адреса и action в syslog; отдельно проверить полученный SNMP payload.
-- GeoIP проверять только к своему `192.168.100.2:8080/8443` с привязкой эмулированного RU/US источника. Публичные адреса здесь — источники, а не внешние цели сканирования.
-- Ложное срабатывание `/docs?topic=/etc/passwd` разобрано: правило `BKS4-Admin-Docs-IPS-Exception` обходит IPS только для `10.1.99.10 → 192.168.100.2:8080`. После Admin200, WANtimeout+SID4149401blocked. Исключение охватывает весь этот HTTP-сервис доверенного АРМ; сигнатура глобально не отключена.
-- Испытание восстановления выполнено со свежей копией после интеграции: изменено только описание BKS4_WAN_TEST, восстановлен CDC, задача done100[], описание вернулось, хеши20FW/4NAT/10сетевых объектов/75сервисов совпали. После восстановленной политики выполнены сетевые и AV-проверки. Старый диск/копию до командной работы не восстанавливать.
-
-## Разбор подтверждённого IPS-события
-
-В `outputs/continent-ips-events.txt` событие `2026-11-06 17:43:01` (UTC) относится к источнику `192.168.100.1:60596`, цели `10.1.50.10:80`, SID `4109359`, сигнатуре Nmap HTTP User-Agent и действию `blocked`. Входящий опубликованный порт — `192.168.100.2:8080`, внутренний адрес виден после DNAT. Это лабораторный тест строки User-Agent, а не доказательство блокировки произвольного портового сканирования.
-
-Критерий готовности к защите: единый актуальный прогон применимых тестов, клиентский результат и соответствующее нативное событие с совпадающими временем/источником. Незавершённые и отложенные этапы должны остаться явно отмеченными.
-
-## Карта доказательств для минимальных тестов
-
-Таблица относится к результатам, включённым в main.typ. Даты исходных прогонов указаны в тексте и записях; кадры сохранённых выводов не объявляются новым измерением.
-
-| Тест | Kerio: результат / событие | Континент: результат / событие |
-|---|---|---|
-| 1 LAN→WAN | kerio-audit-lan.txt; kerio-evidence-baseline-events.png | continent-final-base-lan.txt; continent-final-events.txt, текущие кадры AV/событий |
-| 2 Публикация | kerio-tests-wan.png; kerio-evidence-baseline-events.png | continent-ids-current.png; continent-events-current.png |
-| 3 Изоляция | kerio-tests-dmz.png; kerio-evidence-baseline-events.png | continent-isolation-current.png; continent-final-events.txt |
-| 4 AV | kerio-evidence-av.png; kerio-av-native-events.txt | continent-av-current.png; continent-demo-av-delivery.txt и nativeappfilter |
-| 5 URL-категория | Не задана вариантом6 | Не задана вариантом6 |
-| 6 Исключение Admin | kerio-apps-current.png; kerio-events-final.txt | continent-apps-admin-current.png; nativeuser/rule |
-| 7 DPI Guest | kerio-apps-current.png и kerio-events.png; nativeDENY | continent-apps-guest-current.png; nativeblocked |
-| 8 IDS/IPS scan | kerio-evidence-scan-log/drop.png; Alert/Packetdrop того жеSID | continent-ids-current.png; continent-events-current.png |
-| 9 Веб-сигнатуры | kerio-evidence-paths/path-events.png; LAN404/WANdrop | continent-ids-current.png; continent-events-current.png |
-| 10 Управление | kerio-tests-admin/wan.png; kerio-evidence-baseline-events.png | continent-management-current.png; continent-final-management.txt |
-| Вариант6 GeoIP | kerio-evidence-geoip.png; nativeCountryUS | continent-geoip-disabled/enabled.txt; nativeGeoIPblocked |
-
-Все пути таблицы относительны img/ либо outputs/. Для нового запуска AV/IPS-проверки доставки использовать --origin kerio при Kerio и --origin continent при Континенте. Установленный ~/check-alert-delivery.py синхронизирован с текущим исходником; старый KeyError detail устранён заменой копии.
-
-## Ожидание готовности IPS Kerio
-
-После изменения IPS или загрузки ОС запускать на ADMIN-LINUX:
-
-```bash
-sudo python3 ~/wait-kerio-ips.py --since '<UTC перед изменением/запуском>' --timeout 120
+```sh
+nc -s 10.1.99.10 -vz -w 3 10.1.50.10 22
 ```
 
-Учитывается последнее событие движка; для одинаковой секунды важен порядок строк. Startup должен оставаться последним не менее8с. APIenabled/UpdateOk не заменяют этот контроль. Исправление проверено на реальных последовательностях Startup→Shutdown и Shutdown→Startup с одинаковой меткой времени. После возврата стенда получены HTTPcontrol200, EICARreset/0байт, WANSQLtimeout и nativePacketdrop; outputs/kerio-return-check.txt.
+## Публикация и управление
+
+На WAN-TEST:
+
+```sh
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 192.168.100.1 -ksS -m 5 https://192.168.100.2:8443/allowed.txt
+```
+
+Для Kerio сравнить WebAdmin 4081 из WAN и Management:
+
+```sh
+# WAN-TEST: таймаут
+curl --noproxy '*' --interface 192.168.100.1 -ksS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' https://192.168.100.2:4081/admin/
+# ADMIN-LINUX: ответ WebAdmin
+curl --noproxy '*' --interface 10.1.99.10 -ksS -m 5 -o /dev/null -w 'HTTP=%{http_code}\n' https://10.1.99.1:4081/admin/
+```
+
+У Континента проверить TCP444 из Management, LAN и WAN командой nc с соответствующим `-s`. Открытый порт ещё не доказывает успешную аутентификацию. На ADMIN-LINUX можно прочитать API через curl с ГОСТ-движком из установленной официальной c4_lib:
+
+```sh
+umask 077
+export OPENSSL_ENGINE_PATH="$HOME/bks4-c4/c4_lib"
+export OPENSSL_CONF="$OPENSSL_ENGINE_PATH/openssl.cnf"
+curl --noproxy '*' --interface 10.1.99.10 --user admin -ksS -m 10 -o /tmp/bks4-api.private.json -w 'HTTP=%{http_code}\n' https://10.1.99.1:444/api-v1-objects/config
+jq -M '{configurations:(.data|length)}' /tmp/bks4-api.private.json
+rm /tmp/bks4-api.private.json
+```
+
+Пароль curl запросит отдельно без отображения. Перед записью ответа выполнить `umask 077`, сам ответ целиком в отчёт не печатать: конфигурация может содержать закрытые данные.
+
+## Антивирус
+
+На LAN-CLIENT поочерёдно выполнить curl с теми же параметрами для allowed.txt, eicar.com и eicar.zip:
+
+```sh
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 -o /dev/null -w 'HTTP=%{http_code} bytes=%{size_download}\n' http://10.1.50.10/eicar.com
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 5 -o /dev/null -w 'HTTP=%{http_code} bytes=%{size_download}\n' http://10.1.50.10/eicar.zip
+curl --noproxy '*' --interface 10.1.10.42 -ksS -m 5 -o /tmp/eicar-https -w 'HTTPS=%{http_code} bytes=%{size_download}\n' https://10.1.50.10/eicar.com
+sha256sum /tmp/eicar-https
+```
+
+Континент возвращает 403 для HTTP EICAR/ZIP. Kerio сбрасывает соединение с 0 байт тела; один HTTP200 не означает передачу файла. HTTPS без TLS-инспекции передаёт 68 байт. Сопоставить с нативным AV-событием.
+
+## IRC и BitTorrent
+
+С ADMIN-LINUX и LAN-CLIENT отправить IRC-регистрацию на 6667 и 16667 с рабочим источником. Имя nick должно быть уникальным и коротким:
+
+```sh
+printf 'NICK a6667\r\nUSER bks4 0 * :lab\r\nPING :bks4\r\n' | timeout 8 nc -s 10.1.99.10 192.168.100.1 6667 | sed -n '/ 001 /p;/PONG/p'
+```
+
+Ответ 001 подтверждает регистрацию. Для гостя заменить источник на 10.1.10.42 и nick; повторить на 16667. Отсутствие ответа сопоставить с пользовательским запретом в журнале.
+
+BitTorrent проверять программой transmission-cli с private-торрентом собственного WAN-TEST, отдельно для 6881 и 16881. В отдельном каталоге настроек задать bind-address-ipv4 рабочего источника, выключить DHT/PEX/LPD/uTP и port forwarding. Получить harmless-<порт>.torrent через curl, запустить клиент с `-g <каталог настроек> -w <каталог загрузки> -M -et <торрент>` под timeout. У администратора появляется harmless.txt (3407872 байта), у гостя каталог пуст. Точные команды каждого опыта сохранены в `commands/direct-*-bt-*.txt`; это текст команд, не исполняемый сценарий.
+
+## IDS/IPS
+
+На WAN-TEST выполнить ограниченное сканирование только собственного NGFW:
+
+```sh
+sudo nmap -Pn -n -sS -sV --max-retries 1 --host-timeout 25s -p 22,443,8080,8443 192.168.100.2
+```
+
+Сначала проверить allowed.txt, затем отправить SQL-признак:
+
+```sh
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 'http://192.168.100.2:8080/weblinks-categories?id=1%20union%20select%20password'
+```
+
+На Kerio дождаться штатного IPS Startup, последнего среди событий движка не менее 8 секунд. `enabled` или UpdateOk не заменяют готовность движка. На прямом LAN→DMZ Kerio возвращает 404 без IPS-детекта; этот путь не объявлять защищённым IPS.
+
+На Континенте дополнительно:
+
+```sh
+sudo hping3 -q -I ens3 -a 192.168.100.1 -F -P -U -p 8080 -c 12 -i u50000 192.168.100.2
+sudo hping3 -q -I ens3 -a 192.168.100.1 -S -p 8080 -c 120 -i u10000 192.168.100.2
+```
+
+XMAS может отсечь обычный МЭ раньше СОВ. Для утверждения IPS-блокировки показать SID, действие и время соответствующего события.
+
+## Журналы и доставка уведомлений
+
+На ADMIN-LINUX читать настоящий журнал, а не печатать сохранённую сводку. Например, для событий Kerio за 19.11.2026:
+
+```sh
+sudo grep -a '2026-11-19.*IPS: Packet drop' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 65
+sudo grep '2018289' /var/log/bks4/snmp-traps.log | grep '2026-11-19' | tail -n 1 | fold -s -w 95
+```
+
+Для нового опыта заменить дату и SID на фактические. У Континента искать APP-NAME suricata и нужный signature_id. AV Континента сопоставлять также с журналом c-icap. Отправитель AV/IPS-уведомлений — внешний монитор 10.1.99.10; LinkUp не заменяет сообщение об атаке.
+
+## GeoIP
+
+Только на изолированном WAN-TEST:
+
+```sh
+sudo ip addr replace 5.255.255.5/32 dev lo
+sudo ip addr replace 8.8.8.8/32 dev lo
+curl --noproxy '*' --interface 5.255.255.5 -sS -m 5 http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 8.8.8.8 -sS -m 5 http://192.168.100.2:8080/allowed.txt
+```
+
+При включённом запрете US источник RU проходит, US получает таймаут. Для сравнения off/on изменять правило штатно и затем возвращать исходное включённое состояние. Сохранённые результаты прежних дат не выдавать за новый прогон.

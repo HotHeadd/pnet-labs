@@ -1,0 +1,5 @@
+date -Is
+sudo ip addr replace 5.255.255.5/32 dev lo
+sudo ip addr replace 8.8.8.8/32 dev lo
+curl --noproxy '*' --interface 5.255.255.5 -sS -m 5 -o /dev/null -w 'RU HTTP=%{http_code}\n' http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 8.8.8.8 -sS -m 5 -o /dev/null -w 'US HTTP=%{http_code}\n' http://192.168.100.2:8080/allowed.txt

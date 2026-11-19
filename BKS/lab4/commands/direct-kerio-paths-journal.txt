@@ -1,0 +1,2 @@
+sudo grep -a 'kerio-connection.*BKS4-Protected-Web' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'kerio-connection.*BKS4-Publish-HTTP' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

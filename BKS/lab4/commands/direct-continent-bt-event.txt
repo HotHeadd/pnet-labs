@@ -1,0 +1,2 @@
+sudo grep -a 'C4FW.*dest_port="6881".*signature="BitTorrent"' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'C4FW.*dest_port="16881".*signature="BitTorrent"' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

