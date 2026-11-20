@@ -1,13 +1,6 @@
-20/11/2026 -- 12:12:58 - <Info> - Running suricata under test mode
-20/11/2026 -- 12:12:58 - <Notice> - This is Suricata version 6.0.4 RELEASE running in SYSTEM mode
-20/11/2026 -- 12:12:58 - <Notice> - Configuration provided was successfully loaded. Exiting.
+This is Suricata version 8.0.8 RELEASE
+suricata-update version 1.3.8
+i: suricata: This is Suricata version 8.0.8 RELEASE running in SYSTEM mode
+i: suricata: Configuration provided was successfully loaded. Exiting.
+[5080 - Suricata-Main] 2026-11-20 18:00:43 Info: detect: 2 rule files processed. 16 rules successfully loaded, 0 rules failed, 0 rules skipped
 active
-13
-20/11/2026 -- 12:12:59 - <Info> - stats output device (regular) initialized: stats.log
-20/11/2026 -- 12:12:59 - <Info> - 2 rule files processed. 16 rules successfully loaded, 0 rules failed
-20/11/2026 -- 12:12:59 - <Info> - Threshold config parsed: 1 rule(s) found
-20/11/2026 -- 12:12:59 - <Info> - 16 signatures processed. 0 are IP-only rules, 13 are inspecting packet payload, 2 inspect application layer, 0 are decoder event only
-20/11/2026 -- 12:12:59 - <Info> - Going to use 2 thread(s)
-20/11/2026 -- 12:12:59 - <Info> - Using unix socket file '/var/run/suricata-command.socket'
-20/11/2026 -- 12:12:59 - <Notice> - all 2 packet processing threads, 4 management threads initialized, engine started.
-20/11/2026 -- 12:12:59 - <Info> - All AFP capture threads are running.

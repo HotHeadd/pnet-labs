@@ -1,3 +1,6 @@
-11/20/2026-01:52:44.238971  [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:43208 -> 10.1.50.10:8080
-11/20/2026-01:52:47.246726  [**] [1:1000502:1] BKS5 repeated inbound echo requests [**] [Classification: Attempted Denial of Service] [Priority: 2] {ICMP} 192.168.100.10:8 -> 10.1.50.10:0
-11/20/2026-01:52:48.268554  [**] [1:1000501:1] BKS5 test remote administration download [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:53218 -> 10.1.50.10:8080
+11/19/2026-22:52:44.238971  [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:43208 -> 10.1.50.10:8080
+11/19/2026-22:52:48.268554  [**] [1:1000501:1] BKS5 test remote administration download [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:53218 -> 10.1.50.10:8080
+11/19/2026-22:52:47.246726  [**] [1:1000502:1] BKS5 repeated inbound echo requests [**] [Classification: Attempted Denial of Service] [Priority: 2] {ICMP} 192.168.100.10:8 -> 10.1.50.10:0
+11/19/2026-22:52:44.238971  [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:43208 -> 10.1.50.10:8080
+11/19/2026-22:52:47.246726  [**] [1:1000502:1] BKS5 repeated inbound echo requests [**] [Classification: Attempted Denial of Service] [Priority: 2] {ICMP} 192.168.100.10:8 -> 10.1.50.10:0
+11/19/2026-22:52:48.268554  [**] [1:1000501:1] BKS5 test remote administration download [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:53218 -> 10.1.50.10:8080

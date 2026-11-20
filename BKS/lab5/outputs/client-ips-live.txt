@@ -1,4 +1,4 @@
 ordinary 200
-admin curl: (28) Operation timed out after 4002 milliseconds with 0 bytes received
-000
+curl: (28) Operation timed out after 4000 milliseconds with 0 bytes received
+admin 000
 blocked_curl_exit=28

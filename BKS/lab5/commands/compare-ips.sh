@@ -34,10 +34,10 @@ suricata -q "$queue" "${common[@]}" > "$log/console.log" 2>&1 &
 pid=$!
 for attempt in {1..15}; do
   kill -0 "$pid"
-  if grep -q 'engine started' "$log/console.log"; then break; fi
+  if grep -qi 'engine started' "$log/console.log"; then break; fi
   sleep 1
 done
-grep -q 'engine started' "$log/console.log"
+grep -qi 'engine started' "$log/console.log"
 
 iptables -w -I FORWARD 1 -s "$client" -d "$server" "${iptables_args[@]}"
 iptables -w -I FORWARD 1 -s "$server" -d "$client" "${iptables_args[@]}"
