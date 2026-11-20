@@ -10,7 +10,7 @@
 #import "terminal-heights.typ": terminal-heights
 #let terminal(file, caption) = figure(layout(size => box(
   width: size.width, height: size.width * terminal-heights.at(file), clip: true,
-  align(top + left, image(file, width: size.width, height: size.width * 600 / 1024))
+  align(top + left, image(file, width: size.width, height: size.width * (if file == "img/kerio-web-category-events.png" { 768 } else { 600 }) / 1024))
 )), caption: caption)
 
 = Цель работы
@@ -133,15 +133,21 @@ table.header([№], [Проверка], [Kerio Control], [«Континент»
 [2], [Публикация DMZ], [HTTP/HTTPS доступны на 8080/8443; правило публикации указано в журнале (@fig-k-wan, @fig-k-paths-log)], [HTTP/HTTPS доступны; журнал показывает DNAT в 10.1.50.10:80 (@fig-c-wan, @fig-c-nat-log)],
 [3], [DMZ → LAN], [SSH завершается по таймауту; DROP правила изоляции (@fig-k-dmz, @fig-isolation-log)], [SSH завершается по таймауту; action=blocked (@fig-c-dmz, @fig-isolation-log)],
 [4], [Антивирус], [EICAR/ZIP: сброс соединения, 0 байт; EICAR в журнале (@fig-k-av, @fig-k-av-event)], [EICAR/ZIP: HTTP 403; обнаружение ClamAV (@fig-c-av, @fig-c-av-event)],
-[5], [Фильтрация по категориям], [Вариант 6 задаёт категории приложений общения и передачи файлов; гостевой запрет проверен в тесте 7], [Вариант 6 задаёт Chat/FileSharing; отдельный запрет URL-категории не задан],
-[6], [Исключение администратора], [IRC-регистрация и обе загрузки разрешены (@fig-k-irc-admin, @fig-k-bt-hashes); запись пользователя показана на рисунке @fig-admins-log], [IRC-регистрация и обе загрузки разрешены (@fig-c-irc-admin, @fig-c-bt-hashes); action=allowed на рисунке @fig-admins-log],
+[5], [Фильтрация по категориям], [Локальная веб-категория: HTTP 302 и DENY для labguest (@lst-k-web-tests, @fig-k-web-category)], [Вариант 6 задаёт Chat/FileSharing; отдельный запрет URL-категории не задан],
+[6], [Исключение администратора], [Тот же URL: HTTP 200 и ALLOW для lab-admin (@lst-k-web-tests, @fig-k-web-category)], [IRC-регистрация и обе загрузки разрешены (@fig-c-irc-admin, @fig-c-bt-hashes); action=allowed на рисунке @fig-admins-log],
 [7], [Контроль приложений], [У гостя нет IRC-регистрации и загруженного файла на обоих портах; DENY/BitTorrent в @fig-k-app-event], [Те же клиентские отказы; blocked/BitTorrent с labguest в @fig-c-bt-event],
 [8], [Сканирование], [В Log SSH определяется как open, в Drop - filtered; SID 1:2001219 (таблица @tab-k-scan, рисунок @fig-k-scan-log)], [Nmap показывает открытые публикации; сетевые пробы вызывают блокировку СОВ (@fig-c-nmap, @fig-c-ips-wan-event)],
 [9], [Веб-признаки атак], [SQL-признак из WAN блокируется по SID 1:2018289 (@fig-k-ips-web, @fig-k-ips-event)], [SQL-признак и обращение к /etc/passwd блокируются СОВ (@fig-c-ips-web, @fig-c-web-event)],
 [10], [Управление], [Management: ответ WebAdmin; LAN/WAN: таймаут и DROP (@fig-k-admin, @fig-k-lan, @fig-k-mgmt-log)], [Management: API HTTP 200; SYN из LAN/WAN доходит до шлюза и остаётся без ответа (@fig-c-api, @fig-c-mgmt-capture)],
 )}, caption: [Результаты минимального набора тестов по заданию]) <tab-tests>
 
-Для варианта 6 фильтрация проверяется по категориям приложений и учётным записям.
+Для варианта 6 контроль приложений проверяется отдельно по IRC и BitTorrent.
+
+== Веб-фильтр и исключение администратора
+На WAN-TEST размещена страница `http://192.168.100.1/bks4-web-category.txt`. В Kerio этот URL добавлен в локальную группу `BKS4-Test-Web-Category`. Для группы Guests включён запрет с журналированием, исключение Administrators стоит выше запрета. Гостевой запрос получает HTTP 302, а контрольный запрос к `/allowed.txt` проходит. Администратор получает HTTP 200 и содержимое той же тестовой страницы (листинг @lst-k-web-tests). Журнал Kerio связывает решения `DENY` и `ALLOW` с именами пользователей и правилами (рисунок @fig-k-web-category).
+#listing([Проверка веб-категории из Management и LAN через Kerio], read("outputs/kerio-web-category-clients.txt")) <lst-k-web-tests>
+#terminal("img/kerio-web-category-events.png", [Kerio — решения по одному URL для администратора и гостя]) <fig-k-web-category>
+
 
 == Доступ LAN к DMZ и WAN, изоляция DMZ
 С LAN-CLIENT сначала выполнен `ip route get 10.1.50.10`: он показывает следующий переход через NGFW. Затем curl загрузил allowed.txt из DMZ и WAN. Параметр `--interface` фиксирует рабочий адрес клиента, `--noproxy '*'` исключает системный прокси, `-m 5` ограничивает время ожидания. В ответ получен текст контрольного файла.
@@ -457,7 +463,7 @@ hping3 отправил ограниченные серии XMAS и SYN; пок�
 = Отчётность и мониторинг
 == Журналирование и оповещения
 Обе платформы отправляют syslog в Management на 10.1.99.10:514. События прочитаны на сервере журналов; в них сопоставлены источник, назначение, пользователь, SID и действие.
-Внешний монитор на ADMIN-LINUX преобразует события AV/IPS в SNMP-уведомления. Отправитель - 10.1.99.10, приёмник snmptrapd - 10.1.99.10:162. Оповещения формирует внешний монитор по событиям шлюза и ICAP-сервера. Приём проверен по журналу snmptrapd: сообщение содержит компонент защиты, адреса и сигнатуру (рисунки @fig-k-notification - @fig-c-av-notification).
+Монитор на ADMIN-LINUX преобразует антивирусные события и события IPS из журналов шлюза и ICAP-сервера в SNMP-уведомления. Их принимает snmptrapd на том же узле (10.1.99.10:162). Приём проверен по журналу snmptrapd: сообщение содержит компонент защиты, адреса и сигнатуру (рисунки @fig-k-notification - @fig-c-av-notification).
 #block(breakable: false)[
 SNMP-приёмник получил сообщение об IPS Kerio: в нём есть SID 1:2018289, адреса и действие blocked (рисунок @fig-k-notification).
 
@@ -480,7 +486,7 @@ SNMP-приёмник получил сообщение об IPS Kerio: в нё�
 ]
 == Статистические представления
 #let secstats = json("outputs/continent-final-security-statistics.json")
-По журналу «Континента» построены три представления: по пользователям, по распознанным приложениям и по правилам блокировки. Выборка содержит #(secstats.actions.allowed + secstats.actions.blocked) записей (#secstats.actions.allowed разрешений, #secstats.actions.blocked блокировок); единица учёта - запись журнала, а не соединение или байты (таблицы @tab-c4-stat-users - @tab-c4-stat-blocks).
+По записям «Континента» за 6–7 ноября 2026 года построены три представления: по пользователям, по распознанным приложениям и по правилам блокировки. Выборка содержит #(secstats.actions.allowed + secstats.actions.blocked) записей (#secstats.actions.allowed разрешений, #secstats.actions.blocked блокировок); единица учёта - запись журнала, а не соединение или байты (таблицы @tab-c4-stat-users - @tab-c4-stat-blocks).
 #figure(table(columns: (2fr, 1fr), align: left,
 [Пользователь], [Записей],
 ..secstats.by_user.map(row => ([#row.user], [#row.records])).flatten()),
@@ -497,7 +503,7 @@ caption: [Записи с распознанными приложениями]) 
 caption: [Блокировки по правилам]) <tab-c4-stat-blocks>
 В выборке «Континента» по 11 блокировок IRC и BitTorrent; все 22 записи относятся к гостевому правилу. Ещё 42 отказа дал BKS4-Default-Deny: при разборе таких событий следует проверить, нужны ли запрещённые обращения рабочим сервисам.
 
-Для Kerio сформированы представления по пользователям, распознанному содержимому и правилам (таблица @tab-kerio-stats). Единица учёта - запись журнала: пакетная блокировка, решение DPI, событие IPS и завершённое соединение считаются раздельно; сумма не равна числу соединений. Приложение определяется по полю Content в журнале контроля приложений. В разрез пользователей включены записи с полем User, поэтому их сумма отличается от общего числа записей по правилам.
+Для Kerio по записям за 13 ноября 2026 года сформированы представления по пользователям, распознанному содержимому и правилам (таблица @tab-kerio-stats). Единица учёта - запись журнала: пакетная блокировка, решение DPI, событие IPS и завершённое соединение считаются раздельно; сумма не равна числу соединений. Приложение определяется по полю Content в журнале контроля приложений. В разрез пользователей включены записи с полем User, поэтому их сумма отличается от общего числа записей по правилам.
 #let kstats = json("outputs/kerio-statistics-final.json")
 #figure({set text(size: 9pt); table(columns: (1fr, 2.5fr, 0.6fr), align: left,
 table.header([Представление], [Значение], [Записей]),

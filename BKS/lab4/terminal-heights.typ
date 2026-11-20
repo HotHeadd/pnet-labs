@@ -59,4 +59,5 @@
   "img/direct-kerio-geoip-on.png": 0.234375,
   "img/direct-continent-geoip-on.png": 0.234375,
   "img/direct-continent-management-capture-print.png": 0.236328125,
+  "img/kerio-web-category-events.png": 0.15234375,
 )
