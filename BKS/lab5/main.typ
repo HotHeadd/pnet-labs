@@ -1,4 +1,6 @@
 #import "@local/mephi-lab:0.1.0": lab-report
+#show regex("[–—]"): "-"
+#set figure.caption(separator: [ - ])
 #show: lab-report.with(
   lab-number: 5,
   topic: "Системы обнаружения и предотвращения вторжений (IDS/IPS)",
