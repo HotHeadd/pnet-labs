@@ -1,0 +1,9 @@
+# На хосте PNETLab, параллельно для трёх интерфейсов узла «Континент»
+timeout 12 tcpdump -lni vunl7_3 -tttt 'host 10.1.99.10 and host 10.1.99.1 and tcp port 444'
+timeout 12 tcpdump -lni vunl7_1 -tttt 'host 10.1.10.42 and host 10.1.99.1 and tcp port 444'
+timeout 12 tcpdump -lni vunl7_0 -tttt 'host 192.168.100.1 and host 10.1.99.1 and tcp port 444'
+
+# На ADMIN-LINUX, LAN-CLIENT и WAN-TEST соответственно
+nc -s 10.1.99.10 -vz -w 5 10.1.99.1 444
+nc -s 10.1.10.42 -vz -w 5 10.1.99.1 444
+nc -s 192.168.100.1 -vz -w 5 10.1.99.1 444

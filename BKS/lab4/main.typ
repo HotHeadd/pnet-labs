@@ -43,16 +43,15 @@ table.header([Узел], [Рабочий адрес], [Назначение и �
 «Континент» развёрнут как узел безопасности с ЦУС. Для управления на ADMIN-WIN установлены Менеджер конфигурации и CSP; учебная лицензия показана на рисунке @fig-c4-license.
 #figure(image("img/continent-license.png", width: 100%), caption: [Лицензия и интерфейс управления «Континента»]) <fig-c4-license>
 
-Версии и лицензии сведены в таблицу @tab-versions. Для «Континента» указана дата выпуска пакета сигнатур.
+Версии и лицензии сведены в таблицу @tab-versions. Журнал ЦУС зафиксировал успешный импорт базы IPS «Континента» в 19:33 МСК.
 #block(breakable: false)[
 #set text(size: 10pt)
 #figure(table(columns: (1fr, 1.5fr, 1fr, 2.3fr), align: left,
 table.header([Платформа], [Версия], [Лицензия], [Базы сигнатур]),
 [Kerio Control], [10.0.1 build 9439], [Пробная, активна, 25 пользователей], [AV 10903722; IPS 5.150/2.3546. Обновление: 13.11.2026],
-[«Континент»], [4.2.1-653], [Учебная, активна], [Пакет 4.2.1.53 от 18.04.2025],
+[«Континент»], [4.2.1-653], [Учебная, активна], [IPS 4.2.1.53. Выпуск 18.04.2025, импорт 06.11.2026],
 ), caption: [Версии платформ, лицензии и обновление баз]) <tab-versions>
 ]
-
 
 Пароли по умолчанию заменены, настроен NTP 192.168.100.1. Управление разрешено из Management: TCP 4081 для Kerio и TCP 444 для ЦУС.
 
@@ -139,7 +138,7 @@ table.header([№], [Проверка], [Kerio Control], [«Континент»
 [7], [Контроль приложений], [У гостя нет IRC-регистрации и загруженного файла на обоих портах; DENY/BitTorrent в @fig-k-app-event], [Те же клиентские отказы; blocked/BitTorrent с labguest в @fig-c-bt-event],
 [8], [Сканирование], [В Log SSH определяется как open, в Drop - filtered; SID 1:2001219 (таблица @tab-k-scan, рисунок @fig-k-scan-log)], [Nmap показывает открытые публикации; сетевые пробы вызывают блокировку СОВ (@fig-c-nmap, @fig-c-ips-wan-event)],
 [9], [Веб-признаки атак], [SQL-признак из WAN блокируется по SID 1:2018289 (@fig-k-ips-web, @fig-k-ips-event)], [SQL-признак и обращение к /etc/passwd блокируются СОВ (@fig-c-ips-web, @fig-c-web-event)],
-[10], [Управление], [Management: ответ WebAdmin; LAN/WAN: таймаут и DROP (@fig-k-admin, @fig-k-lan, @fig-k-mgmt-log)], [Management: API HTTP 200; LAN/WAN TCP 444: таймаут (@fig-c-api, @fig-c-mgmt-deny, @fig-c-mgmt-wan)],
+[10], [Управление], [Management: ответ WebAdmin; LAN/WAN: таймаут и DROP (@fig-k-admin, @fig-k-lan, @fig-k-mgmt-log)], [Management: API HTTP 200; SYN из LAN/WAN доходит до шлюза и остаётся без ответа (@fig-c-api, @lst-c-mgmt-capture)],
 )}, caption: [Результаты минимального набора тестов по заданию]) <tab-tests>
 
 Для варианта 6 фильтрация проверяется по категориям приложений и учётным записям. В тесте управления «Континента» представлены клиентские TCP/HTTPS-пробы; отдельная запись отказа доступа к ЦУС в журнале C4FW не получена.
@@ -211,6 +210,12 @@ table.header([№], [Проверка], [Kerio Control], [«Континент»
 Попытка обратиться к TCP 444 из WAN имеет тот же результат: соединение с интерфейсом ЦУС недоступно (рисунок @fig-c-mgmt-wan).
 
 #terminal("img/direct-continent-management-wan.png", [«Континент»: проверка TCP444 из WAN]) <fig-c-mgmt-wan>
+]
+
+#block(breakable: false)[
+При контрольном прогоне захват на интерфейсах «Континента» показал трёхстороннее TCP-рукопожатие из Management и три SYN без ответных пакетов из каждого недоверенного сегмента. В пересланных записях журнала за время прогона соответствующее событие отказа отсутствует (листинг @lst-c-mgmt-capture).
+
+#listing([Захват TCP-пакетов к порту ЦУС из Management, LAN и WAN], read("outputs/continent-management-tcp444.txt")) <lst-c-mgmt-capture>
 ]
 
 #block(breakable: false)[
