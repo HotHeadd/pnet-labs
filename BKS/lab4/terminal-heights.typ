@@ -58,4 +58,5 @@
   "img/direct-continent-av-notification.png": 0.178711,
   "img/direct-kerio-geoip-on.png": 0.234375,
   "img/direct-continent-geoip-on.png": 0.234375,
+  "img/direct-continent-management-capture-print.png": 0.236328125,
 )

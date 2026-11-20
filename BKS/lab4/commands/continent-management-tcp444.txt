@@ -7,3 +7,8 @@ timeout 12 tcpdump -lni vunl7_0 -tttt 'host 192.168.100.1 and host 10.1.99.1 and
 nc -s 10.1.99.10 -vz -w 5 10.1.99.1 444
 nc -s 10.1.10.42 -vz -w 5 10.1.99.1 444
 nc -s 192.168.100.1 -vz -w 5 10.1.99.1 444
+
+# Разбор повторного захвата SYN и SYN-ACK на ADMIN-LINUX
+tcpdump -n -tttt -r /tmp/bks4-test10-mgmt.pcap 2>/dev/null | cut -d, -f1
+tcpdump -n -tttt -r /tmp/bks4-test10-lan.pcap 2>/dev/null | cut -d, -f1
+tcpdump -n -tttt -r /tmp/bks4-test10-wan.pcap 2>/dev/null | cut -d, -f1
