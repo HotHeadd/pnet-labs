@@ -1,0 +1,5 @@
+active
+-P FORWARD ACCEPT
+11/19/2026-22:58:11.440784  [Drop] [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:41810 -> 10.1.50.10:8080
+11/20/2026-12:15:22.514081  [Drop] [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:60226 -> 10.1.50.10:8080
+admin_after_restore=200

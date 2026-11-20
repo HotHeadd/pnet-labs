@@ -1,0 +1,6 @@
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.1.50.10/24 
+10.1.50.0/24 dev ens3 proto kernel scope link src 10.1.50.10 
+192.168.100.0/24 via 10.1.50.1 dev ens3 proto static 
+active
+BKS5 mock administrative path

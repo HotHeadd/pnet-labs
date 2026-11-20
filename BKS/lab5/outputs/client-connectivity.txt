@@ -1,0 +1,12 @@
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             192.168.100.10/24 
+10.1.50.0/24 via 192.168.100.2 dev ens3 proto static 
+192.168.100.0/24 dev ens3 proto kernel scope link src 192.168.100.10 
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=4.07 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=63 time=2.72 ms
+
+--- 10.1.50.10 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 2.719/3.393/4.067/0.674 ms
+BKS5 ordinary page

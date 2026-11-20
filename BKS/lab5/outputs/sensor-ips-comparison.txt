@@ -1,0 +1,12 @@
+19/11/2026 -- 22:58:06 - <Info> - Running suricata under test mode
+19/11/2026 -- 22:58:06 - <Notice> - This is Suricata version 6.0.4 RELEASE running in SYSTEM mode
+19/11/2026 -- 22:58:06 - <Notice> - Configuration provided was successfully loaded. Exiting.
+READY: send test requests from CLIENT in the next 30 seconds
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    6   533 NFQUEUE    tcp  --  *      *       10.1.50.10           192.168.100.10       NFQUEUE num 5 bypass
+   16  1631 NFQUEUE    tcp  --  *      *       192.168.100.10       10.1.50.10           NFQUEUE num 5 bypass
+bks5-ips-check.service: Deactivated successfully.
+bks5-ips-check.service: Consumed 4.842s CPU time.
+active
+-P FORWARD ACCEPT

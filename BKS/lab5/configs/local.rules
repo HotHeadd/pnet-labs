@@ -1,0 +1,3 @@
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS5 test remote administration download"; flow:established,to_server; http.uri; content:"/downloads/"; startswith; pcre:"/^\/downloads\/(?:remote-support-demo|remote-admin-demo)\.exe(?:\?|$)/i"; classtype:policy-violation; sid:1000501; rev:1;)
+alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS5 repeated inbound echo requests"; itype:8; threshold:type both,track by_src,count 4,seconds 8; classtype:attempted-dos; sid:1000502; rev:1;)
+alert http $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS5 administrative path request"; flow:established,to_server; http.uri; pcre:"/^\/(?:wp-admin|phpmyadmin)(?:\/|\?|$)/i"; classtype:policy-violation; sid:1000503; rev:1;)

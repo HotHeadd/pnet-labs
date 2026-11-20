@@ -1,0 +1,14 @@
+/ 200
+/docs/wp-admin/ 200
+/downloads/readme.txt 200
+/wp-admin/ 200
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=20.2 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=63 time=36.4 ms
+64 bytes from 10.1.50.10: icmp_seq=3 ttl=63 time=860 ms
+64 bytes from 10.1.50.10: icmp_seq=4 ttl=63 time=32.2 ms
+
+--- 10.1.50.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3004ms
+rtt min/avg/max/mdev = 20.198/237.232/860.189/359.713 ms
+BKS5 inert download fixture
