@@ -10,7 +10,7 @@
 #import "terminal-heights.typ": terminal-heights
 #let terminal(file, caption) = figure(layout(size => box(
   width: size.width, height: size.width * terminal-heights.at(file), clip: true,
-  align(top + left, image(file, width: size.width, height: size.width * (if file == "img/kerio-web-category-events.png" { 768 } else { 600 }) / 1024))
+  align(top + left, image(file, width: size.width, height: size.width * 600 / 1024))
 )), caption: caption)
 
 = Цель работы
@@ -146,7 +146,7 @@ table.header([№], [Проверка], [Kerio Control], [«Континент»
 == Веб-фильтр и исключение администратора
 На WAN-TEST размещена страница `http://192.168.100.1/bks4-web-category.txt`. В Kerio этот URL добавлен в локальную группу `BKS4-Test-Web-Category`. Для группы Guests включён запрет с журналированием, исключение Administrators стоит выше запрета. Гостевой запрос получает HTTP 302, а контрольный запрос к `/allowed.txt` проходит. Администратор получает HTTP 200 и содержимое той же тестовой страницы (листинг @lst-k-web-tests). Журнал Kerio связывает решения `DENY` и `ALLOW` с именами пользователей и правилами (рисунок @fig-k-web-category).
 #listing([Проверка веб-категории из Management и LAN через Kerio], read("outputs/kerio-web-category-clients.txt")) <lst-k-web-tests>
-#terminal("img/kerio-web-category-events.png", [Kerio — решения по одному URL для администратора и гостя]) <fig-k-web-category>
+#terminal("img/kerio-web-category-events-print.png", [Kerio — решения по одному URL для администратора и гостя]) <fig-k-web-category>
 
 
 == Доступ LAN к DMZ и WAN, изоляция DMZ
