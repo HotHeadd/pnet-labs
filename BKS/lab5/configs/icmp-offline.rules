@@ -1,0 +1,1 @@
+alert icmp $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS5 repeated inbound echo requests"; itype:8; threshold:type both,track by_src,count 100,seconds 1; classtype:attempted-dos; sid:1000502; rev:2;)

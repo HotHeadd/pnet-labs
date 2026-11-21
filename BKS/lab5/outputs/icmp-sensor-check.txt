@@ -1,0 +1,10 @@
+icmp-control.pcap: OK
+icmp-dense.pcap: OK
+icmp-offline.rules: OK
+This is Suricata version 8.0.8 RELEASE
+i: pcap: read 1 file, 10 packets, 980 bytes
+control alerts: 0
+i: pcap: read 1 file, 300 packets, 29400 bytes
+dense alerts: 1
+SID 1000502; packet 100; allowed
+IDS service: active
