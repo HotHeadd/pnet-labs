@@ -1,0 +1,7 @@
+admin_after_ids_restore=200
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=0.694 ms
+
+--- 10.1.50.10 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.694/0.694/0.694/0.000 ms

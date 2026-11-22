@@ -1,0 +1,14 @@
+Started /bin/bash /tmp/bks5-response.sh.
+RESPONSE_READY
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination
+    2   168 DROP       icmp --  *      *       192.168.100.10       10.1.50.10           icmptype 8 /* bks5-response */
+bks5-response-demo.service: Deactivated successfully.
+active
+-P FORWARD ACCEPT
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=0.980 ms
+
+--- 10.1.50.10 ping statistics ---
+1 packets transmitted, 1 received, 0% packet loss, time 0ms
+rtt min/avg/max/mdev = 0.980/0.980/0.980/0.000 ms

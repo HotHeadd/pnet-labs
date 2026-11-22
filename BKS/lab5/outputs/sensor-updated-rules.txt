@@ -1,0 +1,6 @@
+This is Suricata version 8.0.8 RELEASE
+suricata-update version 1.3.8
+i: suricata: This is Suricata version 8.0.8 RELEASE running in SYSTEM mode
+i: suricata: Configuration provided was successfully loaded. Exiting.
+[5080 - Suricata-Main] 2026-11-20 18:00:43 Info: detect: 2 rule files processed. 16 rules successfully loaded, 0 rules failed, 0 rules skipped
+active

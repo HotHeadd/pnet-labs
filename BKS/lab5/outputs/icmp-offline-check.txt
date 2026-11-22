@@ -1,0 +1,6 @@
+Suricata 8.0.8 (OISF PPA), offline PCAP
+SID 1000502 rev 2: threshold type both, by_src, 100 in 1 s
+
+icmp-control.pcap: 10 Echo Request, 9.000 s, 0 alerts
+icmp-dense.pcap: 300 Echo Request, 0.598 s, 1 alerts
+  SID 1000502; packet 100; offset 0.198 s; allowed

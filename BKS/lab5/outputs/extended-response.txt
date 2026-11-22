@@ -1,0 +1,7 @@
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+
+--- 10.1.50.10 ping statistics ---
+2 packets transmitted, 0 received, 100% packet loss, time 1005ms
+
+ping_rc=1
+ordinary=200

@@ -1,0 +1,14 @@
+http://10.1.50.10:8080/ 200
+http://10.1.50.10:8080/docs/wp-admin/ 200
+http://10.1.50.10:8080/wp-admin/ 200
+http://10.1.50.10:8080/wp-admin/ 200
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=1.12 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=63 time=1.41 ms
+64 bytes from 10.1.50.10: icmp_seq=3 ttl=63 time=1.16 ms
+64 bytes from 10.1.50.10: icmp_seq=4 ttl=63 time=1.22 ms
+
+--- 10.1.50.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+rtt min/avg/max/mdev = 1.117/1.226/1.411/0.112 ms
+http://10.1.50.10:8080/downloads/remote-support-demo.exe 200 28 bytes

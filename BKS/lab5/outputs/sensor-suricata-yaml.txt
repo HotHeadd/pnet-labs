@@ -1,0 +1,8 @@
+vars:
+  address-groups:
+    HOME_NET: "[10.1.50.0/24]"
+    EXTERNAL_NET: "!$HOME_NET"
+rule-files:
+  - /etc/suricata/bks5.rules
+  - /etc/suricata/bks5-et-icmp.rules
+threshold-file: /etc/suricata/bks5-threshold.config

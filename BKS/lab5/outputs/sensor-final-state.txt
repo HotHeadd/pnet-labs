@@ -1,0 +1,5 @@
+This is Suricata version 8.0.8 RELEASE
+active
+-P FORWARD ACCEPT
+11/20/2026-18:00:19.940021  [Drop] [**] [1:1000503:1] BKS5 administrative path request [**] [Classification: Potential Corporate Privacy Violation] [Priority: 1] {TCP} 192.168.100.10:53224 -> 10.1.50.10:8080
+Nov 20 18:01:50 bks5-suricata bash[5186]:     2   168 DROP       icmp --  *      *       192.168.100.10       10.1.50.10           icmptype 8 /* bks5-response */

@@ -1,0 +1,13 @@
+/wp-admin/ 200
+/wp-admin/ 200
+/ 200
+/downloads/remote-support-demo.exe 200
+PING 10.1.50.10 (10.1.50.10) 56(84) bytes of data.
+64 bytes from 10.1.50.10: icmp_seq=1 ttl=63 time=1.48 ms
+64 bytes from 10.1.50.10: icmp_seq=2 ttl=63 time=4.69 ms
+64 bytes from 10.1.50.10: icmp_seq=3 ttl=63 time=3.08 ms
+64 bytes from 10.1.50.10: icmp_seq=4 ttl=63 time=3.02 ms
+
+--- 10.1.50.10 ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3005ms
+rtt min/avg/max/mdev = 1.478/3.065/4.692/1.136 ms

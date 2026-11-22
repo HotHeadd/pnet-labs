@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 166">
+  <rect width="800" height="166" fill="white"/>
+  <path d="M168 83H311 M489 83H632" stroke="#334155" stroke-width="3"/>
+  <g fill="#eef5fb" stroke="#334155" stroke-width="2">
+    <rect x="7" y="46" width="161" height="74" rx="8"/>
+    <rect x="311" y="46" width="178" height="74" rx="8"/>
+    <rect x="632" y="46" width="161" height="74" rx="8"/>
+  </g>
+  <g font-family="sans-serif" fill="#172554" text-anchor="middle">
+    <g font-size="17" font-weight="bold"><text x="87" y="77">CLIENT</text><text x="400" y="77">SURICATA</text><text x="712" y="77">HTTP-SERVER</text></g>
+    <g font-size="14"><text x="87" y="100">192.168.100.10</text><text x="400" y="100">IPv4 router / IDS / IPS</text><text x="712" y="100">10.1.50.10:8080</text>
+    <text x="239" y="69">TEST-NET</text><text x="560" y="69">SERVER-NET</text><text x="239" y="104">ens3: 192.168.100.2</text><text x="560" y="104">ens4: 10.1.50.1</text></g>
+  </g>
+</svg>
