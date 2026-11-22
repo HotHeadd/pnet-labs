@@ -1,0 +1,13 @@
+# ADMIN-LINUX /etc/c-icap/c-icap.conf
+Port 10.1.99.10:1344
+Include virus_scan.conf
+Include clamd_mod.conf
+virus_scan.DefaultEngine clamd
+virus_scan.SendPercentData 0
+virus_scan.MaxObjectSize 25M
+
+# /etc/c-icap/virus_scan.conf
+Service antivirus_module virus_scan.so
+
+# /etc/c-icap/clamd_mod.conf
+Module common clamd_mod.so

@@ -1,0 +1,9 @@
+<133>1 2026-11-14T00:27:11+03:00 control kerio-security - - - ﻿ Intrusion Prevention engine: Startup
+Native IPS Startup remained the latest engine event for 8 seconds; tests may start
+control=200/31
+EICAR=200/0
+curl: (56) Recv failure: Connection reset by peer
+WAN SQL=000
+curl: (28) Operation timed out after 5001 milliseconds with 0 bytes received
+<133>1 2026-11-14T00:28:37+03:00 control kerio-security - - - ﻿ IPS: Packet drop, severity: Medium, Rule ID: 1:2018289 ET EXPLOIT Joomla 3.2.1 SQL injection attempt 2, proto:TCP, ip/port:192.168.100.1:34370 (192.168.100.1) -> 10.1.50.10:80 (10.1.50.10)
+<133>1 2026-11-14T00:28:37+03:00 control kerio-security - - - ﻿ IPS: Packet drop, severity: Medium, Rule ID: 1:2018288 ET EXPLOIT Joomla 3.2.1 SQL injection attempt, proto:TCP, ip/port:192.168.100.1:34370 (192.168.100.1) -> 10.1.50.10:80 (10.1.50.10)

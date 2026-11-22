@@ -1,0 +1,92 @@
+{
+ "connection": {
+  "general": {
+   "enabled": true,
+   "fileName": "connection"
+  },
+  "rotation": {
+   "period": "RotateNever",
+   "maxLogSize": 5,
+   "rotateCount": 3
+  },
+  "syslog": {
+   "enabled": true,
+   "serverUrl": "10.1.99.10:514",
+   "facility": "FacilityLocal0",
+   "severity": "SeverityInformational",
+   "application": "kerio-connection"
+  }
+ },
+ "filter": {
+  "general": {
+   "enabled": true,
+   "fileName": "filter"
+  },
+  "rotation": {
+   "period": "RotateNever",
+   "maxLogSize": 5,
+   "rotateCount": 3
+  },
+  "syslog": {
+   "enabled": true,
+   "serverUrl": "10.1.99.10:514",
+   "facility": "FacilityLocal0",
+   "severity": "SeverityInformational",
+   "application": "kerio-filter"
+  }
+ },
+ "security": {
+  "general": {
+   "enabled": true,
+   "fileName": "security"
+  },
+  "rotation": {
+   "period": "RotateNever",
+   "maxLogSize": 5,
+   "rotateCount": 3
+  },
+  "syslog": {
+   "enabled": true,
+   "serverUrl": "10.1.99.10:514",
+   "facility": "FacilityLocal0",
+   "severity": "SeverityNotice",
+   "application": "kerio-security"
+  }
+ },
+ "error": {
+  "general": {
+   "enabled": true,
+   "fileName": "error"
+  },
+  "rotation": {
+   "period": "RotateNever",
+   "maxLogSize": 5,
+   "rotateCount": 3
+  },
+  "syslog": {
+   "enabled": true,
+   "serverUrl": "10.1.99.10:514",
+   "facility": "FacilityLocal0",
+   "severity": "SeverityError",
+   "application": "kerio-error"
+  }
+ },
+ "alert": {
+  "general": {
+   "enabled": true,
+   "fileName": "alert"
+  },
+  "rotation": {
+   "period": "RotateNever",
+   "maxLogSize": 5,
+   "rotateCount": 3
+  },
+  "syslog": {
+   "enabled": true,
+   "serverUrl": "10.1.99.10:514",
+   "facility": "FacilityLocal0",
+   "severity": "SeverityAlert",
+   "application": "kerio-alert"
+  }
+ }
+}

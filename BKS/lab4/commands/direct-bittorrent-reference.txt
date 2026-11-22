@@ -1,0 +1,2 @@
+date -Is
+sha256sum /var/lib/bks4-torrent/data/harmless.txt

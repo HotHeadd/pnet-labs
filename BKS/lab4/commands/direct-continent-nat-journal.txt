@@ -1,0 +1,2 @@
+sudo grep -a 'C4FW.*src_ip="10.1.10.42".*action="allowed".*SNAT:' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'C4FW.*DNAT:' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

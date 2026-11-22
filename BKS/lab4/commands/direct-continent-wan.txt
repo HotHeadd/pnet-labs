@@ -1,0 +1,3 @@
+date -Is
+curl --noproxy '*' --interface 192.168.100.1 -sS -m 5 http://192.168.100.2:8080/allowed.txt
+curl --noproxy '*' --interface 192.168.100.1 -ksS -m 5 https://192.168.100.2:8443/allowed.txt

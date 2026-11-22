@@ -1,0 +1,1 @@
+sudo grep '2026.*VIRUS DETECTED' /var/log/c-icap/server.log | tail -n 1 | fold -s -w 95

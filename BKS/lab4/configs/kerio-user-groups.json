@@ -1,0 +1,152 @@
+{
+ "groups": [
+  {
+   "id": "f32b27c8-b7d3-0b4d-ac21-090152ddd53a",
+   "name": "Guests",
+   "description": "BKS4 variant 6",
+   "rights": {
+    "readConfig": false,
+    "writeConfig": false,
+    "overrideWwwFilter": false,
+    "unlockRule": false,
+    "dialRasConnection": false,
+    "connectVpn": false,
+    "useP2p": true
+   },
+   "members": [
+    {
+     "id": "470cbe12-0519-f446-8ee9-ec7799939d1a",
+     "name": "labguest",
+     "isGroup": false,
+     "domainName": ""
+    }
+   ]
+  },
+  {
+   "id": "a2693b8c-9170-0c47-937e-49004febaae0",
+   "name": "Administrators",
+   "description": "BKS4 variant 6",
+   "rights": {
+    "readConfig": false,
+    "writeConfig": false,
+    "overrideWwwFilter": false,
+    "unlockRule": false,
+    "dialRasConnection": false,
+    "connectVpn": false,
+    "useP2p": true
+   },
+   "members": [
+    {
+     "id": "a9cc43a2-4ba3-8444-96d5-aeffea56f4e1",
+     "name": "lab-admin",
+     "isGroup": false,
+     "domainName": ""
+    }
+   ]
+  }
+ ],
+ "users": [
+  {
+   "name": "Admin",
+   "groups": [],
+   "autoLogin": {
+    "macAddresses": {
+     "enabled": false,
+     "value": []
+    },
+    "addresses": {
+     "enabled": false,
+     "value": []
+    },
+    "addressGroup": {
+     "enabled": false,
+     "id": "",
+     "name": ""
+    }
+   },
+   "rights": {
+    "readConfig": true,
+    "writeConfig": true,
+    "overrideWwwFilter": true,
+    "unlockRule": true,
+    "dialRasConnection": true,
+    "connectVpn": true,
+    "useP2p": true
+   }
+  },
+  {
+   "name": "labguest",
+   "groups": [
+    {
+     "id": "f32b27c8-b7d3-0b4d-ac21-090152ddd53a",
+     "name": "Guests",
+     "isGroup": true,
+     "domainName": ""
+    }
+   ],
+   "autoLogin": {
+    "macAddresses": {
+     "enabled": false,
+     "value": []
+    },
+    "addresses": {
+     "enabled": true,
+     "value": [
+      "10.1.10.42"
+     ]
+    },
+    "addressGroup": {
+     "enabled": false,
+     "id": "",
+     "name": ""
+    }
+   },
+   "rights": {
+    "readConfig": false,
+    "writeConfig": false,
+    "overrideWwwFilter": false,
+    "unlockRule": false,
+    "dialRasConnection": false,
+    "connectVpn": false,
+    "useP2p": true
+   }
+  },
+  {
+   "name": "lab-admin",
+   "groups": [
+    {
+     "id": "a2693b8c-9170-0c47-937e-49004febaae0",
+     "name": "Administrators",
+     "isGroup": true,
+     "domainName": ""
+    }
+   ],
+   "autoLogin": {
+    "macAddresses": {
+     "enabled": false,
+     "value": []
+    },
+    "addresses": {
+     "enabled": true,
+     "value": [
+      "10.1.99.10"
+     ]
+    },
+    "addressGroup": {
+     "enabled": false,
+     "id": "",
+     "name": ""
+    }
+   },
+   "rights": {
+    "readConfig": false,
+    "writeConfig": false,
+    "overrideWwwFilter": false,
+    "unlockRule": false,
+    "dialRasConnection": false,
+    "connectVpn": false,
+    "useP2p": true
+   }
+  }
+ ]
+}

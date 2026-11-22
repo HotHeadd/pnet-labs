@@ -1,0 +1,1 @@
+sudo grep -a '2026-11-19.*DENY.*BKS4-Guests' /var/log/bks4/10.1.99.1/events.log | tail -n 2 | fold -s -w 95

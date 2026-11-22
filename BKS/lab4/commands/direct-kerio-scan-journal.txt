@@ -1,0 +1,2 @@
+sudo grep -a 'IPS: Alert.*2001219.*:36151' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'IPS: Packet drop.*2001219.*:40700' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

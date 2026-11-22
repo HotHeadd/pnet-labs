@@ -1,0 +1,5 @@
+UTC 2026-11-13T16:33:16.458591+00:00
+Current description: BKS4 variant 6: LAN reaches DMZ web only on HTTP/HTTPS
+Before hash: 895d8984fe94bb611dcbfa7ff5cd699a45252a3d88e949cdc212be4ce4c1fe85
+After hash: 895d8984fe94bb611dcbfa7ff5cd699a45252a3d88e949cdc212be4ce4c1fe85
+Different sections: []

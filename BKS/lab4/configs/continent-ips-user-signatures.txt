@@ -1,0 +1,5 @@
+# Пользовательские сигнатуры СОВ «Континента» (формат Suricata, импорт через API /ipssignature; sid < 4000000).
+# HOME_NET = 10.1.50.0/26 (DMZ), EXTERNAL_NET = !HOME_NET. Все три включены в профиль BKS4-IDS-Alert с действием drop.
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS4 TCP SYN flood to DMZ"; flags:S,12; flow:stateless; threshold:type both, track by_src, count 50, seconds 5; classtype:attempted-dos; sid:3900001; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS4 TCP SYN port scan to DMZ"; flags:S,12; flow:stateless; threshold:type both, track by_src, count 10, seconds 60; classtype:network-scan; sid:3900002; rev:1;)
+alert tcp $EXTERNAL_NET any -> $HOME_NET any (msg:"BKS4 TCP XMAS scan to DMZ"; flags:FPU,12; flow:stateless; classtype:network-scan; sid:3900003; rev:1;)

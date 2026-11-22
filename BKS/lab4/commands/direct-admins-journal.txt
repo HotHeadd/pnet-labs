@@ -1,0 +1,2 @@
+sudo grep -a 'kerio-connection.*BKS4-Controlled-App-Test.*User] lab-admin' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'C4FW.*username="lab-admin".*rule_name="BKS4-Administrators' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

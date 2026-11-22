@@ -1,0 +1,8 @@
+ADMIN-LINUX, 10.1.99.10, 2026-11-20T18:21:37+00:00
+BKS4 web category control page
+test6 HTTP 200
+
+LAN-CLIENT, 10.1.10.42, 2026-11-20T18:21:38+00:00
+test5 HTTP 302
+BKS4 harmless control download
+control HTTP 200

@@ -1,0 +1,3 @@
+date -Is
+timeout 5 nc -s 10.1.50.10 -vz 10.1.10.42 22
+echo $?

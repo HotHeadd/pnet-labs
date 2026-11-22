@@ -1,0 +1,38 @@
+Native NGFW events (syslog on ADMIN-LINUX, timestamp_str is MSK = UTC+3) for the final run 10:37-10:44 UTC.
+The node aggregates repeated records of the same rule/source (msgrepeatcount), so one record may cover several test connections.
+
+## GeoIP: emulated US source 8.8.8.8 -> published DMZ (blocked; separate record appeared on the 10:44 retest, see continent-geoip-enabled.txt)
+timestamp_str=2026-11-07T13:44:18.253210+03:00 event_type=firewall action=blocked src_ip=8.8.8.8 src_port=54686 dest_ip=192.168.100.2 dest_port=8080 signature_id=1 signature=BKS4_PUBLISHED_HTTP rule_name=BKS4-GeoIP-Block-US-to-DMZ src_country=US
+timestamp_str=2026-11-07T13:37:18.634995+03:00 event_type=firewall action=allowed src_ip=5.255.255.5 src_port=40504 dest_ip=192.168.100.2 dest_port=8080 signature_id=15 signature=BKS4_PUBLISHED_HTTP rule_name=BKS4-WAN-Published-Web payload=DNAT: 192.168.100.2:8080 => 10.1.50.10:80
+
+## Guest labguest application control (4 ports)
+timestamp_str=2026-11-07T13:38:39.153989+03:00 event_type=firewall action=blocked src_ip=10.1.10.42 src_port=44695 dest_ip=192.168.100.1 dest_port=6667 signature_id=10 signature=IRC rule_name=BKS4-Guests-Block-Messengers-P2P username=labguest payload=SNAT: 10.1.10.42 => 192.168.100.2
+
+## Administrator lab-admin exception (4 ports)
+timestamp_str=2026-11-07T13:40:01.176774+03:00 event_type=firewall action=allowed src_ip=10.1.99.10 src_port=36907 dest_ip=192.168.100.1 dest_port=16667 signature_id=4 signature=BKS4_LAB_IRC_BT_PORTS rule_name=BKS4-Administrators-Lab-Protocol username=lab-admin payload=SNAT: 10.1.99.10 => 192.168.100.2
+
+## LAN -> DMZ SSH denied at SYN
+timestamp_str=2026-11-07T13:38:37.152749+03:00 event_type=firewall action=blocked src_ip=10.1.10.42 src_port=50133 dest_ip=10.1.50.10 dest_port=22 signature_id=7 signature=Any rule_name=BKS4-Deny-LAN-to-DMZ-Other username=labguest
+
+## DMZ -> LAN SSH denied
+timestamp_str=2026-11-07T13:40:22.185569+03:00 event_type=firewall action=blocked src_ip=10.1.50.10 src_port=48817 dest_ip=10.1.10.42 dest_port=22 signature_id=3 signature=Any rule_name=BKS4-Deny-DMZ-to-LAN
+
+## Antivirus (appfilter) for guest and administrator
+timestamp_str=2026-11-07T13:38:37.519142+03:00 event_type=appfilter action=blocked src_ip=10.1.10.42 src_port=48114 dest_ip=10.1.50.10 dest_port=80 signature_id=5 rule_name=BKS4-LAN-to-DMZ-HTTP-AV payload=GET http://10.1.50.10/eicar.com (text/html)
+timestamp_str=2026-11-07T13:38:37.519142+03:00 event_type=appfilter action=blocked src_ip=10.1.10.42 src_port=48114 dest_ip=10.1.50.10 dest_port=80 signature_id=5 rule_name=BKS4-LAN-to-DMZ-HTTP-AV payload=GET http://10.1.50.10/eicar.com (text/html)
+timestamp_str=2026-11-07T13:39:58.493173+03:00 event_type=appfilter action=blocked src_ip=10.1.99.10 src_port=33498 dest_ip=10.1.50.10 dest_port=80 signature_id=13 rule_name=BKS4-Admin-to-DMZ-HTTP-AV payload=GET http://10.1.50.10/eicar.com (text/html)
+timestamp_str=2026-11-07T13:39:58.523793+03:00 event_type=appfilter action=blocked src_ip=10.1.99.10 src_port=33502 dest_ip=10.1.50.10 dest_port=80 signature_id=13 rule_name=BKS4-Admin-to-DMZ-HTTP-AV payload=GET http://10.1.50.10/eicar.zip (text/html)
+
+## IDS/IPS alerts, WAN test (source 192.168.100.1)
+timestamp_str=2026-11-07T13:37:41.393089+03:00 event_type=alert action=blocked src_ip=192.168.100.1 src_port=39433 dest_ip=10.1.50.10 dest_port=443 signature_id=3900002 signature=BKS4 TCP SYN port scan to DMZ
+timestamp_str=2026-11-07T13:37:41.506588+03:00 event_type=alert action=blocked src_ip=192.168.100.1 src_port=34773 dest_ip=10.1.50.10 dest_port=80 signature_id=4109359 signature=Nmap Scripting Engine User-Agent Detected (Nmap Scripting Engine)
+timestamp_str=2026-11-07T13:38:18.889188+03:00 event_type=alert action=blocked src_ip=192.168.100.1 src_port=38778 dest_ip=10.1.50.10 dest_port=80 signature_id=4149401 signature=/etc/passwd Detected in URI
+timestamp_str=2026-11-07T13:38:27.519959+03:00 event_type=alert action=blocked src_ip=192.168.100.1 src_port=2224 dest_ip=10.1.50.10 dest_port=80 signature_id=3900002 signature=BKS4 TCP SYN port scan to DMZ
+timestamp_str=2026-11-07T13:38:27.952499+03:00 event_type=alert action=blocked src_ip=192.168.100.1 src_port=2265 dest_ip=10.1.50.10 dest_port=80 signature_id=3900001 signature=BKS4 TCP SYN flood to DMZ
+
+## IDS/IPS alerts, LAN test (source 10.1.10.42)
+(no alerts: HTTP from LAN to DMZ is terminated by the antivirus proxy, the IPS does not see the client's requests)
+
+## IDS/IPS alerts, LAN network-level test to DMZ HTTPS 443 (source 10.1.10.42; 80 is terminated by the HTTP proxy, 443 is forwarded)
+timestamp_str=2026-11-07T13:43:11.658084+03:00 event_type=alert action=blocked src_ip=10.1.10.42 src_port=1413 dest_ip=10.1.50.10 dest_port=443 signature_id=3900002 signature=BKS4 TCP SYN port scan to DMZ
+timestamp_str=2026-11-07T13:43:12.117839+03:00 event_type=alert action=blocked src_ip=10.1.10.42 src_port=1456 dest_ip=10.1.50.10 dest_port=443 signature_id=3900001 signature=BKS4 TCP SYN flood to DMZ

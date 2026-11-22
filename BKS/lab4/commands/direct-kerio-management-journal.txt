@@ -1,0 +1,2 @@
+sudo grep -a 'BKS4-Deny-Admin-Outside-Management.*packet from LAN' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95
+sudo grep -a 'BKS4-Deny-Admin-Outside-Management.*packet from WAN' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

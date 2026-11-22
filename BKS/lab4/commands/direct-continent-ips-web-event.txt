@@ -1,0 +1,1 @@
+sudo grep -a -E '2026-11-19.*suricata.*(4149401|4106447|4111038)' /var/log/bks4/10.1.99.1/events.log | tail -n 1 | fold -s -w 95

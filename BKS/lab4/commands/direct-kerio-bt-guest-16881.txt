@@ -1,0 +1,6 @@
+date -Is
+mkdir -p /tmp/bks4-lines-guest-16881 /tmp/bks4-lines-files-guest-16881
+curl --noproxy '*' --interface 10.1.10.42 -sS -m 6 http://192.168.100.1/harmless-16881.torrent -o /tmp/harmless-16881.torrent
+printf '%s\n' '{"bind-address-ipv4":"10.1.10.42","bind-address-ipv6":"::1","dht-enabled":false,"pex-enabled":false,"lpd-enabled":false,"utp-enabled":false,"port-forwarding-enabled":false,"encryption":0}' > /tmp/bks4-lines-guest-16881/settings.json
+timeout -s INT 20 transmission-cli -g /tmp/bks4-lines-guest-16881 -w /tmp/bks4-lines-files-guest-16881 -M -et /tmp/harmless-16881.torrent 2>&1 | tr '\r' '\n' | tail -n 4
+ls -l /tmp/bks4-lines-files-guest-16881

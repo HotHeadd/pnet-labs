@@ -1,0 +1,3 @@
+date -Is
+curl --noproxy '*' --interface 10.1.99.10 -sS -m 5 http://10.1.50.10/allowed.txt
+nc -s 10.1.99.10 -vz -w 3 10.1.50.10 22

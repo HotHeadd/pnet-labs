@@ -1,0 +1,2 @@
+<134>1 2026-11-20T21:21:36+03:00 control kerio-filter - - - ﻿ ALLOW [Rule] 'BKS4-Administrators-Application-Exception' [Source] 10.1.99.10 [User] lab-admin [Content] HTTP GET http://192.168.100.1/bks4-web-category.txt
+<134>1 2026-11-20T21:21:37+03:00 control kerio-filter - - - ﻿ DENY [Rule] 'BKS4-Guests-Deny-Test-Web-Category' [Source] 10.1.10.42 [User] labguest [Content] HTTP GET http://192.168.100.1/bks4-web-category.txt

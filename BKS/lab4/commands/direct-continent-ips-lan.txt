@@ -1,0 +1,3 @@
+date -Is
+sudo nmap -Pn -n -sS -sV -S 10.1.10.42 -e ens3 --max-retries 1 --host-timeout 20s -p 443 10.1.50.10 | tail -n 7
+sudo hping3 -q -I ens3 -a 10.1.10.42 -S -p 443 -c 120 -i u10000 10.1.50.10

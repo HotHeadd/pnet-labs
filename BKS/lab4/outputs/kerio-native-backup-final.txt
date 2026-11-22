@@ -1,0 +1,13 @@
+Native Configuration.exportConfig backup, 2026-11-13 16:13:28 UTC.
+29267 bytes, SHA256 4bb16c89a4c0aac285f863a6906cd0d522f27a5429e090fecb521e00c2f29210.
+Private copies: ADMIN-LINUX /home/labadmin/bks4-backups-private/ and
+PNETLab /root/bks4-backups-private/; filename kerio-native-final-20261113.tar.gz, mode600.
+Configuration.getImportInfo: errors=[], fullImportPossible=true, needIfaceMapping=false.
+Four imported NICs matched the same appliance by MAC and IP.
+Changed only the BKS4-LAN-DMZ-Web description, confirmed by API readback.
+Fresh upload -> getImportInfo -> Configuration.apply(fullImport=true).
+The request timed out while services reloaded; no blind repeat was made.
+The optional AppManager agent was stopped to let the native import finish.
+Fresh API verification at16:33:16UTC: original description restored.
+All seven semantic sections matched the saved SHA256.
+License remained registered; this archive is configuration, not a disk image.

@@ -1,0 +1,11 @@
+{
+  "name": "BKS4-Admin-Docs-IPS-Exception",
+  "source": "10.1.99.10",
+  "destination": "192.168.100.2",
+  "protocol": "TCP",
+  "destination_port": 8080,
+  "action": "pass",
+  "logging": true,
+  "passips": false,
+  "before": "BKS4-WAN-Published-Web"
+}
