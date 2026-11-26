@@ -1,0 +1,3 @@
+de25305ab1e3262e516eb69fee341fc24b2c7558248c0fffada7e851fbe9c9ea  /home/ubuntu/bks6/control.txt
+de25305ab1e3262e516eb69fee341fc24b2c7558248c0fffada7e851fbe9c9ea  control-ftp.txt
+de25305ab1e3262e516eb69fee341fc24b2c7558248c0fffada7e851fbe9c9ea  control-sftp.txt

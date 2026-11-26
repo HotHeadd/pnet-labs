@@ -1,0 +1,4 @@
+bks6-server
+ens3             UP             192.168.106.20/24 
+192.168.106.0/24 dev ens3 proto kernel scope link src 192.168.106.20 
+-P INPUT ACCEPT

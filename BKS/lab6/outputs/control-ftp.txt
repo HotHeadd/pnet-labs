@@ -1,0 +1,1 @@
+BKS6: FTP and SFTP transfer the same control file.
