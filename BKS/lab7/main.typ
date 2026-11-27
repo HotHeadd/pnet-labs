@@ -1,5 +1,5 @@
 #import "@local/mephi-lab:0.1.0": lab-report
-#show: lab-report.with(lab-number: 7, topic: "Комплексный аудит информационной безопасности сетевой инфраструктуры компаний и проектов", discipline: "Безопасность компьютерных сетей", student: "Доценко В. А.", group: "Б23-505", teacher: "Басыня Е. А.", section-pagebreaks: false, show-outline: false)
+#show: lab-report.with(lab-number: 7, topic: "Комплексный аудит информационной безопасности сетевой инфраструктуры компаний и проектов", discipline: "Безопасность компьютерных сетей", student: ("Доценко В. А.", "Дзюба С. Д.", "Мартюшев В. А.", "Горячев М. А."), group: "Б23-505", teacher: "Басыня Е. А.", section-pagebreaks: false, show-outline: false)
 #show regex("[–—]"): "-"
 #set figure.caption(separator: text(" - "))
 #show figure.where(kind: table): set block(breakable: false)
