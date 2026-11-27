@@ -1,0 +1,8 @@
+Created on WORKSTATION
+Updated on APPS
+alice employees 660
+cat: /mnt/team/alice.txt: Permission denied
+bob_exit=1
+0
+cat: /mnt/team/alice.txt: Permission denied
+root_exit=1

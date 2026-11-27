@@ -1,0 +1,8 @@
+# WORKSTATION
+sudo -u alice cat /mnt/team/alice.txt
+sudo -u alice stat -c '%U %G %a' /mnt/team/alice.txt
+sudo -u bob cat /mnt/team/alice.txt
+printf 'bob_exit=%s\n' "$?"
+sudo id -u
+sudo cat /mnt/team/alice.txt
+printf 'root_exit=%s\n' "$?"

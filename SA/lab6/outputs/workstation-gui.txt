@@ -1,0 +1,6 @@
+[Seat:*]
+autologin-user=labadmin
+autologin-user-timeout=0
+user-session=xfce
+active
+15781 xfce4-session

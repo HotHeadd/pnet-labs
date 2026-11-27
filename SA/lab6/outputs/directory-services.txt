@@ -1,0 +1,18 @@
+dn: uid=bob,ou=People,dc=sa6,dc=test
+uid: bob
+uidNumber: 10002
+gidNumber: 10001
+
+dn: uid=alice,ou=People,dc=sa6,dc=test
+uid: alice
+uidNumber: 10001
+gidNumber: 10000
+
+/srv/nfs/team 	
+10.60.0.20(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root_
+squash,no_all_squash)
+/srv/nfs/team 	
+10.60.0.100(sync,wdelay,hide,no_subtree_check,sec=sys,rw,secure,root
+_squash,no_all_squash)
+active
+active

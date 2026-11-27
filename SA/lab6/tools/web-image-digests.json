@@ -1,0 +1,22 @@
+[
+  {
+    "image": "quay.io/keycloak/keycloak:26.8.2",
+    "digest": "sha256:7e66a96e4739239070aeaf72e4c5decf0f7f682cfc725b9f7ea2b336eaba38b3",
+    "id": "sha256:75b5c435a83b530caba5923922f93d47b2e3f8b4ad9e79200581122996653e55"
+  },
+  {
+    "image": "vaultwarden/server:1.37.5",
+    "digest": "sha256:4fe17f415f90087377d37c755e0ea3cf189dcc6794e49cdd2a9adbb4937d9e1f",
+    "id": "sha256:f8863ab2519364bfc657144006682a830784e0bb501606d5e34516ee76b60b5c"
+  },
+  {
+    "image": "docker.gitea.com/gitea:28.4.0",
+    "digest": "sha256:aa90e8f00b755b0d665214ab9c14447ea44d3190dbe6b6d0cb46cd9c4f55d309",
+    "id": "sha256:1565a01ff935d56156285149acfce48ecc19c5d4e8ed278bebcf06f44e148295"
+  },
+  {
+    "image": "postgres:17-alpine",
+    "digest": "sha256:f9cf3e1f0066f0eb0c48707d864f0ac5941e9ff454a072077d97a4d278d07d73",
+    "id": "sha256:e80acae3f1109e8e4533618b594918936f2858c63afc7204c4773148a673add8"
+  }
+]

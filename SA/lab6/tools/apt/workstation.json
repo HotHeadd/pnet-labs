@@ -1,0 +1,53 @@
+{
+  "packages": [
+    {
+      "name": "libcodec2-1.0_1.0.1-3_amd64.deb",
+      "size": 8435402,
+      "sha256": "1fbf2167aeb9dedea22c68b6166873d6b5ed0e854cbc4383f148fe20cbe7b142",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/c/codec2/libcodec2-1.0_1.0.1-3_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/c/codec2/libcodec2-1.0_1.0.1-3_amd64.deb"
+    },
+    {
+      "name": "librsvg2-2_2.52.5+dfsg-3ubuntu0.2_amd64.deb",
+      "size": 2973762,
+      "sha256": "7bde6c1a908c59456ed21c4d8b518775835dac24125e3c29805a8f1869ad68b2",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/libr/librsvg/librsvg2-2_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/libr/librsvg/librsvg2-2_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb"
+    },
+    {
+      "name": "libavcodec58_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb",
+      "size": 5566900,
+      "sha256": "2704a3c4283008daa293334f102ed2f32d056fc000df618d0ef98380e6ba18a1",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/f/ffmpeg/libavcodec58_4.4.2-0ubuntu0.22.04.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/f/ffmpeg/libavcodec58_4.4.2-0ubuntu0.22.04.1_amd64.deb"
+    },
+    {
+      "name": "xpra_3.1-1build5_amd64.deb",
+      "size": 3396492,
+      "sha256": "0a90aabca3e2d71ef4581ef59e0bf92225f25cf4881585e42721bd8af9a47fcf",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/x/xpra/xpra_3.1-1build5_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/x/xpra/xpra_3.1-1build5_amd64.deb"
+    }
+  ],
+  "install": [
+    "install",
+    "-y",
+    "--no-install-recommends",
+    "xfce4",
+    "xfce4-terminal",
+    "lightdm",
+    "dbus-x11",
+    "xpra",
+    "xterm",
+    "epiphany-browser",
+    "sssd-ldap",
+    "libnss-sss",
+    "libpam-sss",
+    "ldap-utils",
+    "nfs-common",
+    "acl",
+    "ca-certificates",
+    "sshpass",
+    "python3-pip"
+  ]
+}

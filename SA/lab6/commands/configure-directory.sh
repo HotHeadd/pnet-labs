@@ -86,7 +86,7 @@ homeDirectory: /home/{name}
 loginShell: /bin/bash
 userPassword: {hashed(s[name])}
 ''')
-for name,gid,members in [('staff',10000,['alice']),('guests',10001,['bob']),('xpra-users',10010,['alice'])]:
+for name,gid,members in [('employees',10000,['alice']),('guests',10001,['bob']),('xpra-users',10010,['alice'])]:
     entries.append(f'dn: cn={name},ou=Groups,dc=sa6,dc=test\nobjectClass: posixGroup\ncn: {name}\ngidNumber: {gid}\n'+''.join(f'memberUid: {u}\n' for u in members))
 entries.append(f'''dn: uid=svc-keycloak,ou=Services,dc=sa6,dc=test
 objectClass: inetOrgPerson
@@ -99,7 +99,7 @@ Path('/root/sa6-private/users.ldif').write_text('\n'.join(entries))
 PY
 ldapadd -x -H ldaps://directory.sa6.test -D cn=admin,dc=sa6,dc=test -y /root/sa6-private/ldap-admin-password -f /root/sa6-private/users.ldif
 
-# Общий каталог доступен staff. NFS AUTH_SYS доверяет UID/GID клиентов.
+# Общий каталог доступен employees. NFS AUTH_SYS доверяет UID/GID клиентов.
 install -d -m 2770 -o 10001 -g 10000 /srv/nfs/team
 setfacl -m d:u::rwx,d:g::rwx,d:o::--- /srv/nfs/team
 printf 'Shared SA6 document\n' > /srv/nfs/team/project.txt

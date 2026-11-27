@@ -1,0 +1,5 @@
+LDAP full sync: added=0 updated=2
+alice: imported from LDAP
+bob: imported from LDAP
+OIDC client ready: vaultwarden
+OIDC client ready: gitea

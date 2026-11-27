@@ -10,4 +10,6 @@ CONF
 systemctl set-default graphical.target
 systemctl enable --now lightdm
 sudo -u labadmin mkdir -p /home/labadmin/.ssh
-sudo -u labadmin ssh-keygen -q -t ed25519 -N '' -f /home/labadmin/.ssh/sa6-alice
+if [ ! -s /home/labadmin/.ssh/sa6-alice ]; then
+    sudo -u labadmin ssh-keygen -q -t ed25519 -N '' -f /home/labadmin/.ssh/sa6-alice
+fi

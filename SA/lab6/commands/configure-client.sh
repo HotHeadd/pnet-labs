@@ -1,5 +1,6 @@
 #!/bin/bash
 set -euo pipefail
+export DEBIAN_FRONTEND=noninteractive
 # CA предварительно передаётся из DIRECTORY в /root/sa6-private/ca.crt.
 install -m 644 /root/sa6-private/ca.crt /usr/local/share/ca-certificates/sa6-ca.crt
 update-ca-certificates

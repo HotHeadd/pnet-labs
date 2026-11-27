@@ -1,0 +1,9 @@
+LDAP alice: exit=0
+dn:uid=alice,ou=People,dc=sa6,dc=test
+SSH alice: exit=0
+Warning: Permanently added 'apps.sa6.test' (ED25519) to the list of known hosts.
+uid=10001(alice) gid=10000(employees) groups=10000(employees),10010(xpra-users)
+LDAP bob: exit=0
+dn:uid=bob,ou=People,dc=sa6,dc=test
+SSH bob: exit=255
+bob@apps.sa6.test: Permission denied (publickey,password,keyboard-interactive).

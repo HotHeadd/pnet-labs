@@ -1,0 +1,6 @@
+alice:*:10001:10000:Alice Lab:/home/alice:/bin/bash
+bob:*:10002:10001:Bob Lab:/home/bob:/bin/bash
+uid=10001(alice) gid=10000(employees) groups=10000(employees),10010(xpra-users)
+uid=10002(bob) gid=10001(guests) groups=10001(guests)
+directory.sa6.test:/srv/nfs/team nfs4   /mnt/team
+sec=sys

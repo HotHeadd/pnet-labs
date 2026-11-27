@@ -1,0 +1,261 @@
+{
+  "packages": [
+    {
+      "name": "libcodec2-1.0_1.0.1-3_amd64.deb",
+      "size": 8435402,
+      "sha256": "1fbf2167aeb9dedea22c68b6166873d6b5ed0e854cbc4383f148fe20cbe7b142",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/c/codec2/libcodec2-1.0_1.0.1-3_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/c/codec2/libcodec2-1.0_1.0.1-3_amd64.deb"
+    },
+    {
+      "name": "librsvg2-2_2.52.5+dfsg-3ubuntu0.2_amd64.deb",
+      "size": 2973762,
+      "sha256": "7bde6c1a908c59456ed21c4d8b518775835dac24125e3c29805a8f1869ad68b2",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/libr/librsvg/librsvg2-2_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/libr/librsvg/librsvg2-2_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb"
+    },
+    {
+      "name": "libavcodec58_7%3a4.4.2-0ubuntu0.22.04.1_amd64.deb",
+      "size": 5566900,
+      "sha256": "2704a3c4283008daa293334f102ed2f32d056fc000df618d0ef98380e6ba18a1",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/f/ffmpeg/libavcodec58_4.4.2-0ubuntu0.22.04.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/f/ffmpeg/libavcodec58_4.4.2-0ubuntu0.22.04.1_amd64.deb"
+    },
+    {
+      "name": "libjs-jquery_3.6.0+dfsg+~3.5.13-1_all.deb",
+      "size": 320998,
+      "sha256": "9b8e6deb6db82bf067badb640e56f5a672e89280dab5525feedc8d11323393ef",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/n/node-jquery/libjs-jquery_3.6.0%2bdfsg%2b%7e3.5.13-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/n/node-jquery/libjs-jquery_3.6.0%2bdfsg%2b%7e3.5.13-1_all.deb"
+    },
+    {
+      "name": "libjson-perl_4.04000-1_all.deb",
+      "size": 81802,
+      "sha256": "e13db77dbc6d12acfd5508206053e461266bf00563d4c49697fc2215140918af",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/libj/libjson-perl/libjson-perl_4.04000-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/libj/libjson-perl/libjson-perl_4.04000-1_all.deb"
+    },
+    {
+      "name": "libllvm14_1%3a14.0.0-1ubuntu1.1_amd64.deb",
+      "size": 23967046,
+      "sha256": "9044b614a6c7fb6262e7cbeb13dc731fc0c92bed96281c1a3920dd706442ee8e",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/l/llvm-toolchain-14/libllvm14_14.0.0-1ubuntu1.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/l/llvm-toolchain-14/libllvm14_14.0.0-1ubuntu1.1_amd64.deb"
+    },
+    {
+      "name": "libpq5_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "size": 157116,
+      "sha256": "79f9af127350c5bbf4c1722ebc4aa7d31ae4fd71b0404e501f7a76ed65709e0d",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-14/libpq5_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-14/libpq5_14.24-0ubuntu0.22.04.1_amd64.deb"
+    },
+    {
+      "name": "librsvg2-common_2.52.5+dfsg-3ubuntu0.2_amd64.deb",
+      "size": 17690,
+      "sha256": "047031d120290c115d54b13f183f854cabbca9790c339f803b2acdfcc6fa80e2",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/libr/librsvg/librsvg2-common_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/libr/librsvg/librsvg2-common_2.52.5%2bdfsg-3ubuntu0.2_amd64.deb"
+    },
+    {
+      "name": "postgresql-client-common_238_all.deb",
+      "size": 29552,
+      "sha256": "2f613f32e3740820b12158c41b5d2e24d2c7aadef43567b910c652f11ecfcfbb",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-common/postgresql-client-common_238_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-common/postgresql-client-common_238_all.deb"
+    },
+    {
+      "name": "postgresql-client-14_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "size": 1252526,
+      "sha256": "d63f6b9020c137fe6c47f9f68cababdd2f09f57ff26df79768daa0f3d3a35e8a",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-14/postgresql-client-14_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-14/postgresql-client-14_14.24-0ubuntu0.22.04.1_amd64.deb"
+    },
+    {
+      "name": "ssl-cert_1.1.2_all.deb",
+      "size": 17364,
+      "sha256": "9b52283009c334ac83d7b731bd1199443fff128c2089fcdf6ee434dbb59f9b1b",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/s/ssl-cert/ssl-cert_1.1.2_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/s/ssl-cert/ssl-cert_1.1.2_all.deb"
+    },
+    {
+      "name": "postgresql-common_238_all.deb",
+      "size": 168996,
+      "sha256": "afddd6eadce7fe62148454e401680c97976d8584b6ba6ad5856343a4bfa96f6c",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-common/postgresql-common_238_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-common/postgresql-common_238_all.deb"
+    },
+    {
+      "name": "postgresql-14_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "size": 16300718,
+      "sha256": "d3f5c254fac89a46d9c92c3f098a1c8635b3445f5d9fd609a05041cda6ed4aef",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-14/postgresql-14_14.24-0ubuntu0.22.04.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-14/postgresql-14_14.24-0ubuntu0.22.04.1_amd64.deb"
+    },
+    {
+      "name": "postgresql_14+238_all.deb",
+      "size": 3288,
+      "sha256": "50e56cfd2aaebf824a4ba9e382fdad5cd5fdf9ee3e51476b6590c58b17b8ba72",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/postgresql-common/postgresql_14%2b238_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/postgresql-common/postgresql_14%2b238_all.deb"
+    },
+    {
+      "name": "python3-dateutil_2.8.1-6_all.deb",
+      "size": 78444,
+      "sha256": "cc8ff634b6646b31236eb07f98380796be81845f9b8f7b874a60e2d2f21123d6",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/python-dateutil/python3-dateutil_2.8.1-6_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/python-dateutil/python3-dateutil_2.8.1-6_all.deb"
+    },
+    {
+      "name": "python3-genshi_0.7.6-1build1_amd64.deb",
+      "size": 127900,
+      "sha256": "20736d25c71b4f494445661faa642c9587ebe03c1a349d145439d00b4c1e925e",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/g/genshi/python3-genshi_0.7.6-1build1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/g/genshi/python3-genshi_0.7.6-1build1_amd64.deb"
+    },
+    {
+      "name": "python3-gi-cairo_3.42.1-0ubuntu1_amd64.deb",
+      "size": 8184,
+      "sha256": "154e556121e67d7a94b021944a8a43af838137ef23bde94ad954c3fbe554cca7",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/pygobject/python3-gi-cairo_3.42.1-0ubuntu1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/pygobject/python3-gi-cairo_3.42.1-0ubuntu1_amd64.deb"
+    },
+    {
+      "name": "python3-ldap3_2.8.1-1_all.deb",
+      "size": 228584,
+      "sha256": "544159338e0152b66fde19a31e7bdb04d05cb08c1ca78386753d1d58380732ba",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/p/python-ldap3/python3-ldap3_2.8.1-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/p/python-ldap3/python3-ldap3_2.8.1-1_all.deb"
+    },
+    {
+      "name": "python3-lxml_4.8.0-1ubuntu0.1_amd64.deb",
+      "size": 1150466,
+      "sha256": "f45b484ae2787b107bb02b6b3ae1a568252dff37dd28b0901d0e8c6d86cf0066",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/l/lxml/python3-lxml_4.8.0-1ubuntu0.1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/l/lxml/python3-lxml_4.8.0-1ubuntu0.1_amd64.deb"
+    },
+    {
+      "name": "python3-polib_1.1.1-1_all.deb",
+      "size": 20770,
+      "sha256": "10bb42423abcd0c5b0fc2de40fa3aae7e2f1f298ab2a7f579a1ce19ca1e3a552",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/p/polib/python3-polib_1.1.1-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/p/polib/python3-polib_1.1.1-1_all.deb"
+    },
+    {
+      "name": "python3-relatorio_0.10.0-1_all.deb",
+      "size": 380466,
+      "sha256": "3e6391d89df73c24bebb2268f9c7bc62e96bb3c2c4781e2dc0885d769b4c9649",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/r/relatorio/python3-relatorio_0.10.0-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/r/relatorio/python3-relatorio_0.10.0-1_all.deb"
+    },
+    {
+      "name": "python3-sql_1.3.0-1_all.deb",
+      "size": 28128,
+      "sha256": "b35ed07342782ac14c0d7659c01ae026c806dfeaf50fa5890dc0a80200f7d66b",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/p/python-sql/python3-sql_1.3.0-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/p/python-sql/python3-sql_1.3.0-1_all.deb"
+    },
+    {
+      "name": "python3-stdnum_1.17-1_all.deb",
+      "size": 600966,
+      "sha256": "e885698a49bcbff59c6beb01b56b6650a82433677fbb22a52ed1d51753251fc5",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/p/python-stdnum/python3-stdnum_1.17-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/p/python-stdnum/python3-stdnum_1.17-1_all.deb"
+    },
+    {
+      "name": "python3-werkzeug_2.0.2+dfsg1-1ubuntu0.22.04.3_all.deb",
+      "size": 181072,
+      "sha256": "edec7b8222bbf901813fb32e25222fa78d7857b3620be55be499b728d76c6ddc",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/python-werkzeug/python3-werkzeug_2.0.2%2bdfsg1-1ubuntu0.22.04.3_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/python-werkzeug/python3-werkzeug_2.0.2%2bdfsg1-1ubuntu0.22.04.3_all.deb"
+    },
+    {
+      "name": "python3-wrapt_1.13.3-1build1_amd64.deb",
+      "size": 33952,
+      "sha256": "2ddc93f8aee3353cc7195607245cc3dfdc4795d7f73c62da75d17bca1c1ca7d0",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/python-wrapt/python3-wrapt_1.13.3-1build1_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/python-wrapt/python3-wrapt_1.13.3-1build1_amd64.deb"
+    },
+    {
+      "name": "tryton-client_6.0.10-1_all.deb",
+      "size": 307086,
+      "sha256": "4a05f2f8d06a24435c1ca00b6f8ed59450f6fac2643616fa1965cb76931bf0cf",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-client/tryton-client_6.0.10-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-client/tryton-client_6.0.10-1_all.deb"
+    },
+    {
+      "name": "python3-passlib_1.7.4-1_all.deb",
+      "size": 367608,
+      "sha256": "a63b49b5452b70e5c9d5c71a0afcfca8e6b8cac9406999ddf5677089b0fb8e03",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/main/p/python-passlib/python3-passlib_1.7.4-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/main/p/python-passlib/python3-passlib_1.7.4-1_all.deb"
+    },
+    {
+      "name": "tryton-server_6.0.12-1_all.deb",
+      "size": 493032,
+      "sha256": "aac103a3b1679113931ca1353ee8628b1f595567fa0621bf5e49bc0e62f5cdd3",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-server/tryton-server_6.0.12-1_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-server/tryton-server_6.0.12-1_all.deb"
+    },
+    {
+      "name": "tryton-modules-country_6.0.1-4_all.deb",
+      "size": 34844,
+      "sha256": "2d6f877bc1dbf20b9c1bd018c74b7f87e0154d11126e08b0f87d638f9d866e30",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-modules-country/tryton-modules-country_6.0.1-4_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-modules-country/tryton-modules-country_6.0.1-4_all.deb"
+    },
+    {
+      "name": "tryton-modules-ldap-authentication_6.0.0-2_all.deb",
+      "size": 9558,
+      "sha256": "ae3c55e14e8a7684f53d8097ff0ce91db2a042b05350aeafcf2769da052c26a6",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-modules-ldap-authentication/tryton-modules-ldap-authentication_6.0.0-2_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-modules-ldap-authentication/tryton-modules-ldap-authentication_6.0.0-2_all.deb"
+    },
+    {
+      "name": "tryton-modules-party_6.0.2-3_all.deb",
+      "size": 80618,
+      "sha256": "0f139511b3fd36e13c8eb2a4f4ace244848ed9272c12600ab456b8bb5c808d2d",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-modules-party/tryton-modules-party_6.0.2-3_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-modules-party/tryton-modules-party_6.0.2-3_all.deb"
+    },
+    {
+      "name": "tryton-proteus_6.0.3-2_all.deb",
+      "size": 22902,
+      "sha256": "e73a971df73823b451e3298ba6910fc8eec8593e4c096cb13863f652e542e584",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/t/tryton-proteus/tryton-proteus_6.0.3-2_all.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/t/tryton-proteus/tryton-proteus_6.0.3-2_all.deb"
+    },
+    {
+      "name": "xpra_3.1-1build5_amd64.deb",
+      "size": 3396492,
+      "sha256": "0a90aabca3e2d71ef4581ef59e0bf92225f25cf4881585e42721bd8af9a47fcf",
+      "source": "https://archive.ubuntu.com/ubuntu/pool/universe/x/xpra/xpra_3.1-1build5_amd64.deb",
+      "mirror": "https://mirror.yandex.ru/ubuntu/pool/universe/x/xpra/xpra_3.1-1build5_amd64.deb"
+    }
+  ],
+  "install": [
+    "install",
+    "-y",
+    "--no-install-recommends",
+    "xpra",
+    "xvfb",
+    "xserver-xorg-video-dummy",
+    "xauth",
+    "dbus-x11",
+    "x11-xserver-utils",
+    "fonts-dejavu-core",
+    "xterm",
+    "tryton-client",
+    "tryton-server",
+    "tryton-modules-ldap-authentication",
+    "tryton-modules-party",
+    "postgresql",
+    "sssd-ldap",
+    "libnss-sss",
+    "libpam-sss",
+    "ldap-utils",
+    "nfs-common",
+    "acl",
+    "ca-certificates",
+    "tryton-proteus"
+  ]
+}

@@ -1,0 +1,2 @@
+Nov 27 13:12:10 apps sshd[11888]: Accepted password for alice from 10.60.0.100 port 52584 ssh2
+Nov 27 13:12:10 apps sshd[11946]: User bob from 10.60.0.100 not allowed because none of user's groups are listed in AllowGroups

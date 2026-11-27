@@ -1,0 +1,4 @@
+Tryton login alice: HTTP 200
+Alice reads Party: SA6 Project
+Tryton login bob: HTTP 401
+HTTPS: system CA and hostname verification succeeded

@@ -16,6 +16,7 @@ p.add_argument('command', nargs='?')
 p.add_argument('--file', type=Path)
 p.add_argument('--background', action='store_true', help='запустить файл отдельным systemd-заданием')
 p.add_argument('--output', type=Path)
+p.add_argument('--tailscale-nc', action='store_true', help='SSH через userspace-канал tailscaled')
 a = p.parse_args()
 if bool(a.file) == bool(a.command):
     p.error('нужна команда или --file')
@@ -43,10 +44,14 @@ outer = ['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=30',
          'root@100.100.57.19', shlex.join(inner)]
 if Path('/tmp/pnet-sa6-ssh.sock').exists():
     outer[1:1] = ['-S', '/tmp/pnet-sa6-ssh.sock']
+if a.tailscale_nc:
+    outer[1:1] = ['-o', 'ProxyCommand=tailscale nc %h %p']
 r = subprocess.run(outer, input=a.file.read_bytes() if a.file else b'',
-                   stdout=subprocess.PIPE if a.output else None)
+                   stdout=subprocess.PIPE if a.output else None,
+                   stderr=subprocess.STDOUT if a.output else None)
 if a.output:
-    a.output.parent.mkdir(parents=True, exist_ok=True)
-    a.output.write_bytes(r.stdout)
     print(r.stdout.decode(errors='replace'), end='')
+    if r.returncode != 255:
+        a.output.parent.mkdir(parents=True, exist_ok=True)
+        a.output.write_bytes(r.stdout)
 raise SystemExit(r.returncode)

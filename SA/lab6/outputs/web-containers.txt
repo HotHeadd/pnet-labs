@@ -1,0 +1,4 @@
+sa6-keycloak Up 4 minutes
+sa6-vaultwarden Up 4 minutes (healthy)
+sa6-db Up 4 minutes (healthy)
+sa6-gitea Up About a minute
