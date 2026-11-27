@@ -1,0 +1,5 @@
+sa7-workstation
+status: done
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             192.168.15.244/24 
+active

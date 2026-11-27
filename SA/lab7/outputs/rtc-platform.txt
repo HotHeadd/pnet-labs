@@ -1,0 +1,6 @@
+sa7-rtc
+status: done
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.70.10.30/24 
+ens4             UP             192.168.15.243/24 
+active
