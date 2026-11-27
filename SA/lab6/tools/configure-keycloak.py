@@ -34,7 +34,7 @@ if not any(realm['realm'] == 'sa6' for realm in api('GET', '')):
     api('POST', '', {'realm': 'sa6', 'enabled': True, 'sslRequired': 'external',
         'registrationAllowed': False, 'verifyEmail': False, 'loginWithEmailAllowed': True})
 realm = api('GET', '/sa6')
-api('PUT', '/sa6', {'eventsEnabled': True, 'eventsExpiration': 86400,
+api('PUT', '/sa6', {'eventsEnabled': True, 'eventsExpiration': 86400, 'accessTokenLifespan': 900,
     'enabledEventTypes': ['LOGIN', 'LOGIN_ERROR', 'CODE_TO_TOKEN']})
 config = {key: [value] for key, value in {
     'enabled': 'true', 'priority': '0', 'vendor': 'other', 'editMode': 'READ_ONLY',

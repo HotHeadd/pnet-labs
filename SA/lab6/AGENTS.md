@@ -1,47 +1,164 @@
 # СА, лабораторная работа №6
 
-## Актуальное продолжение — 2026-11-27, после 13:00 МСК
+## Актуальное состояние — 2026-11-27, завершение варианта 6
 
-Пользователь возобновил работу командой «продолжай»; пауза ниже относится к
-предыдущему этапу. Сессия15/pod7 и четыре работающих узла подтверждены helper
-sessions и get_lab. Лаба не пересоздавалась.
+Пользователь возобновил работу. Лаба `/SA labs/SA6.unl`, session15/pod7,
+аккаунт vlad_pc; get_lab подтвердил четыре работающих QEMU, id1–4,
+node sessions26–29. Чужие сессии и общие образы не менялись.
 
-- WORKSTATION и WEB: range-install завершились success, active(exited).
-  На WEB Docker29.1.3, docker-compose1.29.2, docker и nginx active, свободно21ГБ.
-- APPS: прежнего range-unit не было; sa6-sa6-range-install-apps запущен с SHA256 OK.
-  Последний лог: libcodec2/librsvg/libavcodec и ряд малых пакетов проверены,
-  скачивается libllvm14 (около24МБ). Полная установка ещё не подтверждена.
-- На WORKSTATION выполнен tools/check-ssh-auth.py через SSH без передачи
-  секретов на Mac. Оба LDAP bind успешны; SSH Alice с PubkeyAuthentication=no,
-  PreferredAuthentications=password вернул exit0 и правильный id. SSH Bob
-  вернул exit255. Журнал APPS подтвердил Accepted password Alice и отказ Bob
-  по AllowGroups. Выводы outputs/workstation-ssh-auth.txt и apps-ssh-auth-log.txt
-  вставлены в main.typ; PDF8страниц собран и новая страница просмотрена.
-- Предыдущий недописанный heredoc на консоли WORKSTATION прерван двумя Ctrl-C,
-  обычное приглашение labadmin подтверждено скриншотом. Последующий push
-  configure-workstation.sh оборвался: содержимое /tmp/sa6-configure-workstation.sh
-  снова НЕ считать корректным, перед следующим консольным вводом Ctrl-C.
-- configure-workstation по SSH не подтвердился. Попытка сжатой передачи через
-  аргумент команды запускает unit sa6-configure-workstation; перед повтором
-  проверить, существует ли он. Графическая среда пока не подтверждена.
-- Подготовлены commands/configure-tryton.sh и configure-xpra.sh, bash -n пройден.
-  Они пока НЕ применены. Конфигурация сверена с исходниками реальных .deb6.0
-  и официальной документацией6.0. Tryton: PostgreSQL peer/role tryton/db sa6,
-  LDAP Alice без локального пароля, create_user=False, Bob без учётки приложения.
-  Xpra: отдельный сеанс Alice :100, только Tryton, socket ~/.xpra, доступ SSH.
-- tools/pull-mirrored-images.py исправлен: Gitea mirror использует DockerHub
-  gitea/gitea с тем же manifest digest. Запуск sa6-sa6-pull-images не состоялся
-  (not-found); зависший локальный SSH остановлен. Позже отправлен компактный
-  запуск sa6-pull-images-verified, результат проверить перед повтором.
-- Канал остаётся нестабилен: HTTP временами301 за доли секунды, временами
-  timeout; SSH timeout/reset, VNC WS handshake/connection closed. Tailscale
-  отвечает и через DERPams, и direct. Пользователь подтвердил веб-доступ.
-  Управление браузером через CUA недоступно (browser access host unavailable);
-  действия в браузере не выполнялись. Глобальные настройки сети не менялись.
-- Временный SSH master /tmp/pnet-sa6-resume.sock закрылся; созданная ссылка
-  /tmp/pnet-sa6-ssh.sock может быть висячей. Это только /tmp, настройки репо
-  и .pnet-account не менялись. При дальнейшем SSH использовать короткие команды
-  и проверять результат; файлы после обрывов не выполнять без проверки.
+- DIRECTORY: LDAPS OpenLDAP и NFS работают. APPS/WORKSTATION используют
+  SSSD и общий ресурс. Реально проверены парольный SSH Alice/отказ Bob,
+  общий файл Alice с двух клиентов, отказ Bob и root клиента NFS.
+- APPS: Tryton/PostgreSQL, отдельная прикладная LDAP-аутентификация.
+  Alice читает SA6 Project, Bob HTTP401. Xpra публикует только Tryton;
+  reconnect clients1→0→1 сохранил UUID и PID приложения19522.
+- WEB: четыре контейнера работают, nginx active; LDAPS-федерация,
+  конфиденциальные OIDC-клиенты Gitea/Vaultwarden и браузерный SSO проверены.
+  Общий sessionId подтверждён реальными событиями LOGIN обоих клиентов.
+- Vaultwarden: SA6 Team, Alice Owner; Bob подтверждённый User с просмотром
+  только Shared. Private не назначена. Из отдельного приватного браузера
+  Bob реально прочитал Shared HTTP200, получил HTTP400 при чтении Private
+  (Cipher is not owned by user) и записи Shared (Cipher is not write accessible).
+  Версия записи не изменилась. outputs/vaultwarden-rights.txt включён в отчёт.
+- В текущем web-vault2026.10.1 списки выбора участников/коллекций показывали
+  No items found, хотя API возвращал HTTP200 с2 элементами. Приглашение и
+  подтверждение Bob выполнены через GUI, назначение Shared/View items —
+  штатным PUT коллекции от Alice с сохранением её прежних прав и encrypted name.
+  Members GUI после этого показал Bob/Shared/User; фактические права проверены
+  браузером Bob и API. Прямых записей в БД не было. Этот инцидент в отчёт не включён.
+- Все обязательные изображения получены из настоящего GUI: Tryton/Xpra,
+  NFS-терминал, LDAP/READ_ONLY/OIDC Keycloak, Gitea/Vaultwarden, Members и Bob.
+  Снимок Vault после загрузки заменил прежний кадр со spinner.
+- main.typ дополнен архитектурой, разделением проверок аутентификации,
+  заключением/источниками. Схема включает версии ПО. main.pdf собран;
+  финальная сборка22страницы визуально проверена; конфиги не разорваны
+  между страницами. Python AST,
+  bash -n и git diff --check прошли. Общий mephi-labs не менялся.
+- demo-checks.md содержит краткую повторную демонстрацию. Конфиденциальные
+  данные остаются только root private на ВМ, токены на Mac не копировались.
+  Сеансы браузера после API-проверок перезагружены (временные JS-переменные
+  удалены), оба vault разблокированы и показали ожидаемые записи. На переднем
+  плане WORKSTATION активировано окно Alice SA6 - Tryton; тестовый NFS-терминал
+  закрыт остановкой только своего sa6-nfs-demo. Основные службы active.
+- Топология повторно выгружена в stand/pnetlab_export-20261127.zip,
+  stand/README.md обновлён. Диски гостевых ОС остаются в рабочей сессии15;
+  QEMU-образы не публиковались. Никаких stop_lab/delete/wipe/commit/git add.
+- Временный маршрут Mac к46.61.242.181 через192.168.1.1 подтверждён.
+  После проверок пользователю отправлен запрос удалить его командой
+  sudo route -n delete -host 46.61.242.181; пользователь подтвердил удаление.
+  route-get подтвердил отсутствие прежнего host-маршрута.
+  У ассистента нет sudo на Mac. SSH временами reset/timeout; --tailscale-nc
+  помогал коротким операциям. Не повторять изменения вслепую после обрыва.
+- tty1 WORKSTATION: ps показал login/labadmin bash и foreground sudo-i15449.
+  После старого неудачного VNC push перед новым вводом в tty1 сначала Ctrl-C;
+  содержимое старых частичных файлов не выполнять. Графический DISPLAY0 работает.
+
+Ниже — журнал промежуточных состояний. Старые «ещё не настроено» относятся
+к своему времени и заменены итогами выше. Сессию и узлы оставить работающими.
+
+### 18:10 МСК — повторный аудит по методичке
+
+- Повторно прочитаны вариант6 и структура отчёта (стр18 методички),
+  теория и границы остальных вариантов. Практические пункты варианта6
+  и обязательный состав отчёта закрыты. Kerberos/NFSkrb5/Guacamole и
+  проверка offline-login SSSD к варианту6 не относятся. Отдельных письменных
+  ответов на14 контрольных вопросов нет; структура отчёта их не требует.
+- get_lab снова подтвердил session15 и все4 status2, прежние интерфейсы.
+  Заново выполнены LDAPbind Alice/Bob (оба0), парольный SSH Alice0/Bob255,
+  Tryton AliceHTTP200 с чтением SA6 Project и BobHTTP401, проверка HTTPS CA.
+- Текущий Xpra: clients1, PID19494, тот же UUIDed20d3ed33a34431ab3784f31e867ed4,
+  окно Alice SA6 - Tryton, PID19522. Полный reconnect не повторяли:
+  его результат сохранён в outputs/xpra-reconnect.txt и сверен с живым сеансом.
+- Повторное чтение NFS: Alice0, Bob1, rootклиента1; файлUID10001/GID10000 mode660.
+  Приложения, SSSD, nginx и4контейнера active/Up, Vaultwarden/Postgres healthy.
+  HTTPS git/vault200; auth200 после2 штатных перенаправлений, проверкаTLS
+  не отключалась.
+- Повторный Keycloak APIcheck подтвердил LDAPS/READ_ONLY, федерацию обоих
+  пользователей,2 конфиденциальных OIDC-клиента и корректные callbackURI.
+  Сохранённая пара LOGIN13:56:30/14:00:34UTC с общим sessionId по-прежнему
+  читается из Keycloak. Новую браузерную SSO-последовательность не запускали.
+- Vaultwarden SQLite открыт mode=ro: AliceOwner/confirmed/access_all1,
+  BobUser/confirmed/access_all0, единственное назначение Bob — Shared,
+  read_only1/hide_passwords0/manage0; Private не назначена. Права совпали
+  с сохранёнными реальными HTTP200/400/400 и неизменной revisionDate.
+- Проверены22страницы PDF и9 настоящих PNG+схема SVG. Обязательные снимки,
+  схема с версиями, архитектура, разделение аутентификации, результаты,
+  заключение и источники присутствуют. git diff --check чистый.
+- Стенд не перенастраивался, сеансы не останавливались, коммитов/staging нет.
+  ВыгрузкаZIP содержит топологию; перенос настроенных дисков в новые pod
+  потребует отдельно запрошенной публикации образов, это не пункт методички.
+
+### 17:30 МСК — проверка SSO/Xpra, коллекции в работе
+
+- Полный reconnect Xpra выполнен tools/check-xpra.py: clients1→0→1,
+  serverPID19494, TrytonPID19522, UUIDed20d3ed33a34431ab3784f31e867ed4
+  совпали. В отчёт добавлены outputs/xpra-reconnect.txt и реальный кадр
+  img/xpra-tryton.png с Alice SA6 и записью SA6 Project. Ничего не перезапускалось
+  на сервере для проверки; останавливался только клиент WORKSTATION.
+- Первое очищение WebDriver DELETE /cookie сбросило SSO, поэтому тот неудачный
+  вывод удалён из outputs. Затем выполнен нормальный выход только из Vaultwarden
+  и новый OIDC-вход после Gitea. В событиях Keycloak реально найден общий
+  sessionId: LOGIN gitea13:56:30UTC и vaultwarden14:00:34UTC. Второй LDAP-пароль
+  не вводился. outputs/keycloak-sso.txt, browser-sso.txt и screenshots sso-*.png
+  включены в отчёт. Мастер-пароль отдельно разблокировал vault Alice.
+- Согласно официальной документации Vaultwarden поправлен lifespan access token
+  realm sa6 с300 на900с (состояние подтверждено API); без этого был warning
+  про5min. Источник tools/configure-keycloak.py также исправлен.
+- Создана организация SA6 Team id4e49c2e5-9658-4f16-9a50-6070d4c9301d,
+  Alice owner. Default collection переименована Shared, создана Private.
+  В обеих через GUI сохранены Login-записи Shared demo account/demo-shared
+  и Private demo account/demo-private. Пароли случайные, НЕ используются для
+  входа ни в какую службу; хранятся только в root private demo-records.json WS
+  и зашифрованном vault. Не выдавать эти демонстрационные пароли за LDAP.
+- Bob зарегистрирован через LDAP/OIDC в отдельном PRIVATE MiniBrowser на4445,
+  master=vault_master_bob из browser-credentials.json. sa6-sa6-register-bob success,
+  onboarding закрыт. Его browser-session-4445.json600 на WS. Alice живёт на4444
+  в прежнем browser-session.json600. При переключении установить SA6_BROWSER_PORT
+  ДО import browser. У Bob пока нет членства в SA6 Team: приглашение/права/проверки
+  коллекций ЕЩЁ НЕ выполнены. Следующий шаг — Alice Members -> invite Bob,
+  User, только Shared View items, затем confirm (SMTP отключён, уже существующие
+  пользователи автоматически Accepted, это подтверждено исходником1.37.5).
+- На WS создан /var/swap.sa6 1ГБ и запись fstab, чтобы два браузера не вызвалиOOM
+  приRAM2ГБ. /etc/systemd/system/sa6-webdriver-bob.service — копия основного с4445.
+  Vendor args заменяют defaultargs WebKit, поэтому Bob args ОБЯЗАТЕЛЬНО
+  ['--automation','--private']; без --automation было session not created.
+- browser.py теперь поддерживает PORT4445, CSS/XPath и короткий retry только
+  для element-click-intercepted/stale-reference. GUI асинхронен: после Save
+  открывается View login с отдельным Close; закрыть его перед навигацией.
+  Add в AdminCollections имеет Login/Card/.../Collection, а Add item сразуLogin.
+- В main.typ добавлены схема SVG и версии из реально запрошенных dpkg/docker,
+  преподаватель взят как в остальных BKS-отчётах БасыняЕ.А. Последний PDF до
+  схемы14страниц, собранные новые страницы ещё проверить финально.
+- Осталось: права коллекций и проверки Bob; настоящие Keycloak admin screenshots
+  (LDAPprovider+OIDCclients), NFS screenshot; финальная сверка методички,
+  заключение/источники/demo-checks, текущая выгрузка топологии, визуальнаяQA.
+  Сессии не закрывать, образы не публиковать, коммит/staging не трогать.
+
+### 16:48 МСК — продолжение после перерыва
+
+- Пользователь закоммитил промежуточные материалы (442a7e0, сдох лимит);
+  ассистент не делал коммит. Перед продолжением git status был чистым.
+- get_lab подтвердил прежнюю session15 и четыре работающих узла.
+  Tryton/Xpra активны, PID19494/UUIDed20d3ed33a34431ab3784f31e867ed4
+  сохранились с13:49, в GUI авторизован Alice SA6 (пароль введён предыдущим
+  запросом до перерыва). Gitea браузер также открыт под Alice после OIDC.
+- Wi-Fi Mac изменился: en0 gateway192.168.1.1, оставшийся /32 маршрут PNET
+  указывал на10.188.130.1. Пользователь выполнил sudo route change к192.168.1.1,
+  route-get это подтвердил. До исправления связь шла DERPams129мс. Первый
+  прямой ping после change timeout; устойчивость пока не подтверждена.
+- Открыт Vaultwarden в том же браузере. Из-за перерыва SSO Keycloak истёк,
+  понадобился новый вход Alice, он прошёл. Vaultwarden показал настройку
+  master password (Join organization / Create account). Это отдельно от LDAP.
+  Запрошено создание с vault_master_alice из private browser-credentials.json.
+  Проверку внешних breaches отключили, секрет на Mac не передавался.
+- Для чистого доказательства SSO после создания/входа Vault очистить только
+  cookies Gitea через WebDriver на git-origin, затем Sign in with Keycloak:
+  не должно быть повторного запроса LDAP-пароля. Проверить события Keycloak
+  и общий sessionId клиентов. На13:53 eventsEnabled уже включён configure-keycloak.py.
+- Tryton URI-команда не создала второго процесса (только19522), но завершилась
+  SSHreset. Для раскрытия Party запрошен X11 клик по реальному окну
+  xid0x200e03=2100739. Старый Login2097155 уже уничтожен, BadWindow по нему
+  ничего не изменил. Перед дальнейшими кликами снова смотреть кадр.
 
 ### 13:49 МСК — прикладные службы и проверки
 

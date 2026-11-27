@@ -1,0 +1,16 @@
+Organization: SA6 Team
+Alice (alice@sa6.test): Owner
+Bob (bob@sa6.test): User; confirmed member
+
+Shared:
+  Alice: Manage collection
+  Bob: View items (readOnly=true; hidePasswords=false; manage=false)
+  Record: Shared demo account / demo-shared
+
+Private:
+  Alice: Manage collection
+  Bob: not assigned
+  Record: Private demo account / demo-private
+
+Passwords in these records are random demonstration data and are not used
+to authenticate to any lab service. The vault is encrypted by its clients.

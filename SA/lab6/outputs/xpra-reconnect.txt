@@ -1,0 +1,8 @@
+Xpra display :100; SSH from WORKSTATION to APPS
+stage          clients server_pid tryton_pid
+before         1       19494      19522
+disconnected   0       19494      19522
+reconnected    1       19494      19522
+session_uuid=ed20d3ed33a34431ab3784f31e867ed4
+window_title=Alice SA6 - Tryton
+same_session_and_application=true

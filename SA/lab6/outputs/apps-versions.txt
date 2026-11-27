@@ -1,0 +1,5 @@
+postgresql-14	14.24-0ubuntu0.22.04.1
+sssd-ldap	2.6.3-1ubuntu3.9
+tryton-client	6.0.10-1
+tryton-server	6.0.12-1
+xpra	3.1-1build5

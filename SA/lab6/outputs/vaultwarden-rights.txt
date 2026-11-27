@@ -1,0 +1,5 @@
+user=bob@sa6.test; collection=Shared; readOnly=true; manage=false
+GET Shared demo account: HTTP 200
+GET Private demo account: HTTP 400; Cipher is not owned by user
+PUT Shared demo account: HTTP 400; Cipher is not write accessible
+shared_revision_unchanged=true

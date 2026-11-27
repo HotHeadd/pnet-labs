@@ -5,17 +5,20 @@
 """
 import base64
 import json
+import os
 from pathlib import Path
+import time
 import urllib.error
 import urllib.request
 
-STATE = Path('/root/sa6-private/browser-session.json')
+PORT = int(os.environ.get('SA6_BROWSER_PORT', '4444'))
+STATE = Path('/root/sa6-private/browser-session' + ('' if PORT == 4444 else '-' + str(PORT)) + '.json')
 ELEMENT = 'element-6066-11e4-a52e-4f735466cecf'
 
 
 def request(method, path, data=None):
     body = json.dumps(data).encode() if data is not None else None
-    req = urllib.request.Request('http://127.0.0.1:4444' + path, data=body,
+    req = urllib.request.Request('http://127.0.0.1:' + str(PORT) + path, data=body,
         method=method, headers={'Content-Type': 'application/json'})
     try:
         with urllib.request.urlopen(req, timeout=90) as response:
@@ -30,8 +33,10 @@ def request(method, path, data=None):
 
 
 def start():
-    value = request('POST', '/session', {'capabilities': {'alwaysMatch': {
-        'browserName': 'MiniBrowser', 'acceptInsecureCerts': False}}})
+    capabilities = {'browserName': 'MiniBrowser', 'acceptInsecureCerts': False}
+    if PORT != 4444:
+        capabilities['webkitgtk:browserOptions'] = {'args': ['--automation', '--private']}
+    value = request('POST', '/session', {'capabilities': {'alwaysMatch': capabilities}})
     STATE.write_text(json.dumps({'id': value['sessionId']}))
     STATE.chmod(0o600)
     call('POST', '/timeouts', {'implicit': 5000, 'pageLoad': 60000, 'script': 30000})
@@ -55,12 +60,18 @@ def text():
     return script('return document.body.innerText')
 
 
-def element(selector):
-    return call('POST', '/element', {'using': 'css selector', 'value': selector})[ELEMENT]
+def element(selector, using='css selector'):
+    return call('POST', '/element', {'using': using, 'value': selector})[ELEMENT]
 
 
-def click(selector):
-    call('POST', '/element/' + element(selector) + '/click', {})
+def click(selector, using='css selector'):
+    for attempt in range(20):
+        try:
+            return call('POST', '/element/' + element(selector, using) + '/click', {})
+        except RuntimeError as exc:
+            if attempt == 19 or str(exc) not in ['WebDriver: element click intercepted', 'WebDriver: stale element reference']:
+                raise
+            time.sleep(0.2)
 
 
 def fill(selector, value):

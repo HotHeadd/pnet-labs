@@ -21,10 +21,19 @@ SSH для групп sudo и xpra-users. С WORKSTATION проверены LDAP
 пользователей, успешный парольный SSH-вход Alice и отказ Bob; журнал APPS
 подтвердил причину отказа AllowGroups.
 
-Пакеты WORKSTATION и WEB установлены; установка APPS продолжается по последней
-проверке. Графическая часть и SSO пока не подтверждены. Фоновые установки
-могут продолжать работу без SSH. Точное состояние, незавершённый ввод в консоли
-WORKSTATION и порядок продолжения записаны в `../AGENTS.md`.
+На APPS работают Tryton/PostgreSQL и сеанс Xpra Alice :100. С WORKSTATION
+подтверждены прикладной вход Alice, отказ Bob, публикация одного окна Tryton
+и reconnect с сохранением UUID сеанса и PID приложения.
+
+На WEB работают Keycloak, Gitea, Vaultwarden и PostgreSQL. Проверены LDAPS-
+федерация Alice/Bob, HTTPS с доверенным CA и реальный браузерный SSO между
+Gitea и Vaultwarden (общий sessionId в событиях Keycloak). В SA6 Team Alice
+Owner, Bob User с просмотром только Shared. Проверены HTTP200 чтения Shared,
+отказы чтения Private и изменения Shared; версия записи не изменилась.
+
+Топология выгружена заново 2026-11-27 после настройки. Настроенные QEMU-диски
+не публиковались в образы. Для демонстрации использовать сохранённую сессию15,
+а не новую копию ZIP. Краткий порядок: `../demo-checks.md`.
 
 Начальная подготовка дисков и cloud-init находится в `../tools/prepare-hosts.py`.
 Образы `linux-sa6-*` зависят от общего `linux-ubuntu-server-22.04`.
