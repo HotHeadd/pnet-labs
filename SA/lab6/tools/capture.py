@@ -11,6 +11,7 @@ from PIL import Image
 p = argparse.ArgumentParser(description=__doc__)
 p.add_argument('node', choices=['directory', 'apps', 'web', 'workstation'])
 p.add_argument('output', type=Path)
+p.add_argument('--ssh-socket', help='локальный сокет уже открытого SSH-соединения')
 a = p.parse_args()
 node_session = {'directory': 26, 'apps': 27, 'web': 28, 'workstation': 29}[a.node]
 code = '''import gzip,os,socket,sys,tempfile,time
@@ -33,7 +34,10 @@ finally:
  s.close()
  if os.path.exists(path):os.unlink(path)
 ''' % ('/opt/unetlab/tmp/15/' + str(node_session) + '/monitor.sock')
-result = subprocess.run(['ssh', '-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10',
+ssh = ['ssh']
+if a.ssh_socket:
+    ssh += ['-S', a.ssh_socket]
+result = subprocess.run(ssh + ['-o', 'BatchMode=yes', '-o', 'ConnectTimeout=10',
     '-o', 'ProxyCommand=tailscale nc %h %p', '-o', 'ServerAliveInterval=5',
     '-o', 'ServerAliveCountMax=3', 'root@100.100.57.19',
     'python3 -c ' + shlex.quote(code)], stdout=subprocess.PIPE,

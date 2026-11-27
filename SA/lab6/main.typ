@@ -12,445 +12,376 @@
 
 = Цель работы
 
-Приобрести практические навыки централизованного доступа пользователей
-к приложениям и сетевым ресурсам, настройки каталогов, аутентификации
-и разграничения доступа.
+Получить практические навыки централизованного доступа к приложениям
+и сетевым ресурсам, подключения Linux к каталогу пользователей
+и разграничения прав в операционной системе и приложениях.
 
 = Задание
 
-Вариант 6: развернуть OpenLDAP, Linux-сервер с Xpra и графическим
-приложением; обеспечить вход через каталог, публикацию приложения
-в режиме seamless по SSH и повторное подключение к сохраняемому сеансу.
-Настроить NFS и файловые права, LDAP-федерацию Keycloak и OIDC-вход
-в Vaultwarden и отдельное веб-приложение; показать SSO и проверки доступа.
+Вариант 6. Развернуть OpenLDAP, сервер приложений Linux с Xpra
+и графическим клиентом Tryton. Настроить вход пользователей Linux
+через каталог и отдельную аутентификацию в Tryton. Подключиться
+с отдельной рабочей станции по SSH в режиме seamless, проверить
+сохранение сеанса после отключения. Настроить NFS, LDAP-федерацию
+Keycloak, OIDC-вход в Gitea и Vaultwarden и проверить единый вход
+и права доступа.
 
 = Ход работы
 
-== Подготовка виртуальных машин
+== Схема и адресация
 
-В PNETLab создана лаборатория SA6. Для узлов подготовлены отдельные
-диски на основе Ubuntu Server 22.04 и начальные настройки cloud-init.
-Команды подготовки приведены в листинге @lst-platform.
+В PNETLab созданы четыре виртуальные машины с Ubuntu Server 22.04.5.
+DIRECTORY обслуживает каталог и общий файловый ресурс, APPS запускает
+Tryton и Xpra, WEB содержит веб-сервисы. На WORKSTATION установлен
+XFCE, клиент Xpra и браузер. Схема с версиями основных компонентов
+приведена на рисунке @fig-topology.
 
-#block(breakable: false)[
 #figure(
-  raw(read("commands/prepare-platform.txt"), block: true, lang: "sh"),
-  caption: [Подготовка дисков и создание топологии],
-  kind: raw,
-) <lst-platform>
-]
+  image("img/topology.svg", width: 100%),
+  caption: [Схема инфраструктуры и версии программного обеспечения],
+) <fig-topology>
 
-Рабочие интерфейсы объединены сетью 10.60.0.0/24. Вторые интерфейсы
-подключаются к служебной сети pnet0 для установки пакетов и администрирования.
+Рабочие интерфейсы объединены сетью 10.60.0.0/24
+(таблица @tab-addresses). Вторые интерфейсы подключены к служебной сети
+192.168.15.0/24 для администрирования и установки пакетов.
 
 #figure(
   table(
     columns: (1.2fr, 1.5fr, 2fr),
     inset: 6pt,
     table.header([*Узел*], [*Рабочий адрес*], [*Назначение*]),
-    [DIRECTORY], [10.60.0.10/24], [Каталог пользователей, NFS],
-    [APPS], [10.60.0.20/24], [Сервер Xpra и приложение],
+    [DIRECTORY], [10.60.0.10/24], [OpenLDAP, NFS],
+    [APPS], [10.60.0.20/24], [Xpra, Tryton, PostgreSQL],
     [WEB], [10.60.0.30/24], [Keycloak, Vaultwarden, Gitea],
-    [WORKSTATION], [10.60.0.100/24], [Xpra-клиент и браузер],
+    [WORKSTATION], [10.60.0.100/24], [Xpra-клиент, браузер],
   ),
-  caption: [Адресация и назначение узлов],
+  caption: [Адресация узлов],
 ) <tab-addresses>
 
-Адресация и роли узлов приведены в таблице @tab-addresses,
-схема инфраструктуры — на рисунке @fig-topology.
+На APPS используются Tryton Server 6.0.12, Tryton Desktop Client 6.0.10
+и PostgreSQL 14.24. На WEB работают Keycloak 26.8.2, Gitea 28.4.0,
+Vaultwarden 1.37.5 и PostgreSQL 17.12; HTTPS обслуживает nginx 1.18.0.
+
+== Каталог OpenLDAP
+
+На DIRECTORY создан каталог с базой #raw("dc=sa6,dc=test").
+В подразделении People находятся Alice и Bob с POSIX-атрибутами
+для Linux. Alice имеет UID 10001 и основную группу employees с GID 10000;
+Bob имеет UID 10002 и группу guests с GID 10001. Отдельная группа
+xpra-users содержит Alice и разрешает ей доступ к серверу приложений.
+
+Пользователи и состав xpra-users проверены командами #raw("ldapsearch")
+по LDAPS. На рисунке @fig-directory-ldap видны DN пользователей,
+числовые идентификаторы, членство Alice в группе и состояние служб.
 
 #figure(
-  image("img/topology.svg", width: 100%),
-  caption: [Инфраструктура централизованного доступа],
-) <fig-topology>
+  image("img/directory-ldap-terminal.png", width: 100%),
+  caption: [Проверка пользователей и группы доступа на DIRECTORY],
+) <fig-directory-ldap>
 
-Все четыре узла используют Ubuntu Server 22.04.5. Версии пакетов DIRECTORY
-и APPS и компонентов WEB приведены в листинге @lst-versions.
-В WEB используются Keycloak 26.8.2, Vaultwarden 1.37.5 и Gitea 28.4.0.
-
-#figure(
-  raw(read("outputs/directory-versions.txt") + "\n"
-    + read("outputs/apps-versions.txt") + "\n"
-    + read("outputs/web-versions.txt"), block: true),
-  caption: [Версии программного обеспечения],
-  kind: raw,
-) <lst-versions>
-
-== Проверка базовой сети
-
-На DIRECTORY проверены завершение cloud-init, адреса интерфейсов,
-маршруты, доступное место и состояние SSH (листинг @lst-directory-platform).
-Аналогичные проверки выполнены на остальных трёх узлах.
+Для LDAP установлен серверный сертификат собственного центра
+сертификации. В действующей конфигурации slapd указаны сертификат CA,
+серверный сертификат и закрытый ключ. Сервер слушает рабочий адрес
+10.60.0.10, в том числе по LDAPS. Значения прочитаны из #raw("cn=config")
+и файла #raw("/etc/default/slapd") на рисунке @fig-directory-tls.
 
 #figure(
-  raw(read("outputs/directory-platform.txt"), block: true),
-  caption: [Проверка начального состояния DIRECTORY],
-  kind: raw,
-) <lst-directory-platform>
+  image("img/directory-tls-terminal.png", width: 100%),
+  caption: [Параметры TLS и адреса прослушивания OpenLDAP],
+) <fig-directory-tls>
 
-С WORKSTATION выполнены команды #raw("ping -c 2 -W 2") к каждому
-из трёх серверов по рабочим адресам. Каждый узел вернул два ответа
-без потерь (листинг @lst-platform-network).
+== Подключение Linux к каталогу
 
-#figure(
-  raw(read("outputs/workstation-network.txt"), block: true),
-  caption: [Проверка связи рабочей станции с серверами],
-  kind: raw,
-) <lst-platform-network>
+На APPS и WORKSTATION настроен SSSD. NSS получает из LDAP сведения
+о пользователях и группах, PAM проверяет пароль и создаёт домашний каталог
+при первом входе. В #raw("/etc/nsswitch.conf") добавлен источник sss,
+а в PAM подключён #raw("pam_sss.so"). В SSSD выбран LDAP-провайдер,
+указаны базы поиска People и Groups, схема RFC2307 и LDAPS с обязательной
+проверкой сертификата по лабораторному CA.
 
-== Каталог пользователей и файловый ресурс
-
-На DIRECTORY настроен каталог OpenLDAP с базой #raw("dc=sa6,dc=test").
-Пользователи Alice и Bob имеют POSIX-атрибуты UID/GID для согласования
-учётных записей Linux и файловых прав. Группы employees и guests
-разделяют права на документы, xpra-users предназначена для доступа к приложениям.
-Для LDAP выпущен серверный сертификат собственного CA и включён LDAPS.
-
-Настройка выполнена командами из листинга @lst-configure-directory.
+На рисунке @fig-sssd показаны действующий файл #raw("sssd.conf"),
+источники NSS и подключение PAM на APPS.
 
 #figure(
-  raw("python3 SA/lab6/tools/run.py directory --file SA/lab6/commands/configure-directory.sh --background", block: true, lang: "sh"),
-  caption: [Применение конфигурации каталога и NFS],
-  kind: raw,
-) <lst-configure-directory>
+  image("img/apps-sssd-terminal.png", width: 100%),
+  caption: [Конфигурация SSSD и её связь с NSS и PAM],
+) <fig-sssd>
 
-Каталог #raw("/srv/nfs/team") экспортирован по NFS для APPS и WORKSTATION.
-Его владелец имеет UID 10001, группа имеет GID 10000; доступ остальных
-пользователей запрещён. Используются setgid, наследуемые ACL и root_squash.
-При #raw("sec=sys") сервер доверяет UID/GID клиентов; аутентификацию
-пользователей с помощью Kerberos данная настройка не выполняет.
-
-Поиск пользователей по LDAPS и параметры экспорта проверены
-в листинге @lst-directory-services. Клиентские проверки доступа выполняются отдельно.
-
-#block(breakable: false)[
-#figure(
-  raw(read("outputs/directory-services.txt"), block: true),
-  caption: [Поиск пользователей и состояние LDAP/NFS на DIRECTORY],
-  kind: raw,
-) <lst-directory-services>
-]
-
-== Подключение Linux-клиентов и разграничение файлового доступа
-
-APPS и WORKSTATION подключены к каталогу через SSSD. NSS получает
-сведения о пользователях и группах, PAM обеспечивает проверку учётных данных
-и создание домашних каталогов. Соединение с каталогом использует LDAPS
-с проверкой сертификата по установленному CA (листинг @lst-sssd).
-
-#block(breakable: false)[
-#figure(
-  raw(read("configs/sssd.conf"), block: true, lang: "ini"),
-  caption: [Конфигурация SSSD на Linux-клиентах],
-  kind: raw,
-) <lst-sssd>
-]
-
-На обоих узлах пользователи имеют одинаковые UID/GID, а ресурс смонтирован
-в #raw("/mnt/team"). Результаты APPS приведены в листинге @lst-apps-ldap-nfs,
-WORKSTATION — в листинге @lst-workstation-ldap-nfs.
+Команды #raw("getent passwd"), #raw("id") и #raw("findmnt") на WORKSTATION
+подтвердили получение учётных записей и групп из каталога и монтирование
+общего ресурса. Alice входит в employees и xpra-users, Bob только в guests.
+У обоих клиентов используются одинаковые UID/GID
+(рисунок @fig-workstation-ldap).
 
 #figure(
-  raw(read("outputs/apps-ldap-nfs.txt"), block: true),
-  caption: [Проверка LDAP-идентичностей и монтирования NFS на APPS],
-  kind: raw,
-) <lst-apps-ldap-nfs>
+  image("img/workstation-ldap-terminal.png", width: 100%),
+  caption: [LDAP-идентичности и общий ресурс на WORKSTATION],
+) <fig-workstation-ldap>
+
+== Общий файловый ресурс NFS
+
+На DIRECTORY каталог #raw("/srv/nfs/team") экспортирован для APPS
+и WORKSTATION. Владельцем назначен UID 10001, группой GID 10000.
+Каталог имеет setgid и наследуемые ACL: владелец и группа получают
+чтение, запись и проход, остальные пользователи доступа не имеют.
+Параметр root_squash ограничивает права root удалённого клиента.
+Экспорт, ACL и владельцы файлов проверены на рисунке @fig-directory-nfs.
 
 #figure(
-  raw(read("outputs/workstation-ldap-nfs.txt"), block: true),
-  caption: [Проверка LDAP-идентичностей и монтирования NFS на WORKSTATION],
-  kind: raw,
-) <lst-workstation-ldap-nfs>
+  image("img/directory-nfs-terminal.png", width: 100%),
+  caption: [Экспорт NFS, владельцы и наследуемые права каталога],
+) <fig-directory-nfs>
 
-Alice создала документ на WORKSTATION и дополнила его с APPS. Оба клиента
-увидели общее содержимое; владельцем файла является Alice, группой — employees,
-права — 660 (листинг @lst-nfs-shared-write).
+Оба клиента монтируют ресурс в #raw("/mnt/team"). С WORKSTATION от имени
+Alice создан файл #raw("sa6-report.txt"), затем через SSH от той же
+учётной записи на APPS в него добавлена вторая строка. После возврата
+на WORKSTATION прочитаны обе строки. У файла владелец alice,
+группа employees и права 660.
 
-#figure(
-  raw(read("outputs/apps-nfs-write.txt"), block: true),
-  caption: [Запись в общий файл с другого клиента NFS],
-  kind: raw,
-) <lst-nfs-shared-write>
-
-Bob не входит в employees и получает отказ при чтении. Проверка от имени
-root клиента также завершается отказом: NFS применяет root_squash.
-В листинге @lst-nfs-rights приведены выводы чтения и коды завершения:
-#raw("bob_exit=1") и #raw("root_exit=1"); перед проверкой root показан UID 0.
+Bob не входит в employees и получает Permission denied; код завершения
+чтения равен 1. Чтение от root клиента с UID 0 также завершается отказом.
+Все команды и результаты приведены на рисунке @fig-nfs-rights.
 
 #figure(
-  raw(read("outputs/workstation-nfs-rights.txt"), block: true),
-  caption: [Положительная и отрицательные проверки доступа к общему файлу],
-  kind: raw,
-) <lst-nfs-rights>
-
-Те же проверки выполнены в терминале рабочей станции
-(рисунок @fig-nfs-rights).
-
-#figure(
-  image("img/nfs-rights.png", width: 100%),
-  caption: [Чтение файла Alice и отказы Bob и root клиента NFS],
+  image("img/nfs-rights-terminal.png", width: 100%),
+  caption: [Запись с двух клиентов NFS и проверка файловых прав],
 ) <fig-nfs-rights>
 
-== Правила SSH-доступа к серверу приложений
+Использован #raw("sec=sys"): NFS доверяет переданным клиентом UID/GID.
+Такая настройка предназначена для доверенных клиентских машин
+и не выполняет криптографическую аутентификацию пользователей NFS.
 
-На APPS включены PAM и парольный вход, разрешены группы xpra-users
-и sudo (листинг @lst-apps-ssh-config). Служебная учётная запись labadmin
-используется для администрирования; пользовательский доступ регулируется
-группами каталога. Для служебных консолей ВМ включён вход labadmin через
-авторизованную сессию PNETLab; он не является проверкой LDAP-аутентификации.
+== Парольный вход на сервер приложений
 
-#block(breakable: false)[
-#figure(
-  raw(read("configs/ssh-apps.conf"), block: true),
-  caption: [Правила SSH-доступа на APPS],
-  kind: raw,
-) <lst-apps-ssh-config>
-]
+На APPS включены PAM и парольная аутентификация SSH. Доступ разрешён
+группам sudo и xpra-users. Учётная запись labadmin служит для
+администрирования; пользовательский вход проверяется отдельно.
 
-С отдельной WORKSTATION проверены пароли обоих пользователей LDAP,
-затем SSH-вход на APPS с принудительным методом password и отключённым
-PubkeyAuthentication. Alice успешно выполнила #raw("id") на сервере;
-Bob, чей пароль принят каталогом, получил отказ SSH
-(листинг @lst-ssh-auth).
+На WORKSTATION команда #raw("ldapwhoami") с запросом пароля подтвердила
+действительность LDAP-паролей Alice и Bob. Затем выполнен SSH-вход
+с отключённой аутентификацией по ключу. Alice успешно выполнила #raw("id")
+на APPS и получила код завершения 0, Bob получил отказ и код 255
+(рисунок @fig-ssh-auth).
 
 #figure(
-  raw(read("outputs/workstation-ssh-auth.txt"), block: true),
-  caption: [Проверка LDAP-паролей и SSH-доступа с рабочей станции],
-  kind: raw,
-) <lst-ssh-auth>
+  image("img/workstation-ssh-auth-terminal.png", width: 100%),
+  caption: [Проверка LDAP-паролей и SSH-доступа с WORKSTATION],
+) <fig-ssh-auth>
 
-Журнал sshd подтверждает успешную парольную аутентификацию Alice
-и отклонение Bob именно по AllowGroups (листинг @lst-ssh-auth-log).
-
-#figure(
-  raw(read("outputs/apps-ssh-auth-log.txt"), block: true),
-  caption: [Причина отказа Bob в журнале сервера приложений],
-  kind: raw,
-) <lst-ssh-auth-log>
-
-== Графическая рабочая станция
-
-На WORKSTATION установлены XFCE, LightDM, клиент Xpra и браузер.
-Для служебной учётной записи labadmin настроен автоматический запуск XFCE.
-LightDM активен, процесс графического сеанса запущен
-(листинг @lst-workstation-gui).
+Вывод #raw("sshd -T") показывает действующие правила. Журнал SSH
+подтверждает парольный вход Alice и отказ Bob по AllowGroups
+(рисунок @fig-ssh-policy).
 
 #figure(
-  raw(read("outputs/workstation-gui.txt"), block: true),
-  caption: [Настройка и запуск графического сеанса WORKSTATION],
-  kind: raw,
-) <lst-workstation-gui>
+  image("img/apps-ssh-policy-terminal.png", width: 100%),
+  caption: [Правила SSH и причина отказа Bob на APPS],
+) <fig-ssh-policy>
 
-== Прикладная аутентификация Tryton
+== Tryton и отдельная прикладная аутентификация
 
 Использована трёхзвенная архитектура: Tryton Desktop Client обращается
 к серверу Tryton по HTTPS, сервер выполняет прикладную логику и работает
-с PostgreSQL через локальный Unix-сокет. В режиме Xpra клиент приложения
-также выполняется на APPS, а WORKSTATION получает его окна по SSH.
+с PostgreSQL через локальный Unix-сокет. При публикации через Xpra
+графический клиент также выполняется на APPS, а WORKSTATION получает
+только его окно.
 
-На APPS настроены сервер Tryton, база PostgreSQL sa6 и модуль
-ldap_authentication. Приложение проверяет пароль по LDAP самостоятельно.
-Для Alice создана учётная запись приложения с правами работы со справочником
-Party; автоматическое создание учётных записей отключено. Bob учётной записи
-Tryton не имеет.
-
-Итоговая конфигурация сервера приведена в листинге @lst-tryton-config.
-
-#block(breakable: false)[
-#figure(
-  raw(read("configs/trytond.conf"), block: true, lang: "ini"),
-  caption: [Настройки Tryton, PostgreSQL и модуля LDAP],
-  kind: raw,
-) <lst-tryton-config>
-]
-
-С WORKSTATION выполнены HTTPS-запросы входа и чтения справочника.
-Alice получила HTTP 200 и прочитала запись SA6 Project; вход Bob с действующим
-LDAP-паролем отклонён с HTTP 401 (листинг @lst-tryton-auth).
-Клиент проверял сертификат HTTPS по системному хранилищу CA и имени узла.
+В базе sa6 активирован модуль ldap_authentication. Для Alice создана
+учётная запись Tryton с правами Party Administration; автоматическое
+создание пользователей отключено. Bob учётной записи приложения не имеет.
+На рисунке @fig-tryton-config показаны настройки HTTPS, PostgreSQL и LDAP,
+а также результат запроса к таблице пользователей приложения.
 
 #figure(
-  raw(read("outputs/workstation-tryton-auth.txt"), block: true),
-  caption: [Проверка входа и чтения данных в Tryton],
-  kind: raw,
-) <lst-tryton-auth>
+  image("img/apps-tryton-config-terminal.png", width: 100%),
+  caption: [Настройки Tryton и учётная запись Alice в прикладной базе],
+) <fig-tryton-config>
 
-== Публикация приложения и повторное подключение Xpra
-
-Tryton Desktop Client выполняется на APPS от имени Alice в сеансе Xpra
-#raw(":100"). WORKSTATION подключается по SSH с отдельным ключом Alice.
-Публикуется окно приложения, рабочий стол APPS не запускается.
-
-После входа Alice открыт справочник Party с записью SA6 Project
-(рисунок @fig-xpra-tryton). Панель XFCE принадлежит WORKSTATION;
-сам Tryton выполняется на APPS.
+С WORKSTATION обычным #raw("curl") выполнены HTTPS-запросы к Tryton
+с запросом пароля в терминале. Метод #raw("model.party.party.search_read")
+вернул Alice запись SA6 Project и HTTP 200. Аналогичный запрос Bob
+с действующим LDAP-паролем отклонён с HTTP 401
+(рисунок @fig-tryton-auth). Проверка сертификата HTTPS не отключалась.
 
 #figure(
-  image("img/xpra-tryton.png", width: 100%),
-  caption: [Окно Tryton, опубликованное через Xpra],
+  image("img/tryton-auth-terminal.png", width: 100%),
+  caption: [Положительная и отрицательная проверки доступа к Tryton],
+) <fig-tryton-auth>
+
+== Публикация окна через Xpra
+
+На APPS от имени Alice запущен сохраняемый сеанс Xpra #raw(":100")
+с Tryton Desktop Client. WORKSTATION подключается командой
+#raw("xpra attach") к #raw("ssh://alice@apps.sa6.test/100") по отдельному
+SSH-ключу Alice. Параметр #raw("--exit-with-client=no") сохраняет серверный
+сеанс после отключения клиента.
+
+После прикладного входа Alice открыт справочник Party с записью
+SA6 Project (рисунок @fig-xpra-tryton). Полный рабочий стол APPS
+не передаётся; панель XFCE на снимке принадлежит WORKSTATION.
+
+#figure(
+  image("img/xpra-tryton-after-reconnect.png", width: 100%),
+  caption: [Окно Tryton в режиме seamless на WORKSTATION],
 ) <fig-xpra-tryton>
 
-Клиент отключён и повторно запущен. Между подключениями сервер сохранил UUID
-сеанса, PID Xpra и PID авторизованного процесса Tryton; число клиентов
-изменилось с 1 на 0 и снова на 1 (листинг @lst-xpra-reconnect).
+Для проверки на WORKSTATION остановлен клиент #raw("sa6-xpra-client"),
+затем запущен снова. До отключения, без клиента и после подключения
+на APPS выполнена команда #raw("xpra info"). Число клиентов изменилось
+с 1 на 0 и снова на 1, UUID сеанса и PID серверного процесса и Tryton
+остались прежними (рисунок @fig-xpra-reconnect). Повторный вход
+в приложение не потребовался.
 
 #figure(
-  raw(read("outputs/xpra-reconnect.txt"), block: true),
-  caption: [Отключение и возврат в тот же сеанс приложения],
-  kind: raw,
-) <lst-xpra-reconnect>
+  image("img/apps-xpra-reconnect-terminal.png", width: 100%),
+  caption: [Состояние одного сеанса Xpra до и после переподключения],
+) <fig-xpra-reconnect>
 
-== Сервисы веб-доступа
+== Веб-сервисы и HTTPS
 
-На WEB запущены контейнеры PostgreSQL, Keycloak, Vaultwarden и Gitea
-(листинг @lst-web-containers). Nginx завершает TLS и передаёт запросы
-в контейнеры через порты, привязанные к loopback-интерфейсу.
-
-#figure(
-  raw(read("outputs/web-containers.txt"), block: true),
-  caption: [Запущенные контейнеры WEB],
-  kind: raw,
-) <lst-web-containers>
-
-С WORKSTATION проверены HTTPS-адреса трёх веб-сервисов. Системное хранилище
-CA содержит сертификат лабораторного центра; проверка имени и цепочки
-сертификата не отключалась (листинг @lst-web-https).
+На WEB запущены контейнеры Keycloak, Gitea, Vaultwarden и PostgreSQL.
+Nginx принимает HTTPS-запросы к auth.sa6.test, git.sa6.test и
+vault.sa6.test и передаёт их на порты контейнеров, доступные через
+loopback. Список контейнеров, параметры nginx и сертификат показаны
+на рисунке @fig-web-services.
 
 #figure(
-  raw(read("outputs/workstation-web-https.txt"), block: true),
-  caption: [Доступность веб-сервисов по HTTPS с рабочей станции],
-  kind: raw,
-) <lst-web-https>
+  image("img/web-services-terminal.png", width: 100%),
+  caption: [Контейнеры, обратный прокси и серверный сертификат WEB],
+) <fig-web-services>
 
-== Федерация каталога и единый вход
+На WORKSTATION установлен сертификат лабораторного CA. Команды
+#raw("curl") проверили все три адреса с обычной проверкой цепочки
+сертификата и имени сервера. Каждый сервис вернул HTTP 200;
+для Keycloak выполнен переход по штатным перенаправлениям
+(рисунок @fig-web-https).
 
-Keycloak использует OpenLDAP как источник пользователей в режиме READ_ONLY.
-Созданы два конфиденциальных OIDC-клиента с Authorization Code flow:
-Gitea и Vaultwarden. Проверены адреса обратного вызова и принадлежность
-Alice и Bob к LDAP-федерации (листинг @lst-keycloak-sso).
+#figure(
+  image("img/workstation-https-terminal.png", width: 100%),
+  caption: [Проверка HTTPS веб-сервисов с WORKSTATION],
+) <fig-web-https>
 
-Настройки LDAP и список клиентов в административном интерфейсе Keycloak
-показаны на рисунках @fig-keycloak-ldap, @fig-keycloak-search
-и @fig-keycloak-clients.
+== LDAP-федерация Keycloak и OIDC
+
+В realm sa6 подключён LDAP-провайдер sa6-ldap. Для соединения задан
+#raw("ldaps://directory.sa6.test:636"), для поиска пользователей
+#raw("ou=People,dc=sa6,dc=test"), для имени пользователя атрибут uid.
+Используется служебная учётная запись svc-keycloak. Режим READ_ONLY
+разрешает читать пользователей из каталога без изменения их записей.
+Настройки подключения и поиска показаны на рисунках
+@fig-keycloak-ldap и @fig-keycloak-search.
 
 #figure(
   image("img/keycloak-ldap.png", width: 100%),
-  caption: [LDAP-провайдер sa6-ldap и подключение к каталогу],
+  caption: [Подключение LDAP-провайдера Keycloak к OpenLDAP],
 ) <fig-keycloak-ldap>
 
 #figure(
   image("img/keycloak-ldap-search.png", width: 100%),
-  caption: [Режим READ_ONLY и параметры поиска LDAP-пользователей],
+  caption: [READ_ONLY и параметры поиска пользователей каталога],
 ) <fig-keycloak-search>
+
+В разделе Clients созданы конфиденциальные OIDC-клиенты gitea
+и vaultwarden с Authorization Code flow (рисунок @fig-keycloak-clients).
+Для Gitea зарегистрирован адрес возврата
+#raw("https://git.sa6.test/user/oauth2/Keycloak/callback"),
+для Vaultwarden #raw("https://vault.sa6.test/identity/connect/oidc-signin").
+В Gitea подключён источник аутентификации Keycloak, в Vaultwarden
+указаны realm sa6, Client ID vaultwarden и соответствующий секрет клиента.
 
 #figure(
   image("img/keycloak-clients.png", width: 100%),
-  caption: [OIDC-клиенты Gitea и Vaultwarden в realm sa6],
+  caption: [OIDC-клиенты Gitea и Vaultwarden в Keycloak],
 ) <fig-keycloak-clients>
 
-Alice выполнила вход в Gitea через Keycloak, затем вошла в Vaultwarden
-без повторного ввода LDAP-пароля. В событиях Keycloak оба клиента связаны
-с одним сеансом пользователя. Мастер-пароль Vaultwarden используется
-отдельно для разблокировки зашифрованных данных (листинг @lst-browser-sso).
+== Последовательный вход в Gitea и Vaultwarden
 
-#figure(
-  raw(read("outputs/keycloak-sso.txt"), block: true),
-  caption: [Федерация, OIDC-клиенты и общий сеанс SSO],
-  kind: raw,
-) <lst-keycloak-sso>
-
-#block(breakable: false)[
-#figure(
-  raw(read("outputs/browser-sso.txt"), block: true),
-  caption: [Браузерная проверка входа во второе приложение],
-  kind: raw,
-) <lst-browser-sso>
-]
-
-Результаты последовательных входов приведены на рисунках
-@fig-sso-gitea и @fig-sso-vaultwarden.
+Сначала Alice вошла в Gitea через Sign in with Keycloak. Keycloak
+проверил её LDAP-пароль, после возврата в Gitea открылся интерфейс
+пользователя alice (рисунок @fig-sso-gitea).
 
 #figure(
   image("img/sso-gitea.png", width: 100%),
-  caption: [Первое приложение: Gitea, пользователь Alice],
+  caption: [Первый вход: Gitea под учётной записью Alice],
 ) <fig-sso-gitea>
+
+Затем в том же браузере открыт Vaultwarden. После указания
+#raw("alice@sa6.test") и выбора Use single sign-on повторный LDAP-пароль
+не запрашивался. Для расшифровки хранилища отдельно введён мастер-пароль
+Vaultwarden (рисунок @fig-sso-vaultwarden).
 
 #figure(
   image("img/sso-vaultwarden.png", width: 100%),
-  caption: [Второе приложение: Vaultwarden после SSO и разблокировки],
+  caption: [Vaultwarden после единого входа и разблокировки хранилища],
 ) <fig-sso-vaultwarden>
+
+В событиях Keycloak сохранены два входа Alice: gitea в 13:56:30 UTC
+и vaultwarden в 14:00:34 UTC 27.11.2026. Оба относятся к одному
+sessionId. Это согласуется с использованием общего сеанса Keycloak;
+мастер-пароль хранилища выполняет отдельную задачу и не заменяет SSO.
+Последние две строки выборки событий имеют одинаковый session_id
+(рисунок @fig-keycloak-events).
+
+#figure(
+  image("img/keycloak-events-terminal.png", width: 100%),
+  caption: [События входа Alice и общий сеанс двух OIDC-клиентов],
+) <fig-keycloak-events>
 
 == Права коллекций Vaultwarden
 
-В организации SA6 Team Alice имеет роль Owner. Bob добавлен с ролью User
-и правом View items только для коллекции Shared; коллекция Private ему
-не назначена. В коллекциях находятся демонстрационные записи, не используемые
-для входа в службы.
-
-Из отдельного браузерного сеанса Bob проверены чтение общей записи,
-отказ чтения закрытой записи и отказ изменения общей записи
-(листинг @lst-vault-rights). В PUT передано прежнее зашифрованное содержимое;
-сервер отклонил запрос по правам, версия записи сохранилась.
-
-#figure(
-  raw(read("outputs/vaultwarden-rights.txt"), block: true),
-  caption: [Проверка прав Bob на сервере Vaultwarden],
-  kind: raw,
-) <lst-vault-rights>
-
-Назначение Shared участнику Bob показано на рисунке @fig-vault-members.
-В его хранилище видна только общая запись (рисунок @fig-vault-bob),
-тогда как Alice видит обе коллекции.
+В организации SA6 Team Alice назначена роль Owner. Bob добавлен
+как User с доступом View items только к коллекции Shared.
+Коллекция Private ему не назначена. На рисунке @fig-vault-members
+видны роли участников и назначение Shared.
 
 #figure(
   image("img/vault-members.png", width: 100%),
-  caption: [Роли и назначение коллекции участникам SA6 Team],
+  caption: [Участники организации и назначенная Bob коллекция],
 ) <fig-vault-members>
+
+В отдельном приватном браузере Bob видит общую запись Shared demo account,
+но не видит Private (рисунок @fig-vault-bob). У Alice доступны обе коллекции.
+Пароли демонстрационных записей не используются для входа в службы.
 
 #figure(
   image("img/vault-bob-shared.png", width: 100%),
-  caption: [Хранилище Bob: доступна только коллекция Shared],
+  caption: [Хранилище Bob с доступом только к Shared],
 ) <fig-vault-bob>
 
-== Разделение аутентификации и авторизации
+Серверная проверка от имени Bob подтвердила HTTP 200 для чтения Shared
+и отказ HTTP 400 при чтении Private. Попытка передать в Shared прежнее
+зашифрованное содержимое также отклонена: Cipher is not write accessible.
+Версия общей записи после попытки изменения сохранилась.
+Проверки выполнены обычными HTTPS-запросами #raw("curl") с токеном Bob;
+адрес электронной почты из профиля подтверждает учётную запись запроса
+(рисунок @fig-vault-rights).
 
-При парольном входе Linux sshd передаёт проверку PAM и SSSD, а AllowGroups
-ограничивает доступ к APPS. Для соединения Xpra применён SSH-ключ Alice;
-прикладной вход в Tryton выполняется отдельно по LDAP и требует учётной
-записи приложения. Наличие пользователя в каталоге само по себе не даёт
-доступа к Tryton, что показано отказом Bob.
+#figure(
+  image("img/vault-rights-terminal.png", width: 100%),
+  caption: [Проверка чтения и запрета изменения через API Vaultwarden],
+) <fig-vault-rights>
 
-В веб-приложениях Keycloak проверяет LDAP-пароль и возвращает клиенту
-код авторизации. Клиент обменивает код на токены; зарегистрированный
-Redirect URI определяет разрешённый адрес возврата. Сеанс Keycloak
-обеспечивает повторный вход во второе приложение без нового LDAP-пароля.
-Мастер-пароль Vaultwarden отдельно разблокирует зашифрованное хранилище,
-а роли организации и права коллекций определяют доступ к общим записям.
+== Разделение проверок доступа
 
-Файловые права NFS проверяются по согласованным UID/GID. В этом варианте
-использован sec=sys с root_squash; поэтому проверка относится к доверенным
-клиентским машинам и не подтверждает криптографическую аутентификацию NFS.
+Парольный вход Linux проходит через PAM и SSSD; группы каталога
+ограничивают доступ к APPS через AllowGroups. Для транспорта Xpra
+используется SSH-ключ Alice, а пароль Tryton проверяется отдельно
+через LDAP и требует учётной записи приложения. Поэтому наличие Bob
+в каталоге не даёт ему доступ к серверу приложений и Tryton.
+
+Веб-приложения доверяют Keycloak как поставщику идентификации.
+После проверки пользователя клиент получает код авторизации и
+обменивает его на токены. Зарегистрированный Redirect URI задаёт
+разрешённый адрес возврата. Сеанс Keycloak обеспечивает повторный
+вход во второе приложение без нового LDAP-пароля, мастер-пароль
+Vaultwarden открывает зашифрованные данные, а права коллекций
+определяют доступ к общим записям.
 
 = Заключение
 
-Выполнен вариант 6: пользователи Linux подключены к OpenLDAP, окно Tryton
-опубликовано через Xpra по SSH с отдельной рабочей станции. После отключения
-клиента сохранены сеанс и авторизованный процесс приложения. Проверены
-разрешённый вход Alice, отказы Bob в SSH и Tryton, файловые права NFS,
-LDAP-федерация Keycloak и единый вход в Gitea и Vaultwarden. Для Bob
-подтверждены чтение Shared, отказ доступа к Private и запрет изменения
-общей записи на сервере Vaultwarden.
-
-#block(breakable: false)[
-= Источники
-
-+ Лабораторная работа №6 (СА). «Централизованная работа пользователей»,
-  вариант 6 и требования к отчёту.
-+ #link("https://www.openldap.org/doc/admin25/")[OpenLDAP 2.5 Administrator’s Guide].
-+ #link("https://manpages.ubuntu.com/manpages/jammy/man5/sssd-ldap.5.html")[SSSD LDAP provider, Ubuntu 22.04].
-+ #link("https://docs.tryton.org/6.0/server/topics/configuration.html")[Tryton 6.0: Server configuration].
-+ #link("https://manpages.ubuntu.com/manpages/jammy/man1/xpra.1.html")[Xpra 3.1: руководство по командам].
-+ #link("https://www.keycloak.org/docs/latest/server_admin/index.html")[Keycloak: Server Administration Guide].
-+ #link("https://github.com/dani-garcia/vaultwarden/wiki/Enabling-SSO-support-using-OpenId-Connect")[Vaultwarden: OpenID Connect SSO].
-+ #link("https://docs.gitea.com/administration/authentication/")[Gitea: Authentication].
-]
+Выполнен вариант 6. Linux-клиенты подключены к OpenLDAP, Tryton
+опубликован через Xpra по SSH с отдельной рабочей станции. Проверено
+сохранение сеанса при отключении, разрешённый вход Alice и отказы Bob
+в SSH и Tryton. NFS обеспечивает общий доступ к файлам с проверенными
+правами. Keycloak объединяет LDAP-аутентификацию и OIDC-вход
+в Gitea и Vaultwarden. Для Bob подтверждены чтение Shared, отсутствие
+доступа к Private и запрет изменения общей записи.

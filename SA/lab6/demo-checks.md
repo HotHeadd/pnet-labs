@@ -32,11 +32,15 @@ Alice разрешена, Bob с правильным LDAP-паролем пол
 В терминале WORKSTATION:
 
 ```sh
-bash /opt/sa6-tools/show-nfs.sh
+sudo -u alice cat /mnt/team/sa6-report.txt
+sudo -u bob cat /mnt/team/sa6-report.txt
+echo $?
+sudo cat /mnt/team/sa6-report.txt
+echo $?
 ```
 
 Ожидаются содержимое общего файла у Alice и Permission denied у Bob
-и root клиента; итог `alice_exit=0 bob_exit=1 root_exit=1`.
+и root клиента; оба отказа возвращают код1.
 
 ## SSO
 
