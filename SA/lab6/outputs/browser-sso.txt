@@ -1,0 +1,4 @@
+SSO account: alice@sa6.test
+Second application: Vaultwarden; no Keycloak password entered
+Master-password unlock is separate from LDAP authentication
+Vault unlocked successfully

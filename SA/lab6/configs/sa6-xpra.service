@@ -1,0 +1,19 @@
+[Unit]
+Description=SA6 Tryton seamless session for Alice
+After=network-online.target sssd.service tryton-server.service
+Wants=network-online.target
+Requires=tryton-server.service
+
+[Service]
+User=alice
+Group=employees
+Environment=HOME=/home/alice
+Environment=XDG_RUNTIME_DIR=/run/sa6-xpra
+RuntimeDirectory=sa6-xpra
+RuntimeDirectoryMode=0700
+ExecStart=/usr/bin/xpra start :100 --daemon=no --systemd-run=no --start-via-proxy=no --socket-dir=/home/alice/.xpra --start-child=/usr/local/bin/sa6-tryton-client --exit-with-client=no --exit-with-children=no --pulseaudio=no --webcam=no --printing=no
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

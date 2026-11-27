@@ -1,0 +1,17 @@
+directory
+status: done
+extended_status: done
+boot_status_code: enabled-by-generator
+last_update: Thu, 01 Jan 1970 00:01:14 +0000
+detail: DataSourceNoCloud [seed=/dev/sr0]
+errors: []
+recoverable_errors: {}
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.60.0.10/24 
+ens4             UP             192.168.15.231/24 
+default via 192.168.15.2 dev ens4 proto static 
+10.60.0.0/24 dev ens3 proto kernel scope link src 10.60.0.10 
+192.168.15.0/24 dev ens4 proto kernel scope link src 192.168.15.231 
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/vda1        12G  1.7G  9.9G  15% /
+active

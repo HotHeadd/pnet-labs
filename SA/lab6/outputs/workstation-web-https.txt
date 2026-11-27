@@ -1,0 +1,3 @@
+auth HTTPS 200
+git HTTPS 200
+vault HTTPS 200

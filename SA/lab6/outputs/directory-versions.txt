@@ -1,0 +1,2 @@
+nfs-kernel-server	1:2.6.1-1ubuntu1.2
+slapd	2.5.20+dfsg-0ubuntu0.22.04.1

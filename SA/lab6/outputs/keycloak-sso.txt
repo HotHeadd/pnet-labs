@@ -1,0 +1,11 @@
+LDAP: ldaps://directory.sa6.test:636
+editMode=READ_ONLY; usernameAttribute=uid
+alice: federated LDAP identity
+bob: federated LDAP identity
+gitea: confidential; Authorization Code flow
+redirect_uri=https://git.sa6.test/user/oauth2/Keycloak/callback
+vaultwarden: confidential; Authorization Code flow
+redirect_uri=https://vault.sa6.test/identity/connect/oidc-signin
+LOGIN alice client=gitea time=2026-11-27T13:56:30.982000+00:00
+LOGIN alice client=vaultwarden time=2026-11-27T14:00:34.988000+00:00
+same_keycloak_session=true
