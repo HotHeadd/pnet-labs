@@ -1,0 +1,6 @@
+sa7-im
+status: done
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.70.20.20/24 
+ens4             UP             192.168.15.242/24 
+active

@@ -1,0 +1,7 @@
+sa7-gw
+status: done
+lo               UNKNOWN        127.0.0.1/8 
+ens3             UP             10.70.10.10/24 
+ens4             UP             10.70.20.10/24 
+ens5             UP             192.168.15.241/24 
+active
