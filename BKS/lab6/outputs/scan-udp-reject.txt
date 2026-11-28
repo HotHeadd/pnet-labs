@@ -1,0 +1,9 @@
+# Nmap 7.80 scan initiated Wed Nov 25 21:24:59 2026 as: nmap -n -Pn -sU -p 5300 -oN scan-udp-reject.txt 192.168.106.20
+Nmap scan report for 192.168.106.20
+Host is up (0.0031s latency).
+
+PORT     STATE    SERVICE
+5300/udp filtered hacl-hb
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+# Nmap done at Wed Nov 25 21:24:59 2026 -- 1 IP address (1 host up) scanned in 0.08 seconds

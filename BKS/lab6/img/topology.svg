@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="215" viewBox="0 0 920 215">
+  <rect width="920" height="215" fill="#fff"/>
+  <g fill="none" stroke="#32485a" stroke-width="3">
+    <path d="M265 102H344 M578 102H657"/>
+    <rect x="18" y="35" width="247" height="137" rx="12" fill="#f1f6fb"/>
+    <rect x="344" y="60" width="234" height="84" rx="12" fill="#f3f5f6"/>
+    <rect x="657" y="35" width="245" height="137" rx="12" fill="#f1f6fb"/>
+  </g>
+  <g fill="#182c3c" font-family="DejaVu Sans, sans-serif" text-anchor="middle">
+    <g font-size="21" font-weight="bold">
+      <text x="141" y="67">CLIENT</text>
+      <text x="461" y="96">BKS6-ISOLATED</text>
+      <text x="779" y="67">SERVER</text>
+    </g>
+    <g font-size="16">
+      <text x="141" y="98">ens3 · 192.168.106.10/24</text>
+      <text x="141" y="123">tcpdump · Nmap · SFTP</text>
+      <text x="141" y="148">Точка захвата: ens3</text>
+      <text x="461" y="122">Внутренний bridge</text>
+      <text x="779" y="98">ens3 · 192.168.106.20/24</text>
+      <text x="779" y="123">FTP · SSH/SFTP</text>
+      <text x="779" y="148">Тестовые HTTP и DNS</text>
+      <text x="300" y="92">e0</text>
+      <text x="622" y="92">e0</text>
+    </g>
+  </g>
+</svg>

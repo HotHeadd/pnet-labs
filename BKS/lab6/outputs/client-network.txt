@@ -1,0 +1,18 @@
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+bks6-client
+ens3             UP             192.168.106.10/24 
+192.168.106.0/24 dev ens3 proto kernel scope link src 192.168.106.10 
+PING 192.168.106.20 (192.168.106.20) 56(84) bytes of data.
+64 bytes from 192.168.106.20: icmp_seq=1 ttl=64 time=1.63 ms
+64 bytes from 192.168.106.20: icmp_seq=2 ttl=64 time=0.719 ms
+
+--- 192.168.106.20 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1002ms
+rtt min/avg/max/mdev = 0.719/1.173/1.627/0.454 ms
+qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5ms interval 100ms memory_limit 32Mb ecn drop_batch 64 
+tcpdump version 4.99.1
+Nmap version 7.80 ( https://nmap.org )
+Platform: x86_64-pc-linux-gnu
+OpenSSH_8.9p1 Ubuntu-3ubuntu0.18, OpenSSL 3.0.2 15 Mar 2022

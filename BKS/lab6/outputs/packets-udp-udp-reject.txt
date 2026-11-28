@@ -1,0 +1,2 @@
+3	192.168.106.10	192.168.106.20			49349 → 5300 Len=0
+4	192.168.106.20,192.168.106.10	192.168.106.10,192.168.106.20	3	13	Destination unreachable (Communication administratively filtered)

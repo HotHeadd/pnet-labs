@@ -1,0 +1,4 @@
+tcpdump: listening on ens3, link-type EN10MB (Ethernet), snapshot length 128 bytes
+3848 packets captured
+3848 packets received by filter
+0 packets dropped by kernel

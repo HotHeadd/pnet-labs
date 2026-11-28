@@ -1,0 +1,12 @@
+# Nmap 7.80 scan initiated Wed Nov 25 21:23:16 2026 as: nmap -n -Pn -sS -p 21,22,8080,8081 -oN scan-syn-initial.txt 192.168.106.20
+Nmap scan report for 192.168.106.20
+Host is up (0.00077s latency).
+
+PORT     STATE  SERVICE
+21/tcp   open   ftp
+22/tcp   open   ssh
+8080/tcp open   http-proxy
+8081/tcp closed blackice-icecap
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+# Nmap done at Wed Nov 25 21:23:16 2026 -- 1 IP address (1 host up) scanned in 0.05 seconds

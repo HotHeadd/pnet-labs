@@ -1,0 +1,5 @@
+30	192.168.106.10	192.168.106.20			Server status request 0x0000
+31	192.168.106.10	192.168.106.20			40386 → 5300 Len=0
+32	192.168.106.20	192.168.106.10			Server status request response 0x0000 Not implemented
+33	192.168.106.10,192.168.106.20	192.168.106.20,192.168.106.10	3	3	Destination unreachable (Port unreachable)
+34	192.168.106.20,192.168.106.10	192.168.106.10,192.168.106.20	3	3	Destination unreachable (Port unreachable)

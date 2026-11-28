@@ -1,0 +1,6 @@
+de25305ab1e3262e516eb69fee341fc24b2c7558248c0fffada7e851fbe9c9ea  /home/ubuntu/bks6/control.txt
+de25305ab1e3262e516eb69fee341fc24b2c7558248c0fffada7e851fbe9c9ea  /home/bksftp/control.txt
+State  Recv-Q Send-Q  Local Address:Port Peer Address:PortProcess
+LISTEN 0      128           0.0.0.0:22        0.0.0.0:*          
+LISTEN 0      32     192.168.106.20:21        0.0.0.0:*          
+LISTEN 0      128              [::]:22           [::]:*          
