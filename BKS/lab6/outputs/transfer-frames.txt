@@ -1,0 +1,12 @@
+ftp.pcap
+16  0.050996 s  192.168.106.20:21 -> 192.168.106.10:49168  114 B
+    Response: 229 Entering Extended Passive Mode (|||41007|)
+26  0.053464 s  192.168.106.20:41007 -> 192.168.106.10:33370  117 B
+    FTP Data: 51 bytes (EPASV) (RETR control.txt)
+sftp.pcap
+4   0.004574 s  192.168.106.10:55892 -> 192.168.106.20:22  108 B
+    Client: Protocol (SSH-2.0-OpenSSH_8.9p1 Ubuntu-3ubuntu0.18)
+12  0.034631 s  192.168.106.10:55892 -> 192.168.106.20:22  82 B
+    Client: New Keys
+14  0.077464 s  192.168.106.10:55892 -> 192.168.106.20:22  110 B
+    Client: Encrypted packet (len=44)
