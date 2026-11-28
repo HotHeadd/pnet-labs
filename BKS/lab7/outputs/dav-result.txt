@@ -1,0 +1,10 @@
+before=404
+HTTP/1.1 201 Created
+HTTP/1.1 200 OK
+Content-Length: 18
+Content-Type: text/plain
+
+BKS7-OWN-TEST-2711
+
+HTTP/1.1 204 No Content
+after=404
