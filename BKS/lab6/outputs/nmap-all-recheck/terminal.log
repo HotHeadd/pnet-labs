@@ -1,0 +1,137 @@
+** WARNING: connection is not using a post-quantum key exchange algorithm.
+** This session may be vulnerable to "store now, decrypt later" attacks.
+** The server may need to be upgraded. See https://openssh.com/pq.html
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 5.15.0-198-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Sat Nov 28 16:57:47 UTC 2026
+
+  System load: 0.1               Memory usage: 26%   Processes:       95
+  Usage of /:  18.9% of 9.51GB   Swap usage:   0%    Users logged in: 1
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+The list of available updates is more than a week old.
+To check for new updates run: sudo apt update
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Sat Nov 28 16:56:14 2026 from 192.168.106.254
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ stty cols 100 rows 41; cd ~
+[?2004l[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ nmap -n -Pn -sT -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.0026s latency).
+
+PORT     STATE  SERVICE
+21/tcp   open   ftp
+22/tcp   open   ssh
+8080/tcp open   http-proxy
+8081/tcp closed blackice-icecap
+
+Nmap done: 1 IP address (1 host up) scanned in 0.03 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sS -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.00075s latency).
+
+PORT     STATE  SERVICE
+21/tcp   open   ftp
+22/tcp   open   ssh
+8080/tcp open   http-proxy
+8081/tcp closed blackice-icecap
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ nmap -n -Pn -sT -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.0012s latency).
+
+PORT     STATE  SERVICE
+21/tcp   open   ftp
+22/tcp   open   ssh
+8080/tcp closed http-proxy
+8081/tcp closed blackice-icecap
+
+Nmap done: 1 IP address (1 host up) scanned in 0.02 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sS -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.00065s latency).
+
+PORT     STATE  SERVICE
+21/tcp   open   ftp
+22/tcp   open   ssh
+8080/tcp closed http-proxy
+8081/tcp closed blackice-icecap
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ nmap -n -Pn -sT -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.00099s latency).
+
+PORT     STATE    SERVICE
+21/tcp   open     ftp
+22/tcp   open     ssh
+8080/tcp filtered http-proxy
+8081/tcp closed   blackice-icecap
+
+Nmap done: 1 IP address (1 host up) scanned in 1.25 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sS -p 21,22,8080,8081 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.00073s latency).
+
+PORT     STATE    SERVICE
+21/tcp   open     ftp
+22/tcp   open     ssh
+8080/tcp filtered http-proxy
+8081/tcp closed   blackice-icecap
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 1.30 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sU -p 53,5300 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.0013s latency).
+
+PORT     STATE  SERVICE
+53/udp   open   domain
+5300/udp closed hacl-hb
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.05 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sU -p 5300 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.0011s latency).
+
+PORT     STATE    SERVICE
+5300/udp filtered hacl-hb
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.04 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ [H[2J]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ sudo nmap -n -Pn -sU -p 5300 192.168.106.20
+[?2004lStarting Nmap 7.80 ( https://nmap.org ) at 2026-11-28 17:02 UTC
+Nmap scan report for 192.168.106.20
+Host is up (0.0017s latency).
+
+PORT     STATE         SERVICE
+5300/udp open|filtered hacl-hb
+MAC Address: 50:B3:AA:00:17:00 (Unknown)
+
+Nmap done: 1 IP address (1 host up) scanned in 0.28 seconds
+[?2004h]0;ubuntu@hq-fw: ~[01;32mubuntu@hq-fw[00m:[01;34m~[00m$ 
